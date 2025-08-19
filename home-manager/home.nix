@@ -1,9 +1,20 @@
-{ config, pkgs, lib, localUtils, osVersion, user, ... }: {
-    home = {
-        username = user;
-        homeDirectory = "/home/${user}";
-        stateVersion = osVersion;
-    };
+{
+  config,
+  pkgs,
+  lib,
+  localUtils,
+  osVersion,
+  user,
+  ...
+}: {
+  home = {
+    username = user;
+    homeDirectory = "/home/${user}";
+    stateVersion = osVersion;
+  };
 
-    imports = localUtils.dirImports { inherit lib; dir = ./modules; };
+  imports = localUtils.dirImports {
+    inherit lib;
+    dir = ./modules;
+  };
 }

@@ -1,5 +1,8 @@
-{ pkgs, yazi, ... }:
 {
+  pkgs,
+  yazi,
+  ...
+}: {
   programs.yazi = {
     enable = true;
     package = yazi.packages.${pkgs.system}.default;
@@ -40,6 +43,6 @@
         macro_workers = 10;
         bizarre_retry = 5;
       };
+    };
   };
-};
 }

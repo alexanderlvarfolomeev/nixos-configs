@@ -56,13 +56,13 @@
         };
 
         /*
-        "hyprland/window" = {
-          max-length = 40;
-          rewrite = {
-		"(.*) — Mozilla Firefox" = "🌎 $1";
-		"(.*) - zsh" = "> [$1]";
-	  };
-        };
+              "hyprland/window" = {
+                max-length = 40;
+                rewrite = {
+        "(.*) — Mozilla Firefox" = "🌎 $1";
+        "(.*) - zsh" = "> [$1]";
+         };
+              };
         */
 
         "cpu" = {
@@ -76,7 +76,7 @@
           tooltip = true;
           tooltip-format = "Usage: {used} / {total} ({percentage}%)";
         };
- 
+
         "disk" = {
           format = "{percentage_free}% ";
           tooltip = true;

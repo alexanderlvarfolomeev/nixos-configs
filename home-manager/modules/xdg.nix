@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   xdg.portal = {
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
@@ -9,7 +8,7 @@
         "hyprland"
         "gtk"
       ];
-      "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+      "org.freedesktop.impl.portal.FileChooser" = ["gtk"];
     };
   };
 }

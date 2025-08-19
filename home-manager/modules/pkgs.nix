@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   programs.home-manager.enable = true;
 
   nixpkgs.config.allowUnfree = true;
@@ -31,6 +30,6 @@
     bat
     btop
     trashy
-    alejandra    
+    alejandra
   ];
 }

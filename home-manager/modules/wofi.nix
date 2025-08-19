@@ -11,4 +11,3 @@
 
   home.file.".config/wofi/style.css".source = ./wofi-style.css;
 }
-

@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   gtk.iconTheme = {
     name = "Adwaita";
     package = pkgs.adwaita-icon-theme;
@@ -7,10 +10,10 @@
 
   stylix = {
     enable = true;
-    
+
     polarity = "dark";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
-  
+
     targets = {
       gnome.enable = true;
       kitty.enable = false;
@@ -29,7 +32,7 @@
       package = pkgs.adwaita-icon-theme;
     };
 
-    fonts = {      
+    fonts = {
       serif = {
         package = pkgs.noto-fonts;
         name = "Noto Serif";

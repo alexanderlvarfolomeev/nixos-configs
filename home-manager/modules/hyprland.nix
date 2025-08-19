@@ -1,5 +1,4 @@
-{ lib, ...}:
-{
+{lib, ...}: {
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -78,7 +77,7 @@
       # https://wiki.hyprland.org/Configuring/Variables/#animations
       animations = {
         enabled = "yes, please :)";
-        
+
         # Default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
 
         bezier = [
@@ -115,7 +114,7 @@
         kb_variant = ",winkeys";
         kb_options = "grp:alt_shift_toggle";
         resolve_binds_by_sym = true;
-        
+
         follow_mouse = 1;
         sensitivity = 0;
         touchpad = {
@@ -169,7 +168,7 @@
         "$mainMod,       R, exec, pkill -SIGUSR2 waybar"
         "$mainMod SHIFT, R, exec, pkill -SIGUSR1 waybar"
         "$mainMod SHIFT, L, exec, loginctl lock-session"
-      
+
         # "$mainMod,       P, exec, hyprpicker -an"
         "$mainMod,       N, exec, swaync-client -t"
         # ", Print, exec, grimblast --notify --freeze copysave area"
@@ -248,30 +247,30 @@
       # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
       # See https://wiki.hyprland.org/Configuring/Workspace-Rules/ for workspace rules
       /*
-      windowrulev2 = [
-        "bordersize 0, floating:0, onworkspace:w[t1]"
+       windowrulev2 = [
+         "bordersize 0, floating:0, onworkspace:w[t1]"
 
-        "float,class:(mpv)|(imv)|(showmethekey-gtk)"
-        "move 990 60,size 900 170,pin,noinitialfocus,class:(showmethekey-gtk)"
-        "noborder,nofocus,class:(showmethekey-gtk)"
+         "float,class:(mpv)|(imv)|(showmethekey-gtk)"
+         "move 990 60,size 900 170,pin,noinitialfocus,class:(showmethekey-gtk)"
+         "noborder,nofocus,class:(showmethekey-gtk)"
 
-        "workspace 3,class:(obsidian)"
-        "workspace 3,class:(zathura)"
-        "workspace 4,class:(com.obsproject.Studio)"
-        "workspace 5,class:(telegram)"
-        "workspace 5,class:(vesktop)"
-        "workspace 6,class:(teams-for-linux)"
+         "workspace 3,class:(obsidian)"
+         "workspace 3,class:(zathura)"
+         "workspace 4,class:(com.obsproject.Studio)"
+         "workspace 5,class:(telegram)"
+         "workspace 5,class:(vesktop)"
+         "workspace 6,class:(teams-for-linux)"
 
-        "suppressevent maximize, class:.*"
-        "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
+         "suppressevent maximize, class:.*"
+         "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
 
-        "opacity 0.0 override, class:^(xwaylandvideobridge)$"
-        "noanim, class:^(xwaylandvideobridge)$"
-        "noinitialfocus, class:^(xwaylandvideobridge)$"
-        "maxsize 1 1, class:^(xwaylandvideobridge)$"
-        "noblur, class:^(xwaylandvideobridge)$"
-     ];
-     */
+         "opacity 0.0 override, class:^(xwaylandvideobridge)$"
+         "noanim, class:^(xwaylandvideobridge)$"
+         "noinitialfocus, class:^(xwaylandvideobridge)$"
+         "maxsize 1 1, class:^(xwaylandvideobridge)$"
+         "noblur, class:^(xwaylandvideobridge)$"
+      ];
+      */
 
       windowrule = [
         # Ignore maximize requests from apps. You'll probably like this.

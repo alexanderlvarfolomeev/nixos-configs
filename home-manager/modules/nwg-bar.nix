@@ -1,4 +1,9 @@
-{ config, pkgs, utils, ... }: {
+{
+  config,
+  pkgs,
+  utils,
+  ...
+}: {
   xdg.configFile."nwg-bar/bar.json".text = builtins.toJSON [
     {
       label = "Lock";

@@ -1,9 +1,9 @@
 {
   programs = {
-    hyprland.enable = true;	
+    hyprland.enable = true;
     hyprlock.enable = true;
   };
-  
+
   services.xserver.enable = true;
   services = {
     displayManager = {

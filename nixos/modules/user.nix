@@ -1,12 +1,16 @@
-{ config, pkgs, user, ... }:
 {
-    # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.users.${user} = {
-        isNormalUser = true;
-        description = user;
-        extraGroups = [ "networkmanager" "wheel" ];
-        packages = with pkgs; [ ];
-    };
+  config,
+  pkgs,
+  user,
+  ...
+}: {
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.${user} = {
+    isNormalUser = true;
+    description = user;
+    extraGroups = ["networkmanager" "wheel"];
+    packages = with pkgs; [];
+  };
 
-    services.getty.autologinUser = user;
+  services.getty.autologinUser = user;
 }

@@ -1,0 +1,142 @@
+* {
+  border: none;
+  border-radius: 0px;
+  font-family: "JetBrainsMono NF";
+  font-weight: bold;
+  font-size: 20px;
+  min-height: 0;
+  color: #48cae4;
+}
+
+window#waybar {
+  background: #1d2021;
+}
+
+#window label {
+  font-size: 18px;
+}
+
+/* Workspace Buttons */
+#workspaces {
+  padding: 0 5px;
+  border-left: 5px solid #0077b6;
+  border-right: 5px solid #0077b6;
+}
+
+#workspaces button label{
+  color: #00b4d8;
+}
+#workspaces button.active label {
+  color: #1d2021;
+}
+#workspaces button.active {
+  background: #0077b6;
+}
+#workspaces button:hover {
+  background: #003b5b;
+  text-shadow: unset;
+  box-shadow: unset;
+}
+#workspaces button.active:hover {
+  background: #0077b6;
+}
+
+#clock, #battery, #pulseaudio, #network, #tray, #language, #weather, #disk, #memory, #cpu {
+  padding: 0 10px;
+  margin: 0;
+}
+
+#custom-power {
+  padding: 0 10px 0 16px;
+  margin: 0;
+}
+
+#custom-icon {
+  font-size: 30px;
+  margin: 0;
+  padding: 0 16px 0 10px;
+}
+
+#custom-power:hover {
+  background: #003b5b;
+  text-shadow: unset;
+  box-shadow: unset;
+}
+
+#custom-icon:hover {
+  background: #003b5b;
+  text-shadow: unset;
+  box-shadow: unset;  
+}
+
+#hardware {
+  padding: 0 5px 0 0;
+  border-left: 5px solid #0077b6;
+  /* border-right: 5px solid #0077b6; */
+}
+
+#network {
+  margin: 0;
+  color: #8806ce;
+  /* border-bottom: 5px solid #8806ce; */
+}
+
+#disk {
+  margin: 0;
+  color: #f25278;
+  /* border-bottom: 5px solid #f25278; */ 
+}
+
+#memory {
+  margin: 0;
+  color: #ff7900;
+  /* border-bottom: 5px solid #ff7900; */
+}
+
+#cpu {
+  margin: 0;
+  color: #0071c5;
+  /* border-bottom: 5px solid #0071c5; */
+}
+
+#language {
+  margin: 0;
+  color: #d79921;
+  /* border-bottom: 5px solid #d79921; */
+}
+
+#custom-weather {
+  margin: 0;
+  color: #98971a;
+  /* border-bottom: 5px solid #98971a */
+}
+
+#pulseaudio {
+  margin: 0;
+  color: #689d6a;
+  /* border-bottom: 5px solid #689d6a; */
+}
+
+#pulseaudio.muted {
+  padding: 0 20px;
+  color: #cc241d;
+  /* border-bottom: 5px solid #cc241d; */
+}
+
+#battery {
+  margin: 0;
+  color: #458588;
+  /* border-bottom: 5px solid #458588; */
+}
+
+#clock {
+  margin: 0;
+  color: #b16286;
+  /* border-bottom: 5px solid #b16286; */
+}
+
+#tray {
+  margin: 0;
+  color: #d65d0e;
+  /* border-bottom: 5px solid #d65d0e; */
+}

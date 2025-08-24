@@ -2,8 +2,8 @@
   programs.bash = {
     enable = true;
     shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --flake /home/${user}/nix";
-      hmswitch = "home-manager switch --flake /home/${user}/nix";
+      switch = "nh os switch";
+      hmswitch = "nh home switch";
     };
     bashrcExtra = ''
       if command -v fzf-share >/dev/null; then

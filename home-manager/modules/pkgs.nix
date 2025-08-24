@@ -31,5 +31,8 @@
     btop
     trashy
     alejandra
+    nix-health
+    nurl
+    playerctl
   ];
 }

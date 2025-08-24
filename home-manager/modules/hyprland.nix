@@ -167,6 +167,7 @@
 
         "$mainMod,       R, exec, pkill -SIGUSR2 waybar"
         "$mainMod SHIFT, R, exec, pkill -SIGUSR1 waybar"
+        "$mainMod CTRL,  R, exec, waybar"
         "$mainMod SHIFT, L, exec, loginctl lock-session"
 
         # "$mainMod,       P, exec, hyprpicker -an"
@@ -280,6 +281,12 @@
         "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
         "float,initialClass:steam,initialTitle:negative:^(Steam)$"
         "float,class:.telegram-desktop-wrapped"
+        "float,initialClass:org.pulseaudio.pavucontrol"
+        "size <60% <40%,initialClass:org.pulseaudio.pavucontrol"
+        "move 49% 5%,initialClass:org.pulseaudio.pavucontrol"
+        "float,initialClass:org.twosheds.iwgtk"
+        "size <60% <40%,initialClass:org.twosheds.iwgtk"
+        "move 49% 5%,initialClass:org.twosheds.iwgtk"
       ];
     };
   };

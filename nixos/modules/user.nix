@@ -12,5 +12,7 @@
     packages = with pkgs; [];
   };
 
+  nix.settings.trusted-users = [ "root" user ];
+
   services.getty.autologinUser = user;
 }

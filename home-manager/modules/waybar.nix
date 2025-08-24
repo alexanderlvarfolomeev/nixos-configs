@@ -1,6 +1,8 @@
+{ pkgs, inputs, ... }:
 {
   programs.waybar = {
     enable = true;
+    package = inputs.waybar.packages.${pkgs.system}.default;
     style = ./waybar-style.css;
     settings = {
       mainBar = {
@@ -10,10 +12,13 @@
         modules-left = [
           "custom/icon"
           "group/hardware"
+          "cava"
+          # "wlr/taskbar"
         ];
         modules-center = ["hyprland/workspaces"];
         modules-right = [
           "tray"
+          "language"
           "hyprland/language"
           "network"
           "pulseaudio"
@@ -51,7 +56,7 @@
           all-outputs = false;
 
           persistent-workspaces = {
-            "*" = 7;
+            "*" = 5;
           };
         };
 
@@ -82,27 +87,57 @@
           tooltip = true;
           tooltip-format = "Free percentage: {free} / {total} ({percentage_free}%)";
         };
-
+        "cava" = {
+          # "cava_config" = "$XDG_CONFIG_HOME/cava/cava.conf";
+          "framerate" = 30;
+          "autosens" = 1;
+          # "sensitivity" = 100;
+          "bars" = 20;
+          "lower_cutoff_freq" = 50;
+          "higher_cutoff_freq" = 10000;
+          "hide_on_silence" = true;
+          # "format_silent" = "quiet";
+          "method" = "pulse";
+          "source" = "auto";
+          "stereo" = true;
+          "reverse" = false;
+          "bar_delimiter" = 0;
+          "monstercat" = false;
+          "waves" = false;
+          "noise_reduction" = 0.77;
+          "input_delay" = 2;
+          "format-icons" = [ " " "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+          "actions" = {
+            "on-click-right" = "mode";
+          };
+        };
         "hyprland/language" = {
           format-en = "🇺🇸";
           format-ru = "🇷🇺";
           min-length = 5;
           tooltip = false;
+          keyboard-name = "at-translated-set-2-keyboard";
         };
-
         "network" = {
+          format-icons = [ "󰤯" "󰤟" "󰤢" "󰤥" "󰤨" ];
           format = "{ifname}";
-          format-ethernet = " {ifname}";
+          format-ethernet = " {bandwidthDownOctets}";
           format-linked = "󰖪 {essid} (No IP)";
-          format-wifi = "󰖩 {essid}";
+          format-wifi = "{icon} {signalStrength}%";
           format-disconnected = " ";
-          tooltip-format = "{ifname} via {gwaddr}";
+          tooltip-format = "{essid} ({ifname}) via {gwaddr}";
           tooltip-format-ethernet = "{ifname} {ipaddr}/{cidr}";
           tooltip-format-disconnected = "Disconnected";
           max-length = 20;
-          on-click = "iwgtk";
+          on-click = "~/.local/scripts/toggle.sh iwgtk";
         };
-
+        /*
+        "pulseaudio/slider" = {
+          "min" = 0;
+          "max" = 100;
+          "orientation" = "horizontal";
+        };
+        */
         "pulseaudio" = {
           format = "{icon} {volume}%";
           format-bluetooth = "{icon} {volume}% ";
@@ -116,7 +151,7 @@
             "car" = "";
             "default" = ["" ""];
           };
-          on-click = "pavucontrol";
+          on-click = "~/.local/scripts/toggle.sh pavucontrol";
         };
 
         "battery" = {
@@ -126,7 +161,6 @@
           };
           format = "{icon} {capacity}%";
           format-charging = " {capacity}%";
-          format-alt = "{time} {icon}";
           format-icons = ["" "" "" "" ""];
         };
 
@@ -137,7 +171,7 @@
 
         "tray" = {
           icon-size = 14;
-          spacing = 1;
+          spacing = 12;
         };
       };
     };

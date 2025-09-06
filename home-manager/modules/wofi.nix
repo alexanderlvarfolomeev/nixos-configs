@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   programs.wofi = {
     enable = true;
@@ -9,5 +10,14 @@
     };
   };
 
+  programs.rofi = {
+    enable = true;
+    package = pkgs.rofi-wayland-unwrapped;
+    terminal = "alacritty";
+    theme = ./rofi-style.rasi;
+  };
+
+  home.file.".config/rofi/preview.png".source = ./rofi-preview.png;
+  home.file.".config/rofi/rofi-header.png".source = ./rofi-header.png;
   home.file.".config/wofi/style.css".source = ./wofi-style.css;
 }

@@ -1,8 +1,7 @@
-{ pkgs, inputs, ... }:
-{
+{upkgs, ...}: {
   programs.waybar = {
     enable = true;
-    package = inputs.waybar.packages.${pkgs.system}.default;
+    package = upkgs.waybar;
     style = ./waybar-style.css;
     settings = {
       mainBar = {
@@ -11,19 +10,16 @@
         height = 40;
         modules-left = [
           "custom/icon"
-          "group/hardware"
+          "clock"
           "cava"
-          # "wlr/taskbar"
+          "mpris"
         ];
         modules-center = ["hyprland/workspaces"];
         modules-right = [
-          "tray"
-          "language"
+          "wlr/taskbar"
+          "group/net-audio-bat"
+          "group/hardware"
           "hyprland/language"
-          "network"
-          "pulseaudio"
-          "battery"
-          "clock"
           "custom/power"
         ];
 
@@ -42,11 +38,16 @@
           on-click = "wlogout -b 2";
         };
 
+        /*
+        "image#icon" = {
+          path = "~/.config/rofi/preview.png";
+        */
         "custom/icon" = {
-          format = "";
-          on-click = "wofi --show drun";
-          tooltip = false;
+          /* format = ""; */
+          format = " ";
           align = 0.5;
+          on-click = "rofi -show drun";
+          tooltip = false;
         };
 
         "hyprland/workspaces" = {
@@ -59,16 +60,6 @@
             "*" = 5;
           };
         };
-
-        /*
-              "hyprland/window" = {
-                max-length = 40;
-                rewrite = {
-        "(.*) — Mozilla Firefox" = "🌎 $1";
-        "(.*) - zsh" = "> [$1]";
-         };
-              };
-        */
 
         "cpu" = {
           format = "{usage}% ";
@@ -87,30 +78,42 @@
           tooltip = true;
           tooltip-format = "Free percentage: {free} / {total} ({percentage_free}%)";
         };
+
         "cava" = {
           # "cava_config" = "$XDG_CONFIG_HOME/cava/cava.conf";
           "framerate" = 30;
           "autosens" = 1;
           # "sensitivity" = 100;
-          "bars" = 20;
+          "bars" = 18;
           "lower_cutoff_freq" = 50;
           "higher_cutoff_freq" = 10000;
           "hide_on_silence" = true;
           # "format_silent" = "quiet";
           "method" = "pulse";
           "source" = "auto";
-          "stereo" = true;
+          "stereo" = false;
           "reverse" = false;
           "bar_delimiter" = 0;
           "monstercat" = false;
           "waves" = false;
           "noise_reduction" = 0.77;
           "input_delay" = 2;
-          "format-icons" = [ " " "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+          "format-icons" = [" " "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█"];
           "actions" = {
             "on-click-right" = "mode";
           };
         };
+
+        "mpris" = {
+          "format" = "{player_icon} {title}";
+          "format-paused" = " ";
+          "tooltip-format" = "{dynamic}";
+          "player-icons" = {
+            "default" = "▶";
+          };
+          "max-length" = 40;
+        };
+
         "hyprland/language" = {
           format-en = "🇺🇸";
           format-ru = "🇷🇺";
@@ -118,8 +121,18 @@
           tooltip = false;
           keyboard-name = "at-translated-set-2-keyboard";
         };
+
+        "group/net-audio-bat" = {
+          orientation = "horizontal";
+          modules = [
+            "network"
+            "pulseaudio"
+            "battery"
+          ];
+        };
+
         "network" = {
-          format-icons = [ "󰤯" "󰤟" "󰤢" "󰤥" "󰤨" ];
+          format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
           format = "{ifname}";
           format-ethernet = " {bandwidthDownOctets}";
           format-linked = "󰖪 {essid} (No IP)";
@@ -131,13 +144,6 @@
           max-length = 20;
           on-click = "~/.local/scripts/toggle.sh iwgtk";
         };
-        /*
-        "pulseaudio/slider" = {
-          "min" = 0;
-          "max" = 100;
-          "orientation" = "horizontal";
-        };
-        */
         "pulseaudio" = {
           format = "{icon} {volume}%";
           format-bluetooth = "{icon} {volume}% ";
@@ -169,9 +175,11 @@
           tooltip-format = "{:%A, %B %d at %R}";
         };
 
-        "tray" = {
-          icon-size = 14;
-          spacing = 12;
+        "wlr/taskbar" = {
+          icon-size = 20;
+          tooltip-format = "{app_id}";
+          on-click = "activate";
+          ignore-list = [ "Alacritty" ];
         };
       };
     };

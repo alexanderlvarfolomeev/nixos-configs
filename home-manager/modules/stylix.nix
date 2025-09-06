@@ -16,9 +16,10 @@
 
     targets = {
       gnome.enable = true;
-      kitty.enable = false;
+      alacritty.enable = true;
       waybar.enable = false;
       wofi.enable = false;
+      rofi.enable = false;
       micro.enable = false;
       swaync.enable = false;
       gnome-text-editor.enable = false;

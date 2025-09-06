@@ -1,17 +1,15 @@
-@define-color black #1d2021;
+@define-color black #241b20;
 @define-color neon-blue-dark #0077b6;
 @define-color neon-blue #00b4d8;
 @define-color dark-blue #003b5b; /* hover */
 @define-color violet #8806ce;
-@define-color pale-green #689d6a;
-@define-color pale-red #f25278;
-@define-color pale-pink #b16286;
+@define-color chartreuse #7fff00;
 @define-color orange #ff7900;
 @define-color blue #0071c5;
 @define-color red #cc241d;
-@define-color pale-cyan #458588;
-@define-color waybar-top rgba(50,27,38,0.6);
-@define-color waybar-bottom rgba(50,27,38,0.1);
+@define-color lavender #e6e6fa;
+@define-color lime #c5e800;
+@define-color gold #ffd700;
 
 * {
   border: none;
@@ -24,7 +22,7 @@
 }
 
 window#waybar {
-  background: linear-gradient(180deg, @waybar-top, @waybar-bottom);
+  background: linear-gradient(180deg, alpha(@black, 0.6), alpha(@black, 0.1));
 }
 
 #window label {
@@ -50,6 +48,7 @@ window#waybar {
 }
 #workspaces button:hover {
   background: @dark-blue;
+  border-radius: 5px;
   text-shadow: unset;
   box-shadow: unset;
 }
@@ -57,7 +56,7 @@ window#waybar {
   background: @neon-blue-dark;
 }
 
-#clock, #battery, #pulseaudio, #network, #tray, #language, #weather, #disk, #memory, #cpu {
+#pulseaudio, #disk, #memory, #cpu {
   padding: 0 10px;
   margin: 0;
 }
@@ -66,7 +65,7 @@ window#waybar {
   color: @black;
   background: linear-gradient(135deg, @violet, @neon-blue);
   border-radius: 5px 0px 0px 20px;
-  margin: 0 0 0 10px;
+  margin: 0 0 0 5px;
   padding: 0 15px 0 25px;
 
 }
@@ -74,75 +73,109 @@ window#waybar {
 #custom-icon {
   font-size: 30px;
   color: @black;
-  background: linear-gradient(225deg, @violet, @neon-blue);
+  background: url('../rofi/preview.png') center / contain no-repeat border-box padding-box rgba(0,0,0,0);
+  /*background: linear-gradient(225deg, @violet, @neon-blue);
+*/
   border-radius: 0px 5px 20px 0px;
   margin: 0 10px 0 0;
-  padding: 0 25px 0 15px;
+  padding: 0 20px 0 20px;
+  text-shadow: unset;
+  box-shadow: unset;
 }
 
 #custom-power:hover {
-  background: @dark-blue;
   background: linear-gradient(135deg, @violet, @neon-blue-dark);
   text-shadow: unset;
   box-shadow: unset;
 }
 
 #custom-icon:hover {
-  background: @dark-blue;
-  background: linear-gradient(225deg, @violet, @neon-blue-dark);
-  text-shadow: unset;
-  box-shadow: unset;  
+  background: image(alpha(@black, 0.3)) center no-repeat border-box padding-box, url('../rofi/preview.png') center / contain no-repeat border-box padding-box rgba(0,0,0,0);  
 }
 
 #hardware {
+  margin: 0 5px;
+  padding: 0 10px 0 0;
+  border-radius: 5px 20px 20px 5px;
+  background: radial-gradient(alpha(@neon-blue, 0.8), alpha(@violet, 0.8));
+}
+
+#net-audio-bat {
+  margin: 0 5px;
   padding: 0;
+  border-radius: 20px 5px 5px 20px;
+  background: linear-gradient(255deg, alpha(@violet, 0.8), alpha(@blue, 0.8), alpha(@violet, 0.8), alpha(@neon-blue, 0.8), alpha(@neon-blue, 0.8));
+}
+
+#network:hover, #pulseaudio:hover, #battery:hover {
+  background: alpha(@black, 0.1)
 }
 
 #network {
   margin: 0;
-  color: @violet;
+  color: @lavender;
+  padding: 0 10px 0 15px;
+  border-radius: 20px 0 0 20px;
 }
 
 #disk {
   margin: 0;
-  color: @pale-red;
+  color: @lime;
 }
 
 #memory {
   margin: 0;
-  color: @orange;
+  color: @black;
 }
 
 #cpu {
   margin: 0;
-  color: @blue;
+  color: @gold;
 }
 
 #language {
-  margin: 0;
+  margin: 0 5px;
   padding: 0;
+  background: linear-gradient(345deg, alpha(@neon-blue, 0.8), alpha(@violet, 0.8), alpha(@violet, 0.8));
+  border-radius: 0 0 20px 20px;
 }
 
 #pulseaudio {
   margin: 0;
-  color: @pale-green;
+  color: @chartreuse;
 }
 
 #pulseaudio.muted {
-  padding: 0 20px;
+  padding: 0 33px;
   color: @red;
 }
 
 #battery {
   margin: 0;
-  color: @pale-cyan;
+  padding: 0 10px;
+  color: @orange;
+  border-radius: 0 5px 5px 0;
 }
 
 #clock {
-  margin: 0;
-  color: @pale-pink;
+  margin: 0 5px 0 0;
+  padding: 0 40px;
+  font-size: 22px;
+  color: @black;
+  background: radial-gradient(@neon-blue, @blue, @violet);
+  border-radius: 30px 5px 30px 5px;
 }
 
-#tray {
-  margin: 0;
+#mpris {
+  min-width: 20em;
+}
+
+#mpris, #cava {
+  margin: 0 10px;
+  font-size: 18px;
+}
+
+#taskbar button:hover {
+  background: alpha(@neon-blue, 0.5);
+  border-radius: 5px;
 }

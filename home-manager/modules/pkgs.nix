@@ -3,6 +3,8 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  programs.alacritty.enable = true;
+
   home.packages = with pkgs; [
     telegram-desktop
     font-manager
@@ -24,7 +26,6 @@
     fzf
     nudoku
     cairo
-    helvum
     vlc
     yandex-music
     bat
@@ -34,5 +35,6 @@
     nix-health
     nurl
     playerctl
+    gimp3
   ];
 }

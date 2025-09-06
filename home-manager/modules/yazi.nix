@@ -1,11 +1,7 @@
-{
-  pkgs,
-  yazi,
-  ...
-}: {
+{upkgs, ...}: {
   programs.yazi = {
     enable = true;
-    package = yazi.packages.${pkgs.system}.default;
+    package = upkgs.yazi;
     settings = {
       mgr = {
         ratio = [
@@ -36,6 +32,22 @@
           0
           0
         ];
+      };
+
+      opener = {
+        move_to = [{
+          run = "alacritty --working-directory \"$1\"";
+          desc = "Open in Terminal";
+          orphan = true;
+          for = "linux";
+        }];
+      };
+
+      open = {
+        prepend_rules = [{
+          mime = "inode/directory";
+          use = "move_to";
+        }];
       };
 
       tasks = {

@@ -2,17 +2,18 @@
  *
  * Author : Aditya Shakya (adi1090x)
  * Github : @adi1090x
- * 
- * Rofi Theme File
- * Rofi Version: 1.7.3
+ **/
+
+/**
+ *
+ * With some own extras
  **/
 
 /*****----- Configuration -----*****/
 configuration {
-    modi:                       "drun,filebrowser,window";
+    modi:                       "drun,window";
     show-icons:                 true;
     display-drun:               "Apps";
-    display-filebrowser:        "Files";
     display-window:             "Windows";
     drun-display-format:        "{name}";
     window-format:              "{w} · {c} · {t}";
@@ -23,6 +24,7 @@ configuration {
     font:                        "JetBrains Mono Nerd Font 10";
     background:                  #241B20C0;
     background-alt:              #003B5BC0;
+    background-alt-gradient:     linear-gradient(45deg, #003B5BC0, #8806CEC0, #00B4D6C0, #003B5BC0);
     foreground:                  #FFFFFF;
     selected:                    #FF00F1;
     active:                      #9878FF;
@@ -62,7 +64,8 @@ mainbox {
 listbox {
     spacing:                     20px;
     padding:                     20px;
-    background-color:            @background-alt;
+    background-color:            transparent;
+    background-image:            @background-alt-gradient;
     orientation:                 vertical;
     children:                    [ "message", "listview" ];
 }

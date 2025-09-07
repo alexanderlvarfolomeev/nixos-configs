@@ -16,6 +16,7 @@
 
     
     configFile."./xdg-terminals.list".text = "alacritty.desktop";
+    # dataFile."./applications/xterm.desktop".text = "";
   };
 
   home.packages = [pkgs.xdg-terminal-exec];

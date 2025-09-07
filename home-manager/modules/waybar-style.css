@@ -73,7 +73,7 @@ window#waybar {
 #custom-icon {
   font-size: 30px;
   color: @black;
-  background: url('../rofi/preview.png') center / contain no-repeat border-box padding-box rgba(0,0,0,0);
+  background: url('./flake.svg') center / contain no-repeat border-box padding-box rgba(0,0,0,0);
   /*background: linear-gradient(225deg, @violet, @neon-blue);
 */
   border-radius: 0px 5px 20px 0px;
@@ -90,7 +90,7 @@ window#waybar {
 }
 
 #custom-icon:hover {
-  background: image(alpha(@black, 0.3)) center no-repeat border-box padding-box, url('../rofi/preview.png') center / contain no-repeat border-box padding-box rgba(0,0,0,0);  
+  background: image(alpha(@black, 0.3)) center no-repeat border-box padding-box, url('./flake.svg') center / contain no-repeat border-box padding-box rgba(0,0,0,0);  
 }
 
 #hardware {
@@ -114,7 +114,7 @@ window#waybar {
 #network {
   margin: 0;
   color: @lavender;
-  padding: 0 10px 0 15px;
+  padding: 0 20px 0 25px;
   border-radius: 20px 0 0 20px;
 }
 

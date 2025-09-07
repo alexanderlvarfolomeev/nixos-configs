@@ -170,6 +170,8 @@
         "$mainMod CTRL,  R, exec, waybar"
         "$mainMod SHIFT, L, exec, loginctl lock-session"
 
+        "$mainMod, ESCAPE, exec, rofi -show drun"
+
         # "$mainMod,       P, exec, hyprpicker -an"
         "$mainMod,       N, exec, swaync-client -t"
         # ", Print, exec, grimblast --notify --freeze copysave area"

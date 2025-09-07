@@ -1,4 +1,5 @@
 {upkgs, ...}: {
+  home.file.".config/waybar/flake.svg".source = ./nix-snowflake.svg;
   programs.waybar = {
     enable = true;
     package = upkgs.waybar;
@@ -38,10 +39,6 @@
           on-click = "wlogout -b 2";
         };
 
-        /*
-        "image#icon" = {
-          path = "~/.config/rofi/preview.png";
-        */
         "custom/icon" = {
           /* format = ""; */
           format = " ";
@@ -136,7 +133,7 @@
           format = "{ifname}";
           format-ethernet = " {bandwidthDownOctets}";
           format-linked = "󰖪 {essid} (No IP)";
-          format-wifi = "{icon} {signalStrength}%";
+          format-wifi = "{icon}";
           format-disconnected = " ";
           tooltip-format = "{essid} ({ifname}) via {gwaddr}";
           tooltip-format-ethernet = "{ifname} {ipaddr}/{cidr}";

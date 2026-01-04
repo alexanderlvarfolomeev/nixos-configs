@@ -12,7 +12,7 @@
 
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi-wayland-unwrapped;
+    package = pkgs.rofi-wayland;
     terminal = "alacritty";
     theme = ./rofi-style.rasi;
   };

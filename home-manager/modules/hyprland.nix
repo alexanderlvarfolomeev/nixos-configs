@@ -13,13 +13,13 @@
         "XDG_SCREENSHOTS_DIR,$HOME/screens"
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
+        "GRIM_DEFAULT_DIR,$HOME/screens"
       ];
 
       monitor = ",1920x1200@60,auto,1";
       "$mainMod" = "SUPER";
       "$terminal" = "alacritty";
       "$fileManager" = "yazi"; # yazi wrapper generated in .bashrc doesn't work properly here
-      "$menu" = "wofi --show drun";
 
       exec-once = [
         "hyprlock || hyprctl dispatch exit"
@@ -158,7 +158,6 @@
         "$mainMod, C, killactive,"
         "$mainMod, E, exec, $terminal -e $fileManager"
         "$mainMod, V, togglefloating"
-        "$mainMod, M, exec, $menu"
         "$mainMod, P, pseudo," # dwindle
         "$mainMod, J, togglesplit," # dwindle
         "$mainMod, T, exec, XDG_CURRENT_DESKTOP=GNOME telegram-desktop"
@@ -171,6 +170,8 @@
         "$mainMod SHIFT, L, exec, loginctl lock-session"
 
         "$mainMod, ESCAPE, exec, rofi -show drun"
+	"$mainMod SHIFT, S, exec, grim \"$GRIM_DEFAULT_DIR/$(date +'%s_full.png')\""
+        "$mainMod CTRL,  S, exec, grim -g \"$(slurp)\" \"$GRIM_DEFAULT_DIR/$(date +'%s_cut.png')\""
 
         # "$mainMod,       P, exec, hyprpicker -an"
         "$mainMod,       N, exec, swaync-client -t"
@@ -219,8 +220,8 @@
         "$mainMod SHIFT, 0, movetoworkspace, 10"
 
         # Scratchpad
-        "$mainMod,       S, togglespecialworkspace,  magic"
-        "$mainMod SHIFT, S, movetoworkspace, special:magic"
+        "$mainMod,       M, togglespecialworkspace,  magic"
+        "$mainMod SHIFT, M, movetoworkspace, special:magic"
       ];
 
       # Move/resize windows with mainMod + LMB/RMB and dragging

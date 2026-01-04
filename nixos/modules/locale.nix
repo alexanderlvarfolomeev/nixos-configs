@@ -1,4 +1,7 @@
 {
+  pkgs,
+  ...
+}: {
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
 
@@ -22,4 +25,6 @@
     layout = "us,ru";
     variant = ",winkeys";
   };
+
+  environment.etc."X11/layouts.lst".source = "${pkgs.xkeyboard_config}/etc/X11/xkb/rules/base.lst";
 }

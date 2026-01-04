@@ -21,9 +21,9 @@ configuration {
 
 /*****----- Global Properties -----*****/
 * {
-    font:                        "JetBrains Mono Nerd Font 10";
+    font:                        "JetBrains Mono NF 12";
     background:                  #241B20C0;
-    background-alt:              #003B5BC0;
+    background-alt:              #003B5B;
     background-alt-gradient:     linear-gradient(45deg, #003B5BC0, #8806CEC0, #00B4D6C0, #003B5BC0);
     foreground:                  #FFFFFF;
     selected:                    #FF00F1;

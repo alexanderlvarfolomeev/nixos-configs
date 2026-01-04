@@ -1,9 +1,17 @@
-{pkgs, ...}: {
+{pkgs, upkgs, ...}: {
   programs.home-manager.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
   programs.alacritty.enable = true;
+
+  programs.vscode = {
+    enable = true;
+    profiles.default.userSettings = {
+      "git.openRepositoryInParentFolders" = "never";
+      "editor.tabSize" = 2;
+    };
+  };
 
   home.packages = with pkgs; [
     telegram-desktop
@@ -36,5 +44,8 @@
     nurl
     playerctl
     gimp3
+    slurp
+    grim
+    upkgs.quickshell
   ];
 }

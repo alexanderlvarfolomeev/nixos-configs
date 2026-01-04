@@ -1,7 +1,11 @@
 {
   programs.git = {
     enable = true;
-    userName = "alexanderlvarfolomeev";
-    userEmail = "vas.aleks.v@gmail.com";
+    settings = {
+      user = {
+        name = "alexanderlvarfolomeev";
+	email = "vas.aleks.v@gmail.com";
+      };
+    };
   };
 }

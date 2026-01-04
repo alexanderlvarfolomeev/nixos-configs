@@ -29,7 +29,7 @@
     swaynotificationcenter
     hyprpolkitagent
     obs-studio
-    discord
+    # discord
     iwgtk
     fzf
     nudoku

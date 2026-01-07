@@ -1,6 +1,7 @@
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Io
+import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 
@@ -25,48 +26,18 @@ Row {
     }
 
     Repeater {
-        property int alwaysVisibleWorkspaces: 5
-
-        function createModel(workspaces, avw) {
-            let resultMap = new Map();
-            workspaces.forEach(
-                ws => resultMap.set(
-                    ws.id, 
-                    {
-                        id: ws.id,
-                        exists: true,
-                        active: ws.focused,
-                        special: ws.id < 0,
-                    },
-                )
-            )
-            for (let idx = 1; idx <= avw; idx++) {
-                if (!resultMap.has(idx)) {
-                    resultMap.set(
-                        idx, 
-                        {
-                            id: idx,
-                            exists: false,
-                            active: false,
-                            special: false,
-                        },
-                    )
-                }
-            }
-            return Array.from(resultMap.keys()).sort().map(id => resultMap.get(id))
-        }
-
-        model: createModel(Hyprland.workspaces.values, alwaysVisibleWorkspaces)
+        model: AppSingleton.workspaceModels
         Rectangle {
             required property var modelData
             property bool isExists: modelData.exists
             property bool isActive: modelData.active
+            property bool containApps: modelData.topLevels.length > 0
 
             anchors {
                 top: root.top
                 bottom: root.bottom
             }
-            implicitWidth: 36
+            width: containApps ? appsRectangle.width + workspaceText.width + 18 : (workspaceText.width + 10 * 2)
             height: root.height
             radius: 5
             // TODO: make it work
@@ -74,11 +45,58 @@ Row {
 
             color: isExists ? (isActive ? "#0071c5" : "#2800b4d8") : "transparent"
 
+            Rectangle {
+                id: appsRectangle
+
+                color: isActive ? "#90FFFFFF" : "#40FFFFFF"
+
+                anchors {
+                    bottom: parent.bottom
+                    left: workspaceText.right
+                    // right: parent.right
+                    leftMargin: 4
+                    rightMargin: 4
+                }
+
+                width: appsRow.width + 8 * 2
+                height: 24
+                radius: 12
+
+                visible: containApps
+
+                Row {
+                    id: appsRow
+                    spacing: 0
+
+                    anchors {
+                        centerIn: parent
+                    }
+
+                    Repeater {
+                        id: appsRepeater
+
+                        model: modelData.topLevels
+
+                        IconImage {
+                            id: appIcon
+                            required property string modelData
+
+                            implicitSize: 20
+                            source: Quickshell.iconPath(AppSingleton.guessIcon(modelData))
+                        }
+                    }
+                }
+            }
+
             Text {
-                id: timeText
+                id: workspaceText
                 // Layout.alignment: Qt.AlignBaseline
                 // center the bar in its parent component (the window)
-                anchors.centerIn: parent
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: parent.left
+                    leftMargin: 10
+                }
                 text: modelData.special ? "S" : modelData.id 
                 font.pixelSize: 24
                 font.bold: true

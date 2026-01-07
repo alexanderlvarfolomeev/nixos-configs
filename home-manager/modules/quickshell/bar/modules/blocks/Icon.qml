@@ -12,7 +12,7 @@ Item {
     Image {
         id: icon
         anchors.verticalCenter: parent.verticalCenter
-        source: "file:///home/aorise/nix/home-manager/modules/quickshell/bar/modules/blocks/nix-snowflake.svg"
+        source: Quickshell.iconPath("nix-snowflake")
         width: parent.width
         height: parent.height
         fillMode: Image.PreserveAspectFit

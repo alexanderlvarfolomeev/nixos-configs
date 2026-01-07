@@ -1,5 +1,7 @@
 //@ pragma UseQApplication
 //@ pragma Env QS_NO_RELOAD_POPUP=1
+// TODO: try to parametrize
+//@ pragma IconTheme default
 //@ pragma Env QT_QUICK_WHEEL_DECELERATION=1000
 
 // import "modules"

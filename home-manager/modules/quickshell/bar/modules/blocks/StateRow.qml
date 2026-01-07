@@ -14,5 +14,16 @@ Row {
         bottom: parent.bottom
     }
 
+    // I don't need it
+    // Tray {}
+
+    // AllWindows {}
+
+    Wlr {}
+
+    Network {}
+
+    Audio {}
+
     Battery {}
 }

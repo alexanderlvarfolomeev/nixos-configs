@@ -160,7 +160,7 @@
         "$mainMod, V, togglefloating"
         "$mainMod, P, pseudo," # dwindle
         "$mainMod, J, togglesplit," # dwindle
-        "$mainMod, T, exec, XDG_CURRENT_DESKTOP=GNOME telegram-desktop"
+        "$mainMod, T, exec, XDG_CURRENT_DESKTOP=GNOME Telegram --"
         "$mainMod, L, exec, hyprlock"
         "$mainMod, B, exec, firefox"
 

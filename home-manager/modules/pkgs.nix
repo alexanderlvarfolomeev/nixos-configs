@@ -46,6 +46,6 @@
     gimp3
     slurp
     grim
-    upkgs.quickshell
+    quickshell
   ];
 }

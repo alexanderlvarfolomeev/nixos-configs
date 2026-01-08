@@ -1,8 +1,9 @@
 import Quickshell
+import Quickshell.Io
 import Quickshell.Widgets
 import QtQuick
 
-Rectangle {
+MouseRec {
   id: root
 
   anchors {
@@ -22,5 +23,15 @@ Rectangle {
 
     color: "#e6e6fa"
     text: NetworkSingleton.networkStateText(NetworkSingleton.state, NetworkSingleton.network, NetworkSingleton.rssi)
+  }
+
+  onClicked: function() {
+    iwgtk.startDetached()
+  }
+
+  Process {
+    id: iwgtk
+    running: false
+    command: ["bash",  "/home/aorise/.local/scripts/toggle.sh", "iwgtk"]
   }
 }

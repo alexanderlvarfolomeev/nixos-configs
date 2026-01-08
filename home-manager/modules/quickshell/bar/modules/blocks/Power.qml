@@ -3,7 +3,7 @@ import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
 
-Rectangle {
+MouseRec {
     id: root
     anchors {
         top: parent.top
@@ -17,7 +17,7 @@ Rectangle {
     gradient: Gradient {
         orientation: Gradient.Horizontal
         GradientStop { position: 0.0; color: "#8806ce" }
-        GradientStop { position: 1.0; color: "#00b4d8" }
+        GradientStop { position: 1.0; color: (root.hovered ? "#0071c5" : "#00b4d8") }
     }
 
     Text {
@@ -30,12 +30,8 @@ Rectangle {
         color: "black"
     }
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: function() {
-            wlogout.running = true
-        }
-        hoverEnabled: true
+    onClicked: function() {
+        wlogout.running = true
     }
 
     Process {

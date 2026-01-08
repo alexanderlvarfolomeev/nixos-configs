@@ -104,15 +104,15 @@ ShellRoot {
 
                 Blocks.StateRow {}
 
-                Rectangle {
-                    anchors {
-                        top: rightBlocks.top
-                        bottom: rightBlocks.bottom
-                    }
-                    implicitWidth: 4
-                    color: "red"
-                    // Layout.fillHeight: true
-                }
+                // Rectangle {
+                //     anchors {
+                //         top: rightBlocks.top
+                //         bottom: rightBlocks.bottom
+                //     }
+                //     implicitWidth: 4
+                //     color: "red"
+                //     // Layout.fillHeight: true
+                // }
 
                 Blocks.Language {}
         

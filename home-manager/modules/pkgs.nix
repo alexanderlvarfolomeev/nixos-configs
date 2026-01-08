@@ -47,5 +47,10 @@
     slurp
     grim
     quickshell
+
+    libnotify
+    satty
+    wayfreeze
+    wl-clipboard-rs
   ];
 }

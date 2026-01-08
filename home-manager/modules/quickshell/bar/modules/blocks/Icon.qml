@@ -4,10 +4,15 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
 
-Item {
+MouseRec {
     id: root
     implicitWidth: 40
     implicitHeight: 40
+    color: "transparent"
+
+    onClicked: function() {
+        rofi.running = true
+    }
     // Layout.leftMargin: 8
     Image {
         id: icon
@@ -19,13 +24,19 @@ Item {
         smooth: true
     }
 
-    MouseArea {
+    Rectangle {
         anchors.fill: parent
-        onClicked: function() {
-            rofi.running = true
-        }
-        hoverEnabled: true
+        color: root.hovered ? "#40000000" : "transparent"
+
     }
+
+    // MouseArea {
+    //     anchors.fill: parent
+    //     onClicked: function() {
+    //         rofi.running = true
+    //     }
+    //     hoverEnabled: true
+    // }
 
     Process {
         id: rofi

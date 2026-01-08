@@ -11,7 +11,7 @@ Singleton {
     id: root
 
     property list<var> regexTitleToMap: [[/^Yazi/, "yazi"]]
-    property list<var> regexToIgnore: [/^Alacritty/, /^ueberzugpp/]
+    property list<var> regexToIgnore: [/^Alacritty/, /^ueberzugpp/, /^org.pulseaudio.pavucontrol$/]
 
     property int alwaysVisibleWorkspaces: 5
     property list<DesktopEntry> desktopEntries: DesktopEntries.applications.values
@@ -28,7 +28,6 @@ Singleton {
 
         let entry = DesktopEntries.byId(appName)
         if (entry != null) {
-            console.log("Ideal match: " + appName)
             return entry.icon
         }
         entry = DesktopEntries.heuristicLookup(appName)

@@ -19,7 +19,7 @@ Row {
 
     // AllWindows {}
 
-    Wlr {}
+    // Wlr {}
 
     Network {}
 

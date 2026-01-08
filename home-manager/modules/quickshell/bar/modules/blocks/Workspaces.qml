@@ -37,7 +37,7 @@ Row {
                 top: root.top
                 bottom: root.bottom
             }
-            width: containApps ? appsRectangle.width + workspaceText.width + 18 : (workspaceText.width + 10 * 2)
+            width: workspaceRow.width + 10 * 2
             height: root.height
             radius: 5
             // TODO: make it work
@@ -45,65 +45,125 @@ Row {
 
             color: isExists ? (isActive ? "#0071c5" : "#2800b4d8") : "transparent"
 
-            Rectangle {
-                id: appsRectangle
+            Row {
+                id: workspaceRow
 
-                color: isActive ? "#90FFFFFF" : "#40FFFFFF"
-
+                spacing: 10
                 anchors {
-                    bottom: parent.bottom
-                    left: workspaceText.right
-                    // right: parent.right
-                    leftMargin: 4
-                    rightMargin: 4
+                    centerIn: parent
                 }
 
-                width: appsRow.width + 8 * 2
-                height: 24
-                radius: 12
+                Text {
+                    id: workspaceText
+                    // Layout.alignment: Qt.AlignBaseline
+                    // center the bar in its parent component (the window)
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                    }
+                    text: modelData.special ? "S" : modelData.id 
+                    font.pixelSize: 24
+                    font.bold: true
+                    font.family: "JetBrains Mono NF"
 
-                visible: containApps
+                    color: isActive ? "#241b20" : "#00b4d8"
+                }
 
-                Row {
-                    id: appsRow
-                    spacing: 0
+                // Rectangle {
+                //     anchors {
+                //         top: parent.top
+                //         bottom: parent.bottom
+                //     }
+                //     visible: containApps
+                //     implicitWidth: 2
+                //     color: isActive ? "#241b20" : "#00b4d8"
+                // }
+
+                Rectangle {
+                    id: appsRectangle
+
+                    visible: containApps
+
+                    color: isActive ? "#90FFFFFF" : "#50FFFFFF"
 
                     anchors {
-                        centerIn: parent
+                        verticalCenter: parent.verticalCenter
                     }
 
-                    Repeater {
-                        id: appsRepeater
+                    width: appsRow.width + 8 * 2
+                    height: 30
+                    radius: 10
 
-                        model: modelData.topLevels
+                    Row {
+                        id: appsRow
 
-                        IconImage {
-                            id: appIcon
-                            required property string modelData
+                        spacing: -6
 
-                            implicitSize: 20
-                            source: Quickshell.iconPath(AppSingleton.guessIcon(modelData))
+                        anchors {
+                            centerIn: parent
+                        }
+
+                        Repeater {
+                            id: appsRepeater
+
+                            model: modelData.topLevels
+
+                            IconImage {
+                                id: appIcon
+                                required property string modelData
+
+                                implicitSize: 20
+                                source: Quickshell.iconPath(AppSingleton.guessIcon(modelData))
+                            }
                         }
                     }
                 }
+
             }
 
-            Text {
-                id: workspaceText
-                // Layout.alignment: Qt.AlignBaseline
-                // center the bar in its parent component (the window)
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    left: parent.left
-                    leftMargin: 10
-                }
-                text: modelData.special ? "S" : modelData.id 
-                font.pixelSize: 24
-                font.bold: true
-                font.family: "JetBrains Mono NF"
+            // Rectangle {
+            //     id: appsRectangle
 
-                color: isActive ? "#241b20" : "#00b4d8"
-            }
+            //     color: isActive ? "#90FFFFFF" : "#40FFFFFF"
+
+            //     anchors {
+            //         bottom: parent.bottom
+            //         bottomMargin: 2
+            //         left: workspaceText.right
+            //         // right: parent.right
+            //         leftMargin: 4
+            //         rightMargin: 4
+            //     }
+
+            //     width: appsRow.width + 8 * 2
+            //     height: 24
+            //     radius: 12
+
+            //     visible: containApps
+
+            //     Row {
+            //         id: appsRow
+
+            //         spacing: -6
+
+            //         anchors {
+            //             centerIn: parent
+            //         }
+
+            //         Repeater {
+            //             id: appsRepeater
+
+            //             model: modelData.topLevels
+
+            //             IconImage {
+            //                 id: appIcon
+            //                 required property string modelData
+
+            //                 implicitSize: 20
+            //                 source: Quickshell.iconPath(AppSingleton.guessIcon(modelData))
+            //             }
+            //         }
+            //     }
+            // }
         }
     }
 

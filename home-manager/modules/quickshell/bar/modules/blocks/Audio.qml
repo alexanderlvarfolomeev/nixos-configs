@@ -5,7 +5,7 @@ import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 
-Rectangle {
+MouseRec {
   id: root
 
   anchors {
@@ -26,5 +26,15 @@ Rectangle {
 
     color: AudioSingleton.sinkStateColor(AudioSingleton.sink?.audio)
     text: AudioSingleton.sinkStateText(AudioSingleton.sink?.audio)
+  }
+
+  onClicked: function() {
+    pavucontrol.startDetached()
+  }
+
+  Process {
+    id: pavucontrol
+    running: false
+    command: ["bash",  "/home/aorise/.local/scripts/toggle.sh", "pavucontrol"]
   }
 }

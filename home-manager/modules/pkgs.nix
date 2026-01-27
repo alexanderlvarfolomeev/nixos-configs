@@ -52,5 +52,9 @@
     satty
     wayfreeze
     wl-clipboard-rs
+    # useful to get keyboard keys
+    wev
+
+    lazygit
   ];
 }

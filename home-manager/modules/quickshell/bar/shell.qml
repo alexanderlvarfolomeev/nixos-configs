@@ -14,6 +14,10 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
 import "modules/blocks" as Blocks
+// import "modules/dashboard" as Dashboard
+import "modules/devices" as Devices
+import "modules/general" as General
+import "modules/workspaces" as Workspaces
 
 // ShellRoot is the top-level container Quickshell expects
 ShellRoot {
@@ -73,7 +77,7 @@ ShellRoot {
                 // Layout.alignment: Qt.AlignLeft
                 
 
-                Blocks.Icon{}
+                General.Icon{}
 
                 // Rectangle {
                 //     implicitWidth: 4
@@ -81,7 +85,7 @@ ShellRoot {
                 //     color: "transparent"
                 // }
 
-                Blocks.Time {}
+                General.Time {}
             }
 
             Row {
@@ -89,7 +93,7 @@ ShellRoot {
                 anchors.centerIn: parent
                 height: parent.height
 
-                Blocks.Workspaces {}
+                Workspaces.Workspaces {}
             }
 
             Row {
@@ -102,7 +106,7 @@ ShellRoot {
                 }
                 // Layout.alignment: Qt.AlignRight
 
-                Blocks.StateRow {}
+                Devices.DeviceRow {}
 
                 // Rectangle {
                 //     anchors {
@@ -116,8 +120,12 @@ ShellRoot {
 
                 Blocks.Language {}
         
-                Blocks.Power {}
+                General.Power {}
             }
         }
     }
+
+    // Dashboard.Dash {
+    //     anchorWindow: panel
+    // }
 }

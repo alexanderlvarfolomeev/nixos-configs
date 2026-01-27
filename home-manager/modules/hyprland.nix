@@ -10,10 +10,8 @@
         "XDG_SESSION_TYPE,wayland"
         "XDG_SESSION_DESKTOP,Hyprland"
         "QT_QPA_PLATFORM,wayland"
-        "XDG_SCREENSHOTS_DIR,$HOME/screens"
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
-        "GRIM_DEFAULT_DIR,$HOME/screens"
       ];
 
       monitor = ",1920x1200@60,auto,1";
@@ -170,8 +168,8 @@
         "$mainMod SHIFT, L, exec, loginctl lock-session"
 
         "$mainMod, ESCAPE, exec, rofi -show drun"
-	"$mainMod SHIFT, S, exec, grim \"$GRIM_DEFAULT_DIR/$(date +'%s_full.png')\""
-        "$mainMod CTRL,  S, exec, grim -g \"$(slurp)\" \"$GRIM_DEFAULT_DIR/$(date +'%s_cut.png')\""
+        "$mainMod SHIFT, S, exec, ~/.local/scripts/screenshot.sh region satty"
+        "$mainMod CTRL,  S, exec, ~/.local/scripts/screenshot.sh region none"
 
         # "$mainMod,       P, exec, hyprpicker -an"
         "$mainMod,       N, exec, swaync-client -t"
@@ -238,6 +236,8 @@
         ",XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
         ",XF86MonBrightnessUp,   exec, brightnessctl -e4 -n2 set 5%+"
         ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
+        ",Print                , exec, ~/.local/scripts/screenshot.sh fullscreen none"
+        ",XF86Tools            , exec, ~/.local/scripts/screenshot.sh fullscreen satty"
       ];
 
       # Audio playback

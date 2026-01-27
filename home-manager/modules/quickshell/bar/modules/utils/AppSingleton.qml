@@ -11,7 +11,7 @@ Singleton {
     id: root
 
     property list<var> regexTitleToMap: [[/^Yazi/, "yazi"]]
-    property list<var> regexToIgnore: [/^Alacritty/, /^ueberzugpp/, /^org.pulseaudio.pavucontrol$/]
+    property list<var> regexToIgnore: [/^Alacritty/, /^ueberzugpp/, /^org.pulseaudio.pavucontrol$/, /^com.gabm.satty/]
 
     property int alwaysVisibleWorkspaces: 5
     property list<DesktopEntry> desktopEntries: DesktopEntries.applications.values
@@ -59,6 +59,7 @@ Singleton {
                 w.id, 
                 {
                     id: w.id,
+                    workspace: w,
                     exists: true,
                     active: w.focused,
                     special: w.id < 0,
@@ -76,6 +77,10 @@ Singleton {
                         active: false,
                         special: false,
                         topLevels: [],
+                        // To allow switching workspace by clicking on it
+                        workspace: {
+                            activate: () => Hyprland.dispatch(`workspace ${idx}`)
+                        }
                     },
                 )
             }

@@ -4,8 +4,9 @@ import Quickshell.Services.Pipewire
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
+import "../blocks" as Blocks
 
-MouseRec {
+Blocks.MouseRec {
   id: root
 
   anchors {

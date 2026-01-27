@@ -4,6 +4,8 @@ import Quickshell.Io
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
+import "../blocks" as Blocks
+import "../utils" as Utils
 
 
 Row {
@@ -26,12 +28,31 @@ Row {
     }
 
     Repeater {
-        model: AppSingleton.workspaceModels
-        Rectangle {
+        id: workspaceRepeater
+
+        model: Utils.AppSingleton.workspaceModels
+
+        property bool hoverUnlocked: false
+        property var timer: Timer {
+            interval: 100
+            running: false
+            repeat: false
+            onTriggered: workspaceRepeater.hoverUnlocked = true
+        }
+
+        onModelChanged: {
+            workspaceRepeater.hoverUnlocked = false
+            workspaceRepeater.timer.start()
+        }
+
+        Blocks.MouseRec {
+            id: workspaceRec
             required property var modelData
             property bool isExists: modelData.exists
             property bool isActive: modelData.active
             property bool containApps: modelData.topLevels.length > 0
+
+            extraHoveredCondition: workspaceRepeater.hoverUnlocked
 
             anchors {
                 top: root.top
@@ -43,7 +64,9 @@ Row {
             // TODO: make it work
             // Layout.rightMargin: modelData.special ? 10.0 : 0.0
 
-            color: isExists ? (isActive ? "#0071c5" : "#2800b4d8") : "transparent"
+            color: {
+                isExists ? (isActive ? "#0071c5" : (hovered ? "#c0003b5b" : "#2800b4d8")) : (hovered ? "#c0003b5b" : "transparent")
+            }
 
             Row {
                 id: workspaceRow
@@ -112,12 +135,17 @@ Row {
                                 required property string modelData
 
                                 implicitSize: 20
-                                source: Quickshell.iconPath(AppSingleton.guessIcon(modelData))
+                                source: Quickshell.iconPath(Utils.AppSingleton.guessIcon(modelData))
                             }
                         }
                     }
                 }
+            }
 
+            onClicked: function() {
+                if (!isActive) {
+                    modelData.workspace.activate()
+                }
             }
 
             // Rectangle {
@@ -159,7 +187,7 @@ Row {
             //                 required property string modelData
 
             //                 implicitSize: 20
-            //                 source: Quickshell.iconPath(AppSingleton.guessIcon(modelData))
+            //                 source: Quickshell.iconPath(Utils.AppSingleton.guessIcon(modelData))
             //             }
             //         }
             //     }

@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{config, pkgs, ...}: {
   xdg = {
     portal = {
       extraPortals = with pkgs; [
@@ -17,6 +17,13 @@
     
     configFile."./xdg-terminals.list".text = "alacritty.desktop";
     # dataFile."./applications/xterm.desktop".text = "";
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+      extraConfig = {
+        XDG_SCREENSHOT_DIR = "${config.home.homeDirectory}/Screenshots";
+      };
+    };
   };
 
   home.packages = [pkgs.xdg-terminal-exec];

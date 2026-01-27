@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # from https://github.com/basecamp/omarchy/blob/master/bin/omarchy-cmd-screenshot
 
-OUTPUT_DIR="${GRIM_DEFAULT_DIR:-${XDG_PICTURES_DIR:-$HOME/Pictures}}"
+OUTPUT_DIR="${XDG_SCREENSHOT_DIR:-${XDG_PICTURES_DIR:-$HOME/Screenshots}}"
 
 if [[ ! -d "$OUTPUT_DIR" ]]; then
-  notify-send "Screenshot directory does not exist: $OUTPUT_DIR" -u critical -t 3000
+  notify-send "Directory does not exist: $OUTPUT_DIR" -u critical -t 3000
   exit 1
 fi
 

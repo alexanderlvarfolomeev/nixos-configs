@@ -2,8 +2,9 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
+import "../blocks" as Blocks
 
-MouseRec {
+Blocks.MouseRec {
     id: root
     anchors {
         top: parent.top

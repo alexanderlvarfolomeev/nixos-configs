@@ -4,6 +4,7 @@ import Quickshell.Wayland
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Controls
+import "../utils" as Utils
 
 Rectangle {
   id: root
@@ -33,7 +34,7 @@ Rectangle {
         bottom: parent.bottom
       }
 
-      model: AppSingleton.filteredTopLevels
+      model: Utils.AppSingleton.filteredTopLevels
 
       Rectangle {
         id: wlrRepeaterDelegate
@@ -48,14 +49,28 @@ Rectangle {
         width: wlrIcon.actualSize
 
         MouseArea {
+          id: mouseArea
           anchors.fill: parent
           hoverEnabled: true
           ToolTip {
-            visible: parent.containsMouse // Binds the tooltip visibility to the hovered state
+            id: tooltip
+            visible: mouseArea.containsMouse // Binds the tooltip visibility to the hovered state
             text: wlrRepeaterDelegate.modelData.id + " (" + wlrRepeaterDelegate.modelData.title + ")"
             delay: 500 // Optional: delay showing the tooltip by 500ms
             // topMargin: 20
             // clip: false
+
+            background: Rectangle {
+              color: "#d8241b20"
+              opacity: 0.9
+            }
+
+            contentItem: Text {
+              text: tooltip.text // Binds to the ToolTip.text property
+              font: tooltip.font
+              color: "#00b4d8" // Change the text color
+              wrapMode: Text.Wrap
+            }
           }
         }
 
@@ -66,7 +81,7 @@ Rectangle {
 
           implicitSize: 24
 
-          source: Quickshell.iconPath(AppSingleton.guessIcon(wlrRepeaterDelegate.modelData.id))
+          source: Quickshell.iconPath(Utils.AppSingleton.guessIcon(wlrRepeaterDelegate.modelData.id))
         }
 
       }

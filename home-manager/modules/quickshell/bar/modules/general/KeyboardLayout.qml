@@ -7,6 +7,8 @@ import Quickshell.Hyprland
 
 /**
  * Exposes the active Hyprland Xkb keyboard layout name and code for indicators.
+ *
+ * TODO: use events
  */
 Singleton {
     id: root

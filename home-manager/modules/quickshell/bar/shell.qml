@@ -14,7 +14,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
 import "modules/blocks" as Blocks
-// import "modules/dashboard" as Dashboard
+import "modules/dashboard" as Dashboard
 import "modules/devices" as Devices
 import "modules/general" as General
 import "modules/workspaces" as Workspaces
@@ -118,7 +118,7 @@ ShellRoot {
                 //     // Layout.fillHeight: true
                 // }
 
-                Blocks.Language {}
+                General.Language {}
         
                 General.Power {}
             }

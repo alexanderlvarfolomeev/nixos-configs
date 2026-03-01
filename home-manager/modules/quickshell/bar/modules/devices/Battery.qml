@@ -13,12 +13,19 @@ Blocks.MouseRec {
     anchors {
         top: parent.top
         bottom: parent.bottom
+        topMargin: 2.0
+        bottomMargin: 2.0
     }
     width: statusText.width + 10 * 2
-    color: "#003b5b"
+    color: root.hovered ? Qt.darker("#00449a", 1.1) : "#00449a"
 
     topRightRadius: height / 2
     bottomRightRadius: height / 2
+
+    property Component tooltipComponent: Component {
+        Blocks.ToolTip {}
+    }
+    property var tooltip: null
 
     Text {
         id: statusText
@@ -33,25 +40,30 @@ Blocks.MouseRec {
         text: BatterySingleton.batteryStateText(UPower.displayDevice.state, UPower.displayDevice.percentage)
     }
 
-    // ToolTip {
-    //     id: tooltip
-    //     visible: root.hovered
-    //     text: "todo"
-    //     delay: 500
-
-    //     background: Rectangle {
-    //         color: "#d8241b20"
-    //         opacity: 0.9
+    // onClicked: () => {
+    //     if (tooltip) {
+    //         tooltip.hide()
+    //         tooltip.destroy()
+    //     } else {
+    //         tooltip = tooltipComponent.createObject(null)
+    //         console.log(tooltip)
+    //         tooltip.prepareToShow(root, BatterySingleton.tooltipText())
     //     }
-
-    //     contentItem: Text {
-    //         text: tooltip.text // Binds to the ToolTip.text property
-    //         font: tooltip.font
-    //         color: "#00b4d8" // Change the text color
-    //         wrapMode: Text.Wrap
-    //     }
-
-    //     // popupType: Popup.Window
-    //     // topMargin: 50
     // }
+
+    onEntered: () => {
+        if (tooltip) {
+            tooltip.refreshText(BatterySingleton.tooltipText())
+        } else {
+            tooltip = tooltipComponent.createObject(null)
+            tooltip.prepareToShow(root, BatterySingleton.tooltipText())
+        }
+    }
+
+    onExited: () => {
+        if (tooltip) {
+            tooltip.hide()
+            tooltip.destroy()
+        }
+    }
 }

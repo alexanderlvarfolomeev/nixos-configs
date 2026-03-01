@@ -7,7 +7,7 @@ import QtQuick.Layouts
 
 Row {
     id: root
-    spacing: 3
+    spacing: 2
 
     anchors {
         top: parent.top
@@ -22,6 +22,8 @@ Row {
     // Wlr {}
 
     Network {}
+
+    Bluetooth {}
 
     Audio {}
 

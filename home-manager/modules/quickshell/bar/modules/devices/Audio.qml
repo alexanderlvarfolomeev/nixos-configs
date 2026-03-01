@@ -12,9 +12,11 @@ Blocks.MouseRec {
   anchors {
       top: parent.top
       bottom: parent.bottom
+      topMargin: 2.0
+      bottomMargin: 2.0
   }
   width: audioText.width + 10 * 2
-  color: "#0071c5"
+  color: root.hovered ? Qt.darker("#0071c5", 1.1) : "#0071c5"
 
   Text {
     id: audioText

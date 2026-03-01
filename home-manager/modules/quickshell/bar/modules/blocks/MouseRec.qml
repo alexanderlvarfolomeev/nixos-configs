@@ -8,13 +8,19 @@ Rectangle {
     anchors.fill: parent
     hoverEnabled: true
 
-    onClicked: root.onClicked()
+    onClicked: mouse => root.onClicked(mouse)
+    onPressAndHold: mouse => root.onPressAndHold(mouse)
+    onEntered: () => root.onEntered()
+    onExited: () => root.onExited()
   }
 
   // HoverHandler
 
   property bool extraHoveredCondition: true
-  property bool hovered: extraHoveredCondition && mouse.containsMouse
+  readonly property bool hovered: extraHoveredCondition && mouse.containsMouse
 
   property var onClicked: (mouse) => {}
+  property var onPressAndHold: mouse => onClicked(mouse)
+  property var onEntered: () => {}
+  property var onExited: () => {}
 }

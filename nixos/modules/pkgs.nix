@@ -5,6 +5,11 @@
 }: {
   programs.firefox.enable = true;
 
+  programs.appimage = { # https://wiki.nixos.org/wiki/Appimage
+    enable = true;
+    binfmt = true;
+  };
+
   services.udisks2.enable = true;
 
   # Allow unfree packages

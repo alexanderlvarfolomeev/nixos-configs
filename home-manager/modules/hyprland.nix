@@ -158,6 +158,7 @@
         "$mainMod, V, togglefloating"
         "$mainMod, P, pseudo," # dwindle
         "$mainMod, J, togglesplit," # dwindle
+        "$mainMod, F, fullscreen,"
         "$mainMod, T, exec, XDG_CURRENT_DESKTOP=GNOME Telegram --"
         "$mainMod, L, exec, hyprlock"
         "$mainMod, B, exec, firefox"
@@ -220,6 +221,9 @@
         # Scratchpad
         "$mainMod,       M, togglespecialworkspace,  magic"
         "$mainMod SHIFT, M, movetoworkspace, special:magic"
+
+        # Quickshell Bar
+        "$mainMod, D, global, quickshell:dashboard"
       ];
 
       # Move/resize windows with mainMod + LMB/RMB and dragging

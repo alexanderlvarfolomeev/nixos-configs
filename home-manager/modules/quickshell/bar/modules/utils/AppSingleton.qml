@@ -10,7 +10,8 @@ import "../utils"
 Singleton {
     id: root
 
-    property list<var> regexTitleToMap: [[/^Yazi/, "yazi"]]
+    // TODO: map neovim window to "nvim"
+    property list<var> regexTitleToMap: [[/^Yazi/, "yazi"], [/^Brogue/, "brogue-ce"]]
     property list<var> regexToIgnore: [/^Alacritty/, /^ueberzugpp/, /^org.pulseaudio.pavucontrol$/, /^com.gabm.satty/]
 
     property int alwaysVisibleWorkspaces: 5

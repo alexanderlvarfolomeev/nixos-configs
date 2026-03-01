@@ -60,11 +60,6 @@ Item {
     }
   }
 
-  Shortcut {
-    sequence: "Ctrl+Alt+Shift+D"
-    onActivated: dashLoader.active = !dashLoader.active
-  }
-
   Loader {
     id: dashLoader
     sourceComponent: popupComponent

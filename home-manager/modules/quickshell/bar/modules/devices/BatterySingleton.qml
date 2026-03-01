@@ -5,6 +5,7 @@ import Quickshell.Io
 import Quickshell.Services.UPower
 import QtQuick
 import "../utils"
+import "../utils/Utils.js" as Utils
 
 Singleton {
     id: root
@@ -49,6 +50,18 @@ Singleton {
             return Visualization.getBinValue(batteryEmoji, chargeLevel) + " " + percentage + "%"
         }
         return unknownState + " " + percentage + "%"
+    }
+
+    function tooltipText(): string {
+        const toFull = UPower.displayDevice.timeToFull
+        const toEmpty = UPower.displayDevice.timeToEmpty
+        if (toFull > 0) {
+            return "Full in " + Utils.secondsToHumanReadable(toFull)
+        } else if (toEmpty > 0) {
+            return "Empty in " + Utils.secondsToHumanReadable(toEmpty)
+        } else {
+            return ""
+        }
     }
 
     // property real percentage: Math.round(100 * UPower.displayDevice.percentage)

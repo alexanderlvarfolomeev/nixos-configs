@@ -32,9 +32,10 @@ Blocks.MouseRec {
     }
 
     onClicked: function() {
-        wlogout.running = true
+        wlogout.startDetached()
     }
 
+    //TODO: Quickshell.execDetached
     Process {
         id: wlogout
         running: false

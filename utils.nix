@@ -11,15 +11,14 @@
       (builtins.map (name: dir + ("/" + name)))
     ];
 
-  fromFileYAML = {
-    pkgs,
-    file,
-  }:
+  fromFileYAML = pkgs: file:
     builtins.fromJSON (
       # Create a temporary derivation to perform the conversion
       builtins.readFile (
-        pkgs.runCommand "converted-yaml.json" {buildInputs = [pkgs.yj];}
+        pkgs.runCommand "${file}-yaml2json" {buildInputs = [pkgs.yj];}
         ''${pkgs.yj}/bin/yj < "${file}" > "$out"''
       )
     );
+
+  getPkgsByNames = pkgs: names: pkgs.lib.attrVals names pkgs;
 }

@@ -1,9 +1,4 @@
 {
-  config,
-  pkgs,
-  utils,
-  ...
-}: {
   xdg.configFile."wlogout/layout".text =
     builtins.toJSON {
       label = "lock";

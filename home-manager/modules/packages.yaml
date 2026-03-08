@@ -1,0 +1,75 @@
+socials:
+  - telegram-desktop
+#   - discord
+system-analysis:
+  - htop
+  - btop
+  - libnotify
+  - wev # useful to get keyboard keys
+  - trippy
+  - nethogs # laggy
+  - sysz
+  - lazyjournal
+  - kmon
+  - bottom
+  - bandwhich
+games:
+  - nudoku
+  - brogue-ce
+  - nethack
+  - quadrapassel
+media:
+  - ffmpeg
+  - obs-studio
+  - vlc
+  - yandex-music
+  - gimp3
+qol:
+  - neofetch
+  - yt-dlp
+  - wget
+  - fzf
+  - bat
+  - trashy
+  - alejandra
+  - nix-health
+  - nurl
+  - playerctl
+  - grim
+  - wl-clipboard-rs
+  - shadowsocks-rust
+  - neo
+
+  - timg
+  - chafa
+
+  - font-manager
+ui:
+  - nwg-bar
+  - pavucontrol
+  - wlogout
+  - swaynotificationcenter
+  - hyprpolkitagent
+  - iwgtk
+  - satty
+  - wezterm # alacritty alternative, tabs, support image rendering, but consumes more memory
+tui:
+  - lazygit
+  - bluetui # check bluetuith
+  - zellij # laggy
+  - tmux # check diff with zellij, zellij prettier, but has too many unused space
+  - tabiew
+  - lazyssh # could be useful someday
+  - kew
+  - superfile # good yazi alternative (but old version), check image preview and should choose one of them as default
+  - regex-tui
+  - fx
+  - msedit # classic nonmodal editor, love it
+  - kakoune # good alternative for nvim, need check differences to choose one of them (also helix)
+inner-dependencies:
+  - cairo # do not remember, for what
+  - ueberzugpp # image rendering for yazi
+  - slurp # select screenshot area
+  - wayfreeze # freeze screen for screenshots
+  - nixd # nix language server
+uncategorized: []

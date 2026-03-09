@@ -1,6 +1,5 @@
-{ config, ... }:
 {
   home.sessionVariables = {
-    GRIM_DEFAULT_DIR = "$HOME/screens";
+    GRIM_DEFAULT_DIR = "$XDG_SCREENSHOT_DIR";
   };
 }

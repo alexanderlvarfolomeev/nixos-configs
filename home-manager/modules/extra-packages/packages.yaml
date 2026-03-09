@@ -45,7 +45,6 @@ qol:
 
   - font-manager
 ui:
-  - nwg-bar
   - pavucontrol
   - wlogout
   - swaynotificationcenter
@@ -54,7 +53,6 @@ ui:
   - satty
   - wezterm # alacritty alternative, tabs, support image rendering, but consumes more memory
 tui:
-  - lazygit
   - bluetui # check bluetuith
   - zellij # laggy
   - tmux # check diff with zellij, zellij prettier, but has too many unused space

@@ -1,9 +1,7 @@
-{
-  config,
-  pkgs,
-  utils,
-  ...
-}: {
+{pkgs, ...}: {
+  # not used, wlogout analogue
+  home.packages = [pkgs.nwg-bar];
+
   xdg.configFile."nwg-bar/bar.json".text = builtins.toJSON [
     {
       label = "Lock";

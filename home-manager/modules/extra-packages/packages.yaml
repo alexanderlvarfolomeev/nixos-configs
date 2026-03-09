@@ -46,7 +46,6 @@ qol:
   - font-manager
 ui:
   - pavucontrol
-  - wlogout
   - swaynotificationcenter
   - hyprpolkitagent
   - iwgtk
@@ -62,14 +61,10 @@ tui:
   - superfile # good yazi alternative (but old version), check image preview and should choose one of them as default
   - regex-tui
   - fx
-  - msedit # classic nonmodal editor, love it
-  - kakoune # good alternative for nvim, need check differences to choose one of them (also helix)
 inner-dependencies:
   - cairo # do not remember, for what
-  - ueberzugpp # image rendering for yazi
   - slurp # select screenshot area
   - wayfreeze # freeze screen for screenshots
-  - nixd # nix language server
 
 # https://github.com/rothgar/awesome-tuis
 # to experiment

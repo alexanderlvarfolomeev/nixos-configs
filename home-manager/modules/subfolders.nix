@@ -9,9 +9,22 @@
       ./wlogout/wlogout.nix
       ./rofi/rofi.nix
       ./waybar/waybar.nix
+      ./qs/quickshell.nix
     ]
     ++ localUtils.dirImports {
       inherit lib;
       dir = ./hypr;
+    }
+    ++ localUtils.dirImports {
+      inherit lib;
+      dir = ./editors;
+    }
+    ++ localUtils.dirImports {
+      inherit lib;
+      dir = ./file-managers;
+    }
+    ++ localUtils.dirImports {
+      inherit lib;
+      dir = ./temu;
     };
 }

@@ -1,4 +1,8 @@
-{upkgs, ...}: {
+{
+  pkgs,
+  upkgs,
+  ...
+}: {
   programs.yazi = {
     enable = true;
     package = upkgs.yazi;
@@ -35,19 +39,23 @@
       };
 
       opener = {
-        move_to = [{
-          run = "alacritty --working-directory \"$1\"";
-          desc = "Open in Terminal";
-          orphan = true;
-          for = "linux";
-        }];
+        move_to = [
+          {
+            run = "alacritty --working-directory \"$1\"";
+            desc = "Open in Terminal";
+            orphan = true;
+            for = "linux";
+          }
+        ];
       };
 
       open = {
-        prepend_rules = [{
-          mime = "inode/directory";
-          use = "move_to";
-        }];
+        prepend_rules = [
+          {
+            mime = "inode/directory";
+            use = "move_to";
+          }
+        ];
       };
 
       tasks = {
@@ -57,4 +65,6 @@
       };
     };
   };
+
+  home.packages = [pkgs.ueberzugpp];
 }

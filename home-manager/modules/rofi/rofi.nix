@@ -1,5 +1,5 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
+  # Not in use
   programs.wofi = {
     enable = true;
     settings = {

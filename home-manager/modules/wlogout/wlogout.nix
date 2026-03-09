@@ -1,4 +1,6 @@
-{
+{pkgs, ...}: {
+  home.packages = [pkgs.wlogout];
+
   xdg.configFile."wlogout/layout".text =
     builtins.toJSON {
       label = "lock";

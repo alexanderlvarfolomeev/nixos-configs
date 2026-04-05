@@ -3,9 +3,9 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
-import "../blocks" as Blocks
+import qs.base as Base
 
-Blocks.MouseRec {
+Base.MouseRec {
     id: root
     implicitWidth: 40
     implicitHeight: 40

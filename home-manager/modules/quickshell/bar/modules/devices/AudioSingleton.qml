@@ -13,7 +13,7 @@ Singleton {
     property var volumeEmoji: ["", ""]
 
     property string mutedColor: "#cc241d"
-    property string onColor: "#c6e800"
+    property string onColor: "#ff7900"
     property string placeholderColor: "transparent"
 
     property PwNode sink: Pipewire.defaultAudioSink

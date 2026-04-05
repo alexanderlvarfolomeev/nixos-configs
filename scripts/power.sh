@@ -4,14 +4,12 @@
 
 terminate_clients() {
   TIMEOUT=5
-  # Get a list of all client PIDs in the current Hyprland session
-  client_pids=$(hyprctl clients -j | jq -r '.[] | .pid')
 
-  # Send SIGTERM (kill -15) to each client PID and wait for termination
-  for pid in $client_pids; do
-    echo ":: Sending SIGTERM to PID $pid"
-    kill -15 $pid
-  done
+  # Get a list of all client PIDs in the current Hyprland session
+  client_pids=$(hyprctl clients -j | jq -r '.[].pid')
+
+  echo ":: Closing windows with PIDs:" $client_pids
+  echo "$client_pids" | xargs -I {} hyprctl dispatch closewindow pid:{}
 
   start_time=$(date +%s)
   for pid in $client_pids; do

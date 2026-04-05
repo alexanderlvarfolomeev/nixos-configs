@@ -2,9 +2,10 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
-import "../blocks" as Blocks
+import qs.base as Base
+import qs.config
 
-Blocks.MouseRec {
+Base.MouseRec {
     id: root
     anchors {
         top: parent.top
@@ -27,7 +28,7 @@ Blocks.MouseRec {
         text: "⏻"
         font.pixelSize: 24
         font.bold: true
-        font.family: "JetBrains Mono NF"
+        font.family: Config.fontFamily
         color: "black"
     }
 
@@ -35,7 +36,6 @@ Blocks.MouseRec {
         wlogout.startDetached()
     }
 
-    //TODO: Quickshell.execDetached
     Process {
         id: wlogout
         running: false

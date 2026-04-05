@@ -4,8 +4,8 @@ import Quickshell.Io
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
-import "../blocks" as Blocks
-import "../utils" as Utils
+import qs.base as Base
+import qs.modules.utils as Utils
 
 
 Row {
@@ -45,7 +45,7 @@ Row {
             workspaceRepeater.timer.start()
         }
 
-        Blocks.MouseRec {
+        Base.MouseRec {
             id: workspaceRec
             required property var modelData
             property bool isExists: modelData.exists

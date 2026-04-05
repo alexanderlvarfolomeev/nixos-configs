@@ -4,9 +4,10 @@ import Quickshell.Bluetooth as BT
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
-import "../blocks" as Blocks
+import qs.base as Base
+import qs.config
 
-Blocks.MouseRec {
+Base.MouseRec {
   id: root
 
   anchors {
@@ -16,7 +17,7 @@ Blocks.MouseRec {
       bottomMargin: 2.0
   }
   width: statusText.width + 10 * 2
-  color: root.hovered ? Qt.darker("#8806ce", 1.1) : "#8806ce"
+  color: root.hovered ? Qt.darker("#0071c5", 1.1) : "#0071c5"
 
   property var adapter: BT.Bluetooth.defaultAdapter
   readonly property bool enabled: adapter ? adapter.enabled : false
@@ -66,9 +67,9 @@ Blocks.MouseRec {
 
       font.pixelSize: 28
       font.bold: true
-      font.family: "JetBrains Mono NF"
+      font.family: Config.fontFamily
 
-      color: "#ffd700"
+      color: "#c6e800"
       text: root.stateIcon(adapter ? adapter.state : null)
   }
 }

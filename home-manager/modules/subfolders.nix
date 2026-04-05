@@ -9,7 +9,7 @@
       ./wlogout/wlogout.nix
       ./rofi/rofi.nix
       ./waybar/waybar.nix
-      ./qs/quickshell.nix
+      ./quickshell/quickshell.nix
     ]
     ++ localUtils.dirImports {
       inherit lib;

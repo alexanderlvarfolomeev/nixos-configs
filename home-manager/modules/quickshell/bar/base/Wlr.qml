@@ -4,7 +4,7 @@ import Quickshell.Wayland
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Controls
-import "../utils" as Utils
+import qs.modules.utils as Utils
 
 Rectangle {
   id: root

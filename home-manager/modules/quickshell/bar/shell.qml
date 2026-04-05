@@ -13,7 +13,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
-import "modules/blocks" as Blocks
+import qs.base as Base
 import "modules/dashboard" as Dashboard
 import "modules/devices" as Devices
 import "modules/general" as General
@@ -125,7 +125,7 @@ ShellRoot {
         }
     }
 
-    // Dashboard.Dash {
-    //     anchorWindow: panel
-    // }
+    Dashboard.Dash {
+        anchorWindow: panel
+    }
 }

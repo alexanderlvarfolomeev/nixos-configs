@@ -2,9 +2,10 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
 import QtQuick
-import "../blocks" as Blocks
+import qs.base as Base
+import qs.config
 
-Blocks.MouseRec {
+Base.MouseRec {
   id: root
 
   anchors {
@@ -27,7 +28,7 @@ Blocks.MouseRec {
 
     font.pixelSize: 20
     font.bold: true
-    font.family: "JetBrains Mono NF"
+    font.family: Config.fontFamily
 
     color: "#e6e6fa"
     text: NetworkSingleton.networkStateText(NetworkSingleton.state, NetworkSingleton.network, NetworkSingleton.rssi)

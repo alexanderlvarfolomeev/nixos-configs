@@ -24,7 +24,9 @@
         "systemctl --user start hyprpolkitagent"
         "hypridle"
         "waybar"
+        "qs --path ~/nix/home-manager/modules/quickshell/bar"
         "swaync"
+        "qs -c overview"
       ];
 
       # https://wiki.hyprland.org/Configuring/Variables/#general
@@ -163,10 +165,12 @@
         "$mainMod, L, exec, hyprlock"
         "$mainMod, B, exec, firefox"
 
-        "$mainMod,       R, exec, pkill -SIGUSR2 waybar"
-        "$mainMod SHIFT, R, exec, pkill -SIGUSR1 waybar"
-        "$mainMod CTRL,  R, exec, waybar"
-        "$mainMod SHIFT, L, exec, loginctl lock-session"
+        "$mainMod,       R,   exec, pkill -SIGUSR2 waybar"
+        "$mainMod SHIFT, R,   exec, pkill -SIGUSR1 waybar"
+        "$mainMod CTRL,  R,   exec, waybar"
+        "$mainMod SHIFT, L,   exec, loginctl lock-session"
+        "$mainMod      , TAB, exec, qs ipc -c overview call overview toggle"
+        "$mainMod      , D,   exec, qs ipc -p ~/nix/home-manager/modules/quickshell/bar call dashboard toggle"
 
         "$mainMod, ESCAPE, exec, rofi -show drun"
         "$mainMod SHIFT, S, exec, ~/.local/scripts/screenshot.sh region satty"

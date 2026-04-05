@@ -4,9 +4,10 @@ import Quickshell.Services.Pipewire
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
-import "../blocks" as Blocks
+import qs.base as Base
+import qs.config
 
-Blocks.MouseRec {
+Base.MouseRec {
   id: root
 
   anchors {
@@ -16,7 +17,7 @@ Blocks.MouseRec {
       bottomMargin: 2.0
   }
   width: audioText.width + 10 * 2
-  color: root.hovered ? Qt.darker("#0071c5", 1.1) : "#0071c5"
+  color: root.hovered ? Qt.darker("#00449a", 1.1) : "#00449a"
 
   Text {
     id: audioText
@@ -25,7 +26,7 @@ Blocks.MouseRec {
 
     font.pixelSize: 20
     font.bold: true
-    font.family: "JetBrains Mono NF"
+    font.family: Config.fontFamily
 
     color: AudioSingleton.sinkStateColor(AudioSingleton.sink?.audio)
     text: AudioSingleton.sinkStateText(AudioSingleton.sink?.audio)

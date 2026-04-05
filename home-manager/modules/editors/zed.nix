@@ -17,6 +17,11 @@
             };
           };
         };
+        # qml = {
+        #   binary = {
+        #     arguments = ["-E" "additional-args"];
+        #   };
+        # };
       };
       languages = {
         Nix = {

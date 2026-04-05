@@ -6,6 +6,7 @@
       jetbrains-mono
       texlivePackages.hebrew-fonts
       font-awesome
+      material-symbols
       powerline-fonts
       powerline-symbols
       noto-fonts

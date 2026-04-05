@@ -5,7 +5,6 @@ import Quickshell.Hyprland
 import Quickshell.Io
 import Quickshell.Services.Pipewire
 import QtQuick
-import "../utils"
 
 Singleton {
     id: root

@@ -22,7 +22,7 @@ media:
   - ffmpeg
   - obs-studio
   - vlc
-  - yandex-music
+  - spotify
   - gimp3
 qol:
   - neofetch
@@ -50,7 +50,6 @@ ui:
   - hyprpolkitagent
   - iwgtk
   - satty
-  - wezterm # alacritty alternative, tabs, support image rendering, but consumes more memory
 tui:
   - bluetui # check bluetuith
   - zellij # laggy
@@ -58,7 +57,6 @@ tui:
   - tabiew
   - lazyssh # could be useful someday
   - kew
-  - superfile # good yazi alternative (but old version), check image preview and should choose one of them as default
   - regex-tui
   - fx
 inner-dependencies:

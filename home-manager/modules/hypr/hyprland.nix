@@ -23,7 +23,7 @@
         "hyprlock || hyprctl dispatch exit"
         "systemctl --user start hyprpolkitagent"
         "hypridle"
-        "waybar"
+        # "waybar"
         "qs --path ~/nix/home-manager/modules/quickshell/bar"
         "swaync"
         "qs -c overview"

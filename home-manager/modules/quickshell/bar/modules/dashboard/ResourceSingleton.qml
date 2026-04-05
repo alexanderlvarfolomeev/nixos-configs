@@ -3,7 +3,7 @@ pragma Singleton
 import Quickshell
 import Quickshell.Io
 import QtQuick
-import "../utils/Utils.js" as Utils
+import qs.utils
 
 // See caelestia-dots
 Singleton {

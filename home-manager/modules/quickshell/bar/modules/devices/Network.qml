@@ -2,10 +2,10 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
 import QtQuick
-import qs.base as Base
+import qs.base
 import qs.config
 
-Base.MouseRec {
+MouseRec {
   id: root
 
   anchors {
@@ -19,18 +19,14 @@ Base.MouseRec {
   bottomLeftRadius: height / 2
 
   width: statusText.width + 10 * 2
-  color: root.hovered ? Qt.darker("#00b4d8", 1.1) : "#00b4d8"
+  color: root.hovered ? Qt.darker(Config.networkBgColor, 1.1) : Config.networkBgColor
 
-  Text {
+  StyledText {
     id: statusText
     anchors.centerIn: parent
     leftPadding: 8
 
-    font.pixelSize: 20
-    font.bold: true
-    font.family: Config.fontFamily
-
-    color: "#e6e6fa"
+    color: Config.networkTextColor
     text: NetworkSingleton.networkStateText(NetworkSingleton.state, NetworkSingleton.network, NetworkSingleton.rssi)
   }
 

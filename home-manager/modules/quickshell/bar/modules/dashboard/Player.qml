@@ -3,42 +3,38 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
-import "../utils"
+import qs.base
 import qs.config
 
 Rectangle {
   id: root
   color: "transparent"
 
-  readonly property real outerRadius: 10
+  readonly property real outerRadius: Config.dashboardBorderRadius
 
   Rectangle {
     id: wrapper
 
-    color: "#d1f1ff"
+    color: Config.playerBgColor
 
     anchors.centerIn: parent
-    implicitHeight: 0.95 * parent.implicitHeight
-    implicitWidth: 0.95 * parent.implicitWidth
+    implicitHeight: Config.dashboardInnerContainerRatio * parent.implicitHeight
+    implicitWidth: Config.dashboardInnerContainerRatio * parent.implicitWidth
 
-    topLeftRadius: root.outerRadius
-    topRightRadius: root.outerRadius
-    bottomLeftRadius: root.outerRadius
-    bottomRightRadius: root.outerRadius
+    radius: Config.dashboardBorderRadius
 
     ClippingRectangle {
       id: coverWrapper
 
-      anchors.top: parent.top
-      anchors.horizontalCenter: parent.horizontalCenter
-      anchors.topMargin: 10
+      anchors {
+        top: parent.top
+        topMargin: 10
+        horizontalCenter: parent.horizontalCenter
+      }
 
-      // anchors.left: parent.left
-      // anchors.right: parent.right
-
-      implicitWidth: 0.75 * parent.width
-      implicitHeight: 0.75 * parent.width
-      color: "gray"
+      implicitWidth: Config.playerCoverRatio * parent.width
+      implicitHeight: Config.playerCoverRatio * parent.width
+      color: Config.playerCoverPlaceholderColor
       radius: Infinity
 
       Image {
@@ -54,65 +50,62 @@ Rectangle {
       }
     }
 
-    Text{
+    StyledText{
       id: title
 
-      anchors.top: coverWrapper.bottom
-      anchors.horizontalCenter: parent.horizontalCenter
-      anchors.topMargin: 10
+      anchors {
+        top: coverWrapper.bottom
+        topMargin: 10
+        horizontalCenter: parent.horizontalCenter
+      }
 
       text: PlayerSingleton.title
-      color: "black"
-      font.pixelSize: 20
-      font.bold: true
-      font.family: "JetBrains Mono NF"
+      color: Config.playerTitleColor
       elide: Text.ElideRight
       width: Math.min(titleInvisible.width, parent.implicitWidth - 16)
     }
 
     // Workaround to center short names. TODO: get rid of it somehow
-    Text{
+    StyledText{
       id: titleInvisible
 
-      anchors.top: coverWrapper.bottom
-      anchors.horizontalCenter: parent.horizontalCenter
-      anchors.topMargin: 10
+      anchors {
+        top: coverWrapper.bottom
+        topMargin: 10
+        horizontalCenter: parent.horizontalCenter
+      }
 
       text: PlayerSingleton.title
       color: "transparent"
-      font.pixelSize: 20
-      font.bold: true
-      font.family: "JetBrains Mono NF"
     }
 
-    Text{
+    StyledText{
       id: artist
 
-      anchors.top: title.bottom
-      anchors.horizontalCenter: parent.horizontalCenter
-      anchors.topMargin: -2
+      anchors {
+        top: title.bottom
+        topMargin: -2
+        horizontalCenter: parent.horizontalCenter
+      }
 
       text: PlayerSingleton.artist
-      color: "black"
-      font.pixelSize: 16
-      font.bold: true
-      font.family: "JetBrains Mono NF"
-      elide: Text.ElideRight
-      // width: parent.implicitWidth - 16
+      color: Config.playerTitleColor
+      font.pixelSize: Config.playerArtistFontSize
     }
 
     Row {
       id: controlRow
 
-      anchors.top: artist.bottom
-      anchors.horizontalCenter: parent.horizontalCenter
-      anchors.topMargin: 2
+      anchors {
+        top: artist.bottom
+        topMargin: 2
+        horizontalCenter: parent.horizontalCenter
+      }
 
       spacing: 10
 
       PlayerControl {
         onClicked: () => {
-            console.log("Click control.");
             PlayerSingleton.active?.previous();
         }
 
@@ -122,7 +115,6 @@ Rectangle {
 
       PlayerControl {
         onClicked: () => {
-            console.log("Click control.");
             PlayerSingleton.active?.togglePlaying();
         }
 
@@ -132,7 +124,6 @@ Rectangle {
 
       PlayerControl {
         onClicked: () => {
-            console.log("Click control.");
             PlayerSingleton.active?.next();
         }
 

@@ -1,13 +1,13 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
-import "../utils/Utils.js" as Utils
+import qs.config
+import qs.utils
 
 Rectangle {
   id: root
   color: "transparent"
 
-  readonly property real outerRadius: 10
   readonly property real innerRadius: 5
 
   Rectangle {
@@ -16,13 +16,10 @@ Rectangle {
     color: "#0071c5"
 
     anchors.centerIn: parent
-    implicitHeight: 0.95 * parent.implicitHeight
-    implicitWidth: 0.95 * parent.implicitWidth
+    implicitHeight: Config.dashboardInnerContainerRatio * parent.implicitHeight
+    implicitWidth: Config.dashboardInnerContainerRatio * parent.implicitWidth
 
-    topLeftRadius: root.outerRadius
-    topRightRadius: root.outerRadius
-    bottomLeftRadius: root.outerRadius
-    bottomRightRadius: root.outerRadius
+    radius: Config.dashboardBorderRadius
 
     Column {
       id: resources
@@ -37,10 +34,7 @@ Rectangle {
 
         color: "#A0FFFFFF"
 
-        topLeftRadius: root.innerRadius
-        topRightRadius: root.innerRadius
-        bottomLeftRadius: root.innerRadius
-        bottomRightRadius: root.innerRadius
+        radius: root.innerRadius
 
         Column {
           anchors.fill: parent
@@ -79,10 +73,7 @@ Rectangle {
 
         color: "#A0FFFFFF"
 
-        topLeftRadius: root.innerRadius
-        topRightRadius: root.innerRadius
-        bottomLeftRadius: root.innerRadius
-        bottomRightRadius: root.innerRadius
+        radius: root.innerRadius
 
         Column {
           anchors.fill: parent
@@ -121,10 +112,7 @@ Rectangle {
 
         color: "#A0FFFFFF"
 
-        topLeftRadius: root.innerRadius
-        topRightRadius: root.innerRadius
-        bottomLeftRadius: root.innerRadius
-        bottomRightRadius: root.innerRadius
+        radius: root.innerRadius
 
         Column {
           anchors.fill: parent

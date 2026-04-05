@@ -5,10 +5,10 @@ import Quickshell.Widgets
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import qs.base as Base
+import qs.base
 import qs.config
 
-Base.MouseRec {
+MouseRec {
     id: root
 
     anchors {
@@ -24,18 +24,14 @@ Base.MouseRec {
     bottomRightRadius: height / 2
 
     property Component tooltipComponent: Component {
-        Base.ToolTip {}
+        ToolTip {}
     }
     property var tooltip: null
 
-    Text {
+    StyledText {
         id: statusText
         anchors.centerIn: parent
         rightPadding: 8
-
-        font.pixelSize: Config.fontSize
-        font.bold: true
-        font.family: Config.fontFamily
 
         color: Config.batteryTextColor
         text: BatterySingleton.batteryStateText(UPower.displayDevice.state, UPower.displayDevice.percentage)

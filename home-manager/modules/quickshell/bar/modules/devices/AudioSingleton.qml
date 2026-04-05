@@ -4,7 +4,8 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Pipewire
 import QtQuick
-import "../utils"
+import qs.config
+import qs.utils
 
 Singleton {
     id: root
@@ -12,8 +13,8 @@ Singleton {
     property string mutedEmoji: ""
     property var volumeEmoji: ["", ""]
 
-    property string mutedColor: "#cc241d"
-    property string onColor: "#ff7900"
+    property string mutedColor: Config.audioMutedTextColor
+    property string onColor: Config.audioTextColor
     property string placeholderColor: "transparent"
 
     property PwNode sink: Pipewire.defaultAudioSink
@@ -37,7 +38,7 @@ Singleton {
             return mutedEmoji
         }
 
-        return Visualization.getBinValue(volumeEmoji, audio.volume) + " " + Math.round(100 * audio.volume) + "%"
+        return Utils.getBinValue(volumeEmoji, audio.volume) + " " + Math.round(100 * audio.volume) + "%"
     }
 
     PwObjectTracker {

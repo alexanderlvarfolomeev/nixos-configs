@@ -4,8 +4,7 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Services.UPower
 import QtQuick
-import "../utils"
-import "../utils/Utils.js" as Utils
+import qs.utils
 
 Singleton {
     id: root
@@ -47,7 +46,7 @@ Singleton {
         if (state === UPowerDeviceState.Charging) {
             return chargingState + " " + percentage + "%"
         } else if (state === UPowerDeviceState.Discharging) {
-            return Visualization.getBinValue(batteryEmoji, chargeLevel) + " " + percentage + "%"
+            return Utils.getBinValue(batteryEmoji, chargeLevel) + " " + percentage + "%"
         }
         return unknownState + " " + percentage + "%"
     }

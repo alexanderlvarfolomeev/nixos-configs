@@ -4,7 +4,7 @@ import Quickshell.Wayland
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Controls
-import qs.modules.utils as Utils
+import qs.utils
 
 Rectangle {
   id: root
@@ -81,7 +81,7 @@ Rectangle {
 
           implicitSize: 24
 
-          source: Quickshell.iconPath(Utils.AppSingleton.guessIcon(wlrRepeaterDelegate.modelData.id))
+          source: Quickshell.iconPath(AppSingleton.guessIcon(wlrRepeaterDelegate.modelData.id))
         }
 
       }

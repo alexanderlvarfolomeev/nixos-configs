@@ -3,7 +3,7 @@ pragma Singleton
 import Quickshell
 import Quickshell.Io
 import QtQuick
-import "../utils"
+import qs.utils
 
 Singleton {
   id: root
@@ -79,7 +79,7 @@ Singleton {
         if (network == null) {
             return ethernetEmoji
         } else {
-            return Visualization.getBinValue(wifiEmoji, rssiLevel(rssi))
+            return Utils.getBinValue(wifiEmoji, rssiLevel(rssi))
         }
     } else {
         // TODO: understand all possible states 

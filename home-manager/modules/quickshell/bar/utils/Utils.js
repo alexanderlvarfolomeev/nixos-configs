@@ -21,3 +21,8 @@ function percentage(current, total) {
 function kbytesToHumanReadable(kibibytes) {
   return (kibibytes / 1048576).toFixed(2);
 }
+
+function getBinValue(bins, ratio) {
+  let bin = Math.min(bins.length - 1, Math.floor(ratio * bins.length))
+  return bins[bin]
+}  

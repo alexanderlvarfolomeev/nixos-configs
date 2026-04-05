@@ -13,35 +13,29 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
-import qs.base as Base
-import "modules/dashboard" as Dashboard
-import "modules/devices" as Devices
-import "modules/general" as General
-import "modules/workspaces" as Workspaces
+import qs.config
+import qs.modules.dashboard as Dashboard
+import qs.modules.devices as Devices
+import qs.modules.general as General
+import qs.modules.hyprland as Workspaces
 
 // ShellRoot is the top-level container Quickshell expects
 ShellRoot {
     id: root
 
-    // One panel window
     PanelWindow {
         id: panel
         visible: true
-        color: "#2620242b"
+        color: Config.barColor
 
-        // Size of the bar (thickness)
-        implicitHeight: 40
+        implicitHeight: Config.barHeight
 
-        // Anchor to the top of the screen and stretch horizontally
-        // PanelWindow already knows how to span the selected output width.
         anchors {
             top: true
             left: true
             right: true
         }
 
-        // Reserve space so other windows don't overlap
-        // If your Quickshell version doesn't have exclusiveZone, use: reserveSpace: true
         exclusiveZone: height
 
         // // Background of the bar
@@ -56,14 +50,6 @@ ShellRoot {
             id: content
             anchors.fill: parent
             color: "transparent"
-            // Layout.fillHeight: true
-            // Layout.fillWidth: true
-            // spacing: 0
-
-            // Blocks.Time{}
-
-            // // Spacer to push future widgets to the right if you add them
-            // Item { Layout.fillWidth: true }
 
             Row {
                 id: leftBlocks
@@ -79,19 +65,16 @@ ShellRoot {
 
                 General.Icon{}
 
-                // Rectangle {
-                //     implicitWidth: 4
-                //     implicitHeight: parent.implicitHeight
-                //     color: "transparent"
-                // }
-
                 General.Time {}
             }
 
             Row {
                 id: centerBlocks
-                anchors.centerIn: parent
-                height: parent.height
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    top: parent.top
+                    bottom: parent.bottom
+                }
 
                 Workspaces.Workspaces {}
             }

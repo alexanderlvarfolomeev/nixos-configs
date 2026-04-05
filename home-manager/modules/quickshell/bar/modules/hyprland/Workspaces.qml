@@ -5,7 +5,6 @@ import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 import qs.base as Base
-import qs.modules.utils as Utils
 
 
 Row {
@@ -30,7 +29,7 @@ Row {
     Repeater {
         id: workspaceRepeater
 
-        model: Utils.AppSingleton.workspaceModels
+        model: AppSingleton.workspaceModels
 
         property bool hoverUnlocked: false
         property var timer: Timer {
@@ -135,7 +134,7 @@ Row {
                                 required property string modelData
 
                                 implicitSize: 20
-                                source: Quickshell.iconPath(Utils.AppSingleton.guessIcon(modelData))
+                                source: Quickshell.iconPath(AppSingleton.guessIcon(modelData))
                             }
                         }
                     }
@@ -187,7 +186,7 @@ Row {
             //                 required property string modelData
 
             //                 implicitSize: 20
-            //                 source: Quickshell.iconPath(Utils.AppSingleton.guessIcon(modelData))
+            //                 source: Quickshell.iconPath(AppSingleton.guessIcon(modelData))
             //             }
             //         }
             //     }

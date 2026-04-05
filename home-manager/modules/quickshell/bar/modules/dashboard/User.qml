@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
-import "../utils" as Utils
+import qs.modules.common
 
 Rectangle {
   id: root
@@ -62,7 +62,7 @@ Rectangle {
           font.bold: true
           font.family: "JetBrains Mono NF"
 
-          text: "User: " + Utils.SystemSingleton.user
+          text: "User: " + SystemSingleton.user
         }
       }
 
@@ -92,10 +92,10 @@ Rectangle {
           font.bold: true
           font.family: "JetBrains Mono NF"
 
-          text: "OS: " + Utils.SystemSingleton.osNameString + "\n" +
-            "DE: " + Utils.SystemSingleton.wm + "\n" +
-            "Kernel: " + Utils.SystemSingleton.kernel + "\n" +
-            "Uptime: " + Utils.SystemSingleton.uptimeString
+          text: "OS: " + SystemSingleton.osNameString + "\n" +
+            "DE: " + SystemSingleton.wm + "\n" +
+            "Kernel: " + SystemSingleton.kernel + "\n" +
+            "Uptime: " + SystemSingleton.uptimeString
         }
       }
     }

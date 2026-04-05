@@ -28,7 +28,7 @@ Rectangle {
 
       anchors {
         top: parent.top
-        topMargin: 10
+        topMargin: Config.playerCoverVerticalMargin
         horizontalCenter: parent.horizontalCenter
       }
 
@@ -55,14 +55,14 @@ Rectangle {
 
       anchors {
         top: coverWrapper.bottom
-        topMargin: 10
+        topMargin: Config.playerCoverVerticalMargin
         horizontalCenter: parent.horizontalCenter
       }
 
       text: PlayerSingleton.title
       color: Config.playerTitleColor
       elide: Text.ElideRight
-      width: Math.min(titleInvisible.width, parent.implicitWidth - 16)
+      width: Math.min(titleInvisible.width, parent.implicitWidth - Config.playerTitlePadding * 2)
     }
 
     // Workaround to center short names. TODO: get rid of it somehow
@@ -71,7 +71,7 @@ Rectangle {
 
       anchors {
         top: coverWrapper.bottom
-        topMargin: 10
+        topMargin: Config.playerCoverVerticalMargin
         horizontalCenter: parent.horizontalCenter
       }
 
@@ -84,7 +84,6 @@ Rectangle {
 
       anchors {
         top: title.bottom
-        topMargin: -2
         horizontalCenter: parent.horizontalCenter
       }
 
@@ -98,11 +97,10 @@ Rectangle {
 
       anchors {
         top: artist.bottom
-        topMargin: 2
         horizontalCenter: parent.horizontalCenter
       }
 
-      spacing: 10
+      spacing: Config.playerControlSpacing
 
       PlayerControl {
         onClicked: () => {

@@ -2,28 +2,24 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
+import qs.base
+import qs.config
 import qs.modules.common
 
 Rectangle {
   id: root
   color: "transparent"
 
-  readonly property real outerRadius: 10
-  readonly property real innerRadius: 5
-
   Rectangle {
     id: wrapper
 
-    color: "#69b1e2"
+    color: Config.userBgColor
 
     anchors.centerIn: parent
-    implicitHeight: 0.95 * parent.implicitHeight
-    implicitWidth: 0.95 * parent.implicitWidth
+    implicitHeight: Config.dashboardInnerContainerRatio * parent.implicitHeight
+    implicitWidth: Config.dashboardInnerContainerRatio * parent.implicitWidth
 
-    topLeftRadius: root.outerRadius
-    topRightRadius: root.outerRadius
-    bottomLeftRadius: root.outerRadius
-    bottomRightRadius: root.outerRadius
+    radius: Config.dashboardBorderRadius
 
     Column {
       id: resources
@@ -34,63 +30,49 @@ Rectangle {
       width: parent.implicitWidth
 
       padding: 8
-      spacing: 75
+      spacing: 78
 
       Rectangle {
-        height: userInfo.height + 2 + 6
+        height: userInfo.height + Config.userInnerVerticalPadding * 2
         width: resources.width - resources.padding * 2
 
-        color: "#A0FFFFFF"
+        color: Config.userInnerBgColor
 
-        topLeftRadius: root.innerRadius
-        topRightRadius: root.innerRadius
-        bottomLeftRadius: root.innerRadius
-        bottomRightRadius: root.innerRadius
+        radius: Config.userControlRadius
 
         // TODO: avatar
 
-        Text {
+        StyledText {
           id: userInfo
           anchors{
             verticalCenter: parent.verticalCenter
+            leftMargin: Config.userTitleSpacing
             left: parent.left
-            leftMargin: 10
           }
 
-          color: "black"
-          font.pixelSize: 20
-          font.bold: true
-          font.family: "JetBrains Mono NF"
+          color: Config.userTextColor
 
           text: "User: " + SystemSingleton.user
         }
       }
 
       Rectangle {
-        height: osInfo.height + 2 + 6
+        height: osInfo.height + Config.userInnerVerticalPadding * 2
         width: resources.width - resources.padding * 2
 
-        color: "#A0FFFFFF"
+        color: Config.userInnerBgColor
 
-        topLeftRadius: root.innerRadius
-        topRightRadius: root.innerRadius
-        bottomLeftRadius: root.innerRadius
-        bottomRightRadius: root.innerRadius
+        radius: Config.userControlRadius
 
-        Text {
+        StyledText {
           id: osInfo
           anchors{
             verticalCenter: parent.verticalCenter
+            leftMargin: Config.userTitleSpacing
             left: parent.left
-            
-
-            leftMargin: 10
           }
 
-          color: "black"
-          font.pixelSize: 20
-          font.bold: true
-          font.family: "JetBrains Mono NF"
+          color: Config.userTextColor
 
           text: "OS: " + SystemSingleton.osNameString + "\n" +
             "DE: " + SystemSingleton.wm + "\n" +

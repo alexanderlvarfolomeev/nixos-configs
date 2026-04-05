@@ -67,6 +67,7 @@ Singleton {
   readonly property real dashboardBorderWidth: 2
 
   readonly property real playerControlRadius: 5
+  readonly property real playerControlSpacing: 10
   readonly property string playerControlActiveColor: "black"
   readonly property string playerControlInactiveColor: "gray"
 
@@ -74,5 +75,21 @@ Singleton {
   readonly property real playerCoverRatio: 0.75
   readonly property string playerCoverPlaceholderColor: "gray"
   readonly property string playerTitleColor: "black"
+  readonly property real playerTitlePadding: 8
+  readonly property real playerCoverVerticalMargin: 10
   readonly property real playerArtistFontSize: 16
+
+  readonly property real resourcesControlRadius: 5
+  readonly property string resourcesBgColor: "#0071c5"
+  readonly property string resourcesInnerBgColor: "#A0FFFFFF"
+  readonly property string resourcesTextColor: "black"
+  readonly property real resourcesInnerVerticalPadding: 4
+  readonly property real resourcesTitleFontSize: 24
+
+  readonly property real userControlRadius: 5
+  readonly property string userBgColor: "#69b1e2"
+  readonly property string userInnerBgColor: "#A0FFFFFF"
+  readonly property string userTextColor: "black"
+  readonly property real userInnerVerticalPadding: 4
+  readonly property real userTitleSpacing: 10
 }

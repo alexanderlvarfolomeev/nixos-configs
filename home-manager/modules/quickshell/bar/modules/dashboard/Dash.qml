@@ -52,7 +52,7 @@ Item {
             color: Config.dashboardBgColor
 
             anchors.horizontalCenter: parent.horizontalCenter
-            height: dashColumn.height // - tabRowRect.height // - columnLine.height
+            height: dashColumn.height
             width: dashColumn.width
 
             bottomRightRadius: Config.dashboardBorderRadius

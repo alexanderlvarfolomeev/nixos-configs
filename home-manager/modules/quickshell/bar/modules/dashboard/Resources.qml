@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
+import qs.base
 import qs.config
 import qs.utils
 
@@ -8,12 +9,10 @@ Rectangle {
   id: root
   color: "transparent"
 
-  readonly property real innerRadius: 5
-
   Rectangle {
     id: wrapper
 
-    color: "#0071c5"
+    color: Config.resourcesBgColor
 
     anchors.centerIn: parent
     implicitHeight: Config.dashboardInnerContainerRatio * parent.implicitHeight
@@ -26,15 +25,15 @@ Rectangle {
       anchors.fill: parent
 
       padding: 8
-      spacing: 17
+      spacing: 20
 
       Rectangle {
-        height: storageTitle.height + storage.height + 2 + 6
+        height: storageTitle.height + storage.height + Config.resourcesInnerVerticalPadding * 2
         width: resources.width - resources.padding * 2
 
-        color: "#A0FFFFFF"
+        color: Config.resourcesInnerBgColor
 
-        radius: root.innerRadius
+        radius: Config.resourcesControlRadius
 
         Column {
           anchors.fill: parent
@@ -42,24 +41,19 @@ Rectangle {
           spacing: 2
           padding: 5
 
-          Text {
+          StyledText {
             id: storageTitle
 
-            color: "black"
-            font.pixelSize: 24
-            font.bold: true
-            font.family: "JetBrains Mono NF"
+            color: Config.resourcesTextColor
+            font.pixelSize: Config.resourcesTitleFontSize
 
             text: "Storage: " + ResourceSingleton.storagePercentage + "%"
           }
 
-          Text {
+          StyledText {
             id: storage
 
-            color: "black"
-            font.pixelSize: 20
-            font.bold: true
-            font.family: "JetBrains Mono NF"
+            color: Config.resourcesTextColor
 
             text: "Used: " + ResourceSingleton.kibToString(ResourceSingleton.storageUsed) + "\n" + 
               "Total: " + ResourceSingleton.kibToString(ResourceSingleton.storageTotal)
@@ -68,12 +62,12 @@ Rectangle {
       }
 
       Rectangle {
-        height: memoryTitle.height + memory.height + 2 + 6
+        height: memoryTitle.height + memory.height + Config.resourcesInnerVerticalPadding * 2
         width: resources.width - resources.padding * 2
 
-        color: "#A0FFFFFF"
+        color: Config.resourcesInnerBgColor
 
-        radius: root.innerRadius
+        radius: Config.resourcesControlRadius
 
         Column {
           anchors.fill: parent
@@ -81,24 +75,19 @@ Rectangle {
           spacing: 2
           padding: 3
 
-          Text {
+          StyledText {
             id: memoryTitle
 
-            color: "black"
-            font.pixelSize: 24
-            font.bold: true
-            font.family: "JetBrains Mono NF"
+            color: Config.resourcesTextColor
+            font.pixelSize: Config.resourcesTitleFontSize
 
             text: "Memory: " + ResourceSingleton.memoryPercentage + "%"
           }
 
-          Text {
+          StyledText {
             id: memory
 
-            color: "black"
-            font.pixelSize: 20
-            font.bold: true
-            font.family: "JetBrains Mono NF"
+            color: Config.resourcesTextColor
 
             text: "Used: " + ResourceSingleton.kibToString(ResourceSingleton.memoryUsed) + "\n" +
               "Size: " + ResourceSingleton.kibToString(ResourceSingleton.memoryTotal)
@@ -107,12 +96,12 @@ Rectangle {
       }
 
       Rectangle {
-        height: cpuTitle.height + cpu.height + 2 + 6
+        height: cpuTitle.height + cpu.height + Config.resourcesInnerVerticalPadding * 2
         width: resources.width - resources.padding * 2
 
-        color: "#A0FFFFFF"
+        color: Config.resourcesInnerBgColor
 
-        radius: root.innerRadius
+        radius: Config.resourcesControlRadius
 
         Column {
           anchors.fill: parent
@@ -120,24 +109,19 @@ Rectangle {
           padding: 3
           spacing: 2
 
-          Text {
+          StyledText {
             id: cpuTitle
 
-            color: "black"
-            font.pixelSize: 24
-            font.bold: true
-            font.family: "JetBrains Mono NF"
+            color: Config.resourcesTextColor
+            font.pixelSize: Config.resourcesTitleFontSize
 
             text: "CPU: " + ResourceSingleton.cpuPercentage + "%"
           }
 
-          Text {
+          StyledText {
             id: cpu
 
-            color: "black"
-            font.pixelSize: 20
-            font.bold: true
-            font.family: "JetBrains Mono NF"
+            color: Config.resourcesTextColor
 
             text: ResourceSingleton.cpuName
           }

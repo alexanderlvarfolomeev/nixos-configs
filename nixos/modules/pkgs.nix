@@ -1,11 +1,8 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   programs.firefox.enable = true;
 
-  programs.appimage = { # https://wiki.nixos.org/wiki/Appimage
+  programs.appimage = {
+    # https://wiki.nixos.org/wiki/Appimage
     enable = true;
     binfmt = true;
   };
@@ -14,6 +11,9 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # /lib64/ld-linux-x86-64.so.2
+  # programs.nix-ld.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

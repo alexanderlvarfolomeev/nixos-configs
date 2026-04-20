@@ -24,6 +24,7 @@ media:
   - vlc
   - spotify
   - gimp3
+  - loupe
 qol:
   - neofetch
   - yt-dlp
@@ -39,6 +40,7 @@ qol:
   - wl-clipboard-rs
   - shadowsocks-rust
   - neo
+  - localsend
 
   - timg
   - chafa

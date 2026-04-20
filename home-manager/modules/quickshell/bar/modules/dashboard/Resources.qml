@@ -95,13 +95,19 @@ Rectangle {
         }
       }
 
-      Rectangle {
+      MouseRec {
         height: cpuTitle.height + cpu.height + Config.resourcesInnerVerticalPadding * 2
         width: resources.width - resources.padding * 2
 
         color: Config.resourcesInnerBgColor
 
         radius: Config.resourcesControlRadius
+
+        function openUI() {
+          Quickshell.execDetached(["auto-cpufreq-gtk"])
+        }
+
+        onClicked: (mouse) => Quickshell.execDetached(["auto-cpufreq-gtk"])
 
         Column {
           anchors.fill: parent

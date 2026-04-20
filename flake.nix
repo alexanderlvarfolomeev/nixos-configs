@@ -17,6 +17,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Do not override its nixpkgs input, otherwise there can be mismatch between patches and kernel version
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+
     # waybar.url = "github:Alexays/Waybar/tags/0.14.0"; # https://github.com/Alexays/waybar/issues/4301
 
     # yazi.url = "github:sxyazi/yazi/refs/tags/v25.5.31"; # https://github.com/sxyazi/yazi/issues/2809
@@ -25,6 +28,7 @@
   outputs = {
     nixpkgs,
     nixpkgs-unstable,
+    nix-cachyos-kernel,
     stylix,
     home-manager,
     ...
@@ -41,7 +45,10 @@
       specialArgs = {
         inherit localUtils homeManager osVersion user;
       };
-      modules = [./nixos/configuration.nix];
+      modules = [
+        {nixpkgs.overlays = [nix-cachyos-kernel.overlays.default];}
+        ./nixos/configuration.nix
+      ];
     };
 
     homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {

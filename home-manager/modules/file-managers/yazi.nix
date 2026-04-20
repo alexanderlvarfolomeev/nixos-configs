@@ -47,6 +47,14 @@
             for = "linux";
           }
         ];
+        image_viewer = [
+          {
+            run = "loupe \"$1\"";
+            desc = "Open GNOME loupe";
+            orphan = true;
+            for = "linux";
+          }
+        ];
       };
 
       open = {
@@ -54,6 +62,10 @@
           {
             mime = "inode/directory";
             use = "move_to";
+          }
+          {
+            mime = "image/*";
+            use = "image_viewer";
           }
         ];
       };

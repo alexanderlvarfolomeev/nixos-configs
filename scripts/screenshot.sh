@@ -49,5 +49,5 @@ grim -g "$SELECTION" - |
     --save-after-copy \
     --copy-command 'wl-copy'
 else
-  grim -g "$SELECTION" - | wl-copy
+  grim -g "$SELECTION" - | wl-copy && notify-send "Screenshot copied" "Image copied to the clipboard."
 fi

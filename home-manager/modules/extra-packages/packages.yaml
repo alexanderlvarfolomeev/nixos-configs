@@ -50,9 +50,9 @@ qol:
 
   - timg
   - chafa
-  - kitty
 
   - font-manager
+  - kitty # for default hyprland config in case nix config would be bricked
 ui:
   - pavucontrol
   - swaynotificationcenter

@@ -85,11 +85,12 @@ Singleton {
   readonly property string resourcesTextColor: "black"
   readonly property real resourcesInnerVerticalPadding: 4
   readonly property real resourcesTitleFontSize: 24
+  readonly property real resourcesTextSpacing: 10
 
   readonly property real userControlRadius: 5
   readonly property string userBgColor: "#69b1e2"
   readonly property string userInnerBgColor: "#A0FFFFFF"
   readonly property string userTextColor: "black"
   readonly property real userInnerVerticalPadding: 4
-  readonly property real userTitleSpacing: 10
+  readonly property real userTextSpacing: 10
 }

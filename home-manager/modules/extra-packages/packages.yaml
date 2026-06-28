@@ -13,6 +13,10 @@ system-analysis:
   - kmon
   - bottom
   - bandwhich
+  - heaptrack
+  - gdb
+  - mesa-demos
+  - intel-gpu-tools
 games:
   - nudoku
   - brogue-ce
@@ -26,7 +30,7 @@ media:
   - gimp3
   - loupe
 qol:
-  - neofetch
+  - hyfetch
   - yt-dlp
   - wget
   - fzf
@@ -41,9 +45,12 @@ qol:
   - shadowsocks-rust
   - neo
   - localsend
+  - ripgrep
+  - fd
 
   - timg
   - chafa
+  - kitty
 
   - font-manager
 ui:

@@ -3,17 +3,17 @@
 
   # inputs must be constant
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     stylix = {
-      url = "github:nix-community/stylix/release-25.11";
+      url = "github:nix-community/stylix/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -35,7 +35,7 @@
   } @ inputs: let
     user = "aorise";
     system = "x86_64-linux";
-    osVersion = "25.11";
+    osVersion = "26.05";
     homeManager = home-manager;
     localUtils = import ./utils.nix;
     upkgs = nixpkgs-unstable.legacyPackages.${system};
@@ -43,10 +43,9 @@
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit localUtils homeManager osVersion user;
+        inherit localUtils homeManager osVersion user nix-cachyos-kernel;
       };
       modules = [
-        {nixpkgs.overlays = [nix-cachyos-kernel.overlays.default];}
         ./nixos/configuration.nix
       ];
     };

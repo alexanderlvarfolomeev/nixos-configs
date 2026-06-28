@@ -29,8 +29,8 @@ Rectangle {
       }
       width: parent.implicitWidth
 
-      padding: 8
-      spacing: 78
+      padding: 10
+      spacing: 32
 
       Rectangle {
         height: userInfo.height + Config.userInnerVerticalPadding * 2
@@ -44,9 +44,9 @@ Rectangle {
 
         StyledText {
           id: userInfo
-          anchors{
+          anchors {
             verticalCenter: parent.verticalCenter
-            leftMargin: Config.userTitleSpacing
+            leftMargin: Config.userTextSpacing
             left: parent.left
           }
 
@@ -57,7 +57,7 @@ Rectangle {
       }
 
       Rectangle {
-        height: osInfo.height + Config.userInnerVerticalPadding * 2
+        height: generalInfo.height + Config.userInnerVerticalPadding * 2
         width: resources.width - resources.padding * 2
 
         color: Config.userInnerBgColor
@@ -65,19 +65,62 @@ Rectangle {
         radius: Config.userControlRadius
 
         StyledText {
-          id: osInfo
-          anchors{
+          id: generalInfo
+          anchors {
             verticalCenter: parent.verticalCenter
-            leftMargin: Config.userTitleSpacing
+            leftMargin: Config.userTextSpacing
             left: parent.left
           }
 
           color: Config.userTextColor
 
           text: "OS: " + SystemSingleton.osNameString + "\n" +
-            "DE: " + SystemSingleton.wm + "\n" +
-            "Kernel: " + SystemSingleton.kernel + "\n" +
-            "Uptime: " + SystemSingleton.uptimeString
+            "DE: " + SystemSingleton.wm
+        }
+      }
+
+      Rectangle {
+        height: kernelInfo.height + Config.userInnerVerticalPadding * 2
+        width: resources.width - resources.padding * 2
+
+        color: Config.userInnerBgColor
+
+        radius: Config.userControlRadius
+
+        StyledText {
+          id: kernelInfo
+          anchors {
+            verticalCenter: parent.verticalCenter
+            leftMargin: Config.userTextSpacing
+            left: parent.left
+          }
+
+          color: Config.userTextColor
+
+          text: "Kernel: " + SystemSingleton.kernel + "\n" +
+            (SystemSingleton.kernelCustom ? ("Extra: " + SystemSingleton.kernelCustom + "\n") : "")
+        }
+      }
+
+      Rectangle {
+        height: uptimeInfo.height + Config.userInnerVerticalPadding * 2
+        width: resources.width - resources.padding * 2
+
+        color: Config.userInnerBgColor
+
+        radius: Config.userControlRadius
+
+        StyledText {
+          id: uptimeInfo
+          anchors {
+            verticalCenter: parent.verticalCenter
+            leftMargin: Config.userTextSpacing
+            left: parent.left
+          }
+
+          color: Config.userTextColor
+
+          text: "Uptime: " + SystemSingleton.uptimeString
         }
       }
     }

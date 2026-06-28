@@ -24,8 +24,8 @@ Rectangle {
       id: resources
       anchors.fill: parent
 
-      padding: 8
-      spacing: 20
+      padding: 10
+      spacing: 18
 
       Rectangle {
         height: storageTitle.height + storage.height + Config.resourcesInnerVerticalPadding * 2
@@ -44,6 +44,11 @@ Rectangle {
           StyledText {
             id: storageTitle
 
+            anchors {
+              leftMargin: Config.resourcesTextSpacing
+              left: parent.left
+            }
+
             color: Config.resourcesTextColor
             font.pixelSize: Config.resourcesTitleFontSize
 
@@ -52,6 +57,11 @@ Rectangle {
 
           StyledText {
             id: storage
+
+            anchors {
+              leftMargin: Config.resourcesTextSpacing
+              left: parent.left
+            }
 
             color: Config.resourcesTextColor
 
@@ -78,6 +88,11 @@ Rectangle {
           StyledText {
             id: memoryTitle
 
+            anchors {
+              leftMargin: Config.resourcesTextSpacing
+              left: parent.left
+            }
+
             color: Config.resourcesTextColor
             font.pixelSize: Config.resourcesTitleFontSize
 
@@ -86,6 +101,11 @@ Rectangle {
 
           StyledText {
             id: memory
+
+            anchors {
+              leftMargin: Config.resourcesTextSpacing
+              left: parent.left
+            }
 
             color: Config.resourcesTextColor
 
@@ -118,6 +138,11 @@ Rectangle {
           StyledText {
             id: cpuTitle
 
+            anchors {
+              leftMargin: Config.resourcesTextSpacing
+              left: parent.left
+            }
+
             color: Config.resourcesTextColor
             font.pixelSize: Config.resourcesTitleFontSize
 
@@ -126,6 +151,11 @@ Rectangle {
 
           StyledText {
             id: cpu
+
+            anchors {
+              leftMargin: Config.resourcesTextSpacing
+              left: parent.left
+            }
 
             color: Config.resourcesTextColor
 

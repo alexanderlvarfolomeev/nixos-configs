@@ -3,7 +3,7 @@
     enable = true;
     extensions = ["nix"];
     userSettings = {
-      buffer_font_family = lib.mkForce "JetBrainsMono NF";
+      buffer_font_family = lib.mkForce "JetBrainsMono Nerd Font";
       buffer_font_size = lib.mkForce 18;
 
       ui_font_family = lib.mkForce "Noto Sans";

@@ -11,6 +11,7 @@ Singleton {
   property string user: Quickshell.env("USER")
   property string wm: Quickshell.env("XDG_CURRENT_DESKTOP")
   property string kernel
+  property string kernelCustom
   property string osLogo: defaultOsLogo
   property string osName
   property string osPrettyName
@@ -86,7 +87,15 @@ Singleton {
     path: "/proc/sys/kernel/osrelease"
 
     onLoaded: {
-      root.kernel = text().trim();
+      // split in case of custom kernel
+      const data = text();
+      const dash = data.indexOf('-');
+      if (dash < 0) {
+        root.kernel = data.trim();
+      } else {
+        root.kernel = data.substring(0, dash).trim();
+        root.kernelCustom = data.substring(dash + 1).trim();
+      }
     }
   }
 }

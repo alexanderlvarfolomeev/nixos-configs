@@ -1,11 +1,13 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  nix-cachyos-kernel,
+  ...
+}: {
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.cachyosKernels.linux-cachyos-lts-lto-x86_64-v3; # x86_64-v3 is max supported by laptop.
-  nix.settings = {
-    substituters = ["https://attic.xuyh0120.win/lantian"];
-    trusted-public-keys = ["lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="];
-  };
+  # Has issues with it. Zed editor parses 2668 font faces for 6s instead of 1s.
+  # nixpkgs.overlays = [nix-cachyos-kernel.overlays.pinned];
+  # boot.kernelPackages = pkgs.linuxPackagesFor pkgs.cachyosKernels.linux-cachyos-lts-lto-x86_64-v3; # x86_64-v3 is max supported by laptop.
 }

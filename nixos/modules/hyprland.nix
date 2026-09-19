@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   programs = {
     hyprland = {
       enable = true;
@@ -21,7 +21,6 @@
   # };
 
   services.hypridle.enable = true;
-  security.pam.services.hyprlock = {};
 
   programs.regreet = {
     enable = true;
@@ -46,4 +45,27 @@
   #     };
   #   };
   # };
+
+  services.gnome.gnome-keyring.enable = true;
+  programs.seahorse.enable = true;
+  environment.systemPackages = [pkgs.gcr];
+
+  # do not know which of this is actualy useful
+  security.pam.services = {
+    login = {
+      enableGnomeKeyring = true;
+    };
+    hyprlock = {
+      enableGnomeKeyring = true;
+    };
+    greetd = {
+      enableGnomeKeyring = true;
+    };
+    greetd-password = {
+      enableGnomeKeyring = true;
+    };
+    regreet = {
+      enableGnomeKeyring = true;
+    };
+  };
 }

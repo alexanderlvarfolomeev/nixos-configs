@@ -2,6 +2,7 @@ pragma Singleton
 
 import Quickshell
 import Quickshell.Io
+import Quickshell.Networking
 import QtQuick
 import qs.utils
 

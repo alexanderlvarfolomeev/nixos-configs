@@ -1,4 +1,4 @@
-{user, ...}: {
+{
   programs.bash = {
     enable = true;
     shellAliases = {

@@ -10,6 +10,7 @@
       ./rofi/rofi.nix
       ./waybar/waybar.nix
       ./quickshell/quickshell.nix
+      ./nixvim
     ]
     ++ localUtils.dirImports {
       inherit lib;
@@ -26,5 +27,9 @@
     ++ localUtils.dirImports {
       inherit lib;
       dir = ./temu;
+    }
+    ++ localUtils.dirImports {
+      inherit lib;
+      dir = ./sw-engine;
     };
 }

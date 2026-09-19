@@ -8,7 +8,7 @@
       builtins.attrNames
       (builtins.filter (lib.strings.hasSuffix ".nix"))
       (builtins.filter (name: name != "default.nix"))
-      (builtins.map (name: dir + ("/" + name)))
+      (map (name: dir + ("/" + name)))
     ];
 
   fromFileYAML = pkgs: file:

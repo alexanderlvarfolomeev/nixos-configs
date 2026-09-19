@@ -78,8 +78,9 @@ Singleton {
                         special: false,
                         topLevels: [],
                         // To allow switching workspace by clicking on it
+                        // Lua version
                         workspace: {
-                            activate: () => Hyprland.dispatch(`workspace ${idx}`)
+                            activate: () => Hyprland.dispatch(`hl.dsp.focus({ workspace = "${idx}" })`)
                         }
                     },
                 )

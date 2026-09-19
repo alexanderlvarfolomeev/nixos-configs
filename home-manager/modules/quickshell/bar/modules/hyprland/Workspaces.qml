@@ -143,6 +143,7 @@ Row {
 
             onClicked: function() {
                 if (!isActive) {
+                    console.log(Hyprland.usingLua)
                     modelData.workspace.activate()
                 }
             }

@@ -1,0 +1,6 @@
+setup nixvim
+optimize quickshell bar
+add animations and shaders to bar
+smooth animations for hover and for workspace switch
+bar settings to yaml/json
+migrate to zsh

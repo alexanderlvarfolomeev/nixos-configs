@@ -22,6 +22,14 @@ games:
   - brogue-ce
   - nethack
   - quadrapassel
+programming:
+  - cargo
+  - rustc
+  - python314
+  - xlsclients
+  # for egui_overlay
+  - cmake
+  - gcc
 media:
   - ffmpeg
   - obs-studio
@@ -30,7 +38,7 @@ media:
   - gimp3
   - loupe
 qol:
-  - hyfetch
+  - fastfetch
   - yt-dlp
   - wget
   - fzf
@@ -39,6 +47,8 @@ qol:
   - alejandra
   - nix-health
   - nurl
+  - stylua
+  - lua-language-server
   - playerctl
   - grim
   - wl-clipboard-rs
@@ -47,6 +57,7 @@ qol:
   - localsend
   - ripgrep
   - fd
+  # - tldr # network timeout
 
   - timg
   - chafa
@@ -61,17 +72,17 @@ ui:
   - satty
 tui:
   - bluetui # check bluetuith
-  - zellij # laggy
-  - tmux # check diff with zellij, zellij prettier, but has too many unused space
   - tabiew
   - lazyssh # could be useful someday
   - kew
   - regex-tui
   - fx
+  - fresh-editor
 inner-dependencies:
   - cairo # do not remember, for what
   - slurp # select screenshot area
   - wayfreeze # freeze screen for screenshots
+  - tree-sitter # nixvim tree-sitter
 
 # https://github.com/rothgar/awesome-tuis
 # to experiment
@@ -140,5 +151,6 @@ inner-dependencies:
 # twig       # no use
 # lazysql    # dbeaver
 # play       # can test in terminal
+# zellij     # laggy
 
 uncategorized: []

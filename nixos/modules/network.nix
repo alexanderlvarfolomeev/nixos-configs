@@ -1,4 +1,4 @@
-{
+{upkgs, ...}: {
   networking.hostName = "nixos"; # Define your hostname.
 
   networking.wireless.iwd = {
@@ -50,4 +50,9 @@
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
+
+  programs.amnezia-vpn = {
+    enable = true;
+    package = upkgs.amnezia-vpn;
+  };
 }

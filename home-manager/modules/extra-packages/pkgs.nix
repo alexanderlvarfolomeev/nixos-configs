@@ -1,6 +1,5 @@
 {
   pkgs,
-  # upkgs,
   lib,
   localUtils,
   ...
@@ -15,5 +14,6 @@ in {
 
   nixpkgs.config.allowUnfree = true;
 
-  home.packages = localUtils.getPkgsByNames pkgs extraPackagesNameList;
+  home.packages =
+    localUtils.getPkgsByNames pkgs extraPackagesNameList;
 }

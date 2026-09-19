@@ -3,6 +3,12 @@ import QtQuick
 Rectangle {
   id: root
 
+  // Behavior on color {
+  //   ColorAnimation {
+  //     duration: 100 // Animation time in milliseconds
+  //   }
+  // }
+
   MouseArea {
     id: mouse
     anchors.fill: parent

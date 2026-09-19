@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   gtk.iconTheme = {
     name = "Adwaita";
     package = pkgs.adwaita-icon-theme;
@@ -25,6 +21,7 @@
       gnome-text-editor.enable = false;
       hyprlock.enable = false;
       yazi.enable = true;
+      # regreet.enable = true; # not in 26.05
     };
 
     cursor = {

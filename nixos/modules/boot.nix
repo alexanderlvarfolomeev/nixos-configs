@@ -1,7 +1,12 @@
 {...}: {
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    consoleLogLevel = 3;
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+  };
 
   # Has issues with it. Zed editor parses 2668 font faces for 6s instead of 1s.
   # nixpkgs.overlays = [nix-cachyos-kernel.overlays.pinned];

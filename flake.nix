@@ -31,6 +31,14 @@
       url = "github:crmne/fastpotify/refs/tags/v0.6.0";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
   };
 
   outputs = {
@@ -40,6 +48,7 @@
     stylix,
     nixvim,
     home-manager,
+    zen-browser,
     ...
   } @ inputs: let
     user = "aorise";
@@ -69,6 +78,7 @@
       modules = [
         stylix.homeModules.stylix
         nixvim.homeModules.nixvim
+        zen-browser.homeModules.twilight
         ./home-manager/home.nix
       ];
     };

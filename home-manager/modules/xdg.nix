@@ -1,4 +1,10 @@
-{config, pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: let
+  defaultBrowser = "zen-twilight.desktop";
+in {
   xdg = {
     portal = {
       extraPortals = with pkgs; [
@@ -10,12 +16,12 @@
       };
     };
 
-    /* Change to this when it will be enabled in branch
+    /*
+       Change to this when it will be enabled in branch
     terminal-exec.enable = true;
     */
 
-    
-    configFile."./xdg-terminals.list".text = "alacritty.desktop";
+    # configFile."./xdg-terminals.list".text = "foot.desktop";
     # dataFile."./applications/xterm.desktop".text = "";
     userDirs = {
       enable = true;
@@ -24,6 +30,17 @@
         XDG_SCREENSHOT_DIR = "${config.home.homeDirectory}/Screenshots";
       };
     };
+
+    # mimeApps = {
+    # enable = true;
+    #   defaultApplications = {
+    #     "text/html" = [defaultBrowser];
+    #     "x-scheme-handler/http" = [defaultBrowser];
+    #     "x-scheme-handler/https" = [defaultBrowser];
+    #     "x-scheme-handler/about" = [defaultBrowser];
+    #     "x-scheme-handler/unknown" = [defaultBrowser];
+    #   };
+    # };
   };
 
   home.packages = [pkgs.xdg-terminal-exec];

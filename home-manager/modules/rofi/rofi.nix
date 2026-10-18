@@ -12,7 +12,7 @@
 
   programs.rofi = {
     enable = true;
-    terminal = "alacritty";
+    terminal = "foot";
     theme = ./rofi-style.rasi;
   };
 

@@ -33,7 +33,7 @@ hl.monitor({
 ---------------------
 
 -- Set programs that you use
-local terminal = "alacritty"
+local terminal = "foot"
 local fileManager = "yazi"
 local menu = "rofi -show drun"
 
@@ -408,7 +408,7 @@ hl.window_rule({
 
 	float = true,
 	size = { "monitor_w*0.6", "monitor_h*0.4" },
-	move = { "monitor_w*0.49", "monitor_h*0.05" },
+	move = { "monitor_w*0.39", "monitor_h*0.05" },
 })
 
 hl.window_rule({
@@ -419,6 +419,19 @@ hl.window_rule({
 	size = { "monitor_w*0.6", "monitor_h*0.4" },
 	move = { "monitor_w*0.49", "monitor_h*0.05" },
 })
+
+-- There are some issues with yazi preview on current ueberzugpp+Hyprland version
+-- hl.window_rule({
+-- 	name = "float-ueberzugpp",
+-- 	match = {
+-- 		initial_class = "^ueberzug.*$",
+-- 	},
+-- 	float = true,
+-- 	no_focus = true,
+-- 	content = "photo",
+-- 	decorate = false,
+-- 	move = { "window_x + 117", "window_y+1" },
+-- })
 
 -- Layer rules also return a handle.
 -- local overlayLayerRule = hl.layer_rule({

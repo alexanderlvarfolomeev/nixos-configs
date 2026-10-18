@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   programs.git = {
     enable = true;
     package = pkgs.git.override {withLibsecret = true;};
@@ -11,7 +7,7 @@
         name = "alexanderlvarfolomeev";
         email = "vas.aleks.v@gmail.com";
       };
-      credential.helper = "{config.programs.git.package}/bin/git-credential-libsecret";
+      credential.helper = "libsecret";
     };
   };
 

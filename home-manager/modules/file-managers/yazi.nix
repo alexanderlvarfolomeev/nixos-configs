@@ -41,7 +41,7 @@
       opener = {
         move_to = [
           {
-            run = "alacritty --working-directory \"$1\"";
+            run = "foot -D \"%s\"";
             desc = "Open in Terminal";
             orphan = true;
             for = "linux";
@@ -49,8 +49,16 @@
         ];
         image_viewer = [
           {
-            run = "loupe \"$1\"";
+            run = "loupe \"%s\"";
             desc = "Open GNOME loupe";
+            orphan = true;
+            for = "linux";
+          }
+        ];
+        notify = [
+          {
+            run = "notify-send \"%s\"";
+            desc = "Notify";
             orphan = true;
             for = "linux";
           }
@@ -61,11 +69,15 @@
         prepend_rules = [
           {
             mime = "inode/directory";
-            use = "move_to";
+            use = ["move_to" "open" "notify"];
+          }
+          {
+            mime = "folder/*";
+            use = ["move_to" "open" "notify"];
           }
           {
             mime = "image/*";
-            use = "image_viewer";
+            use = ["image_viewer" "notify"];
           }
         ];
       };
@@ -78,5 +90,5 @@
     };
   };
 
-  home.packages = [pkgs.ueberzugpp];
+  home.packages = with pkgs; [ueberzugpp poppler];
 }

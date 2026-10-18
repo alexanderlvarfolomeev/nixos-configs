@@ -1,15 +1,11 @@
-{
-  pkgs,
-  upkgs,
-  ...
-}: {
+{upkgs, ...}: {
   services.udiskie = {
     enable = true;
     automount = true;
     notify = true;
     settings = {
       program_options = {
-        file_manager = "${pkgs.alacritty}/bin/alacritty -e ${upkgs.yazi}/bin/yazi";
+        file_manager = "foot -e ${upkgs.yazi}/bin/yazi";
       };
     };
   };

@@ -3,17 +3,10 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
   osVersion,
-  lib,
-  localUtils,
   ...
-}: let
-  hwConf = [./hardware-configuration.nix]; # Include the results of the hardware scan.
-  mods = localUtils.dirImports {
-    inherit lib;
-    dir = ./modules;
-  };
-in {
-  imports = hwConf ++ mods;
+}: {
+  # Include the results of the hardware scan.
+  imports = [./hardware-configuration.nix];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -3,6 +3,9 @@
 
   # inputs must be constant
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:denful/import-tree";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -41,46 +44,7 @@
     };
   };
 
-  outputs = {
-    nixpkgs,
-    nixpkgs-unstable,
-    nix-cachyos-kernel,
-    stylix,
-    nixvim,
-    home-manager,
-    zen-browser,
-    ...
-  } @ inputs: let
-    user = "aorise";
-    system = "x86_64-linux";
-    osVersion = "26.05";
-    homeManager = home-manager;
-    localUtils = import ./utils.nix;
-    upkgs = nixpkgs-unstable.legacyPackages.${system};
-  in {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = {
-        inherit localUtils homeManager osVersion user nix-cachyos-kernel upkgs;
-      };
-      modules = [
-        ./nixos/configuration.nix
-      ];
-    };
-
-    homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.${system};
-
-      extraSpecialArgs = {
-        inherit localUtils osVersion user upkgs inputs system;
-      };
-
-      modules = [
-        stylix.homeModules.stylix
-        nixvim.homeModules.nixvim
-        zen-browser.homeModules.twilight
-        ./home-manager/home.nix
-      ];
-    };
-  };
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake {inherit inputs;}
+    (inputs.import-tree ./modules);
 }

@@ -1,6 +1,4 @@
 {
-  lib,
-  localUtils,
   osVersion,
   user,
   ...
@@ -9,10 +7,5 @@
     username = user;
     homeDirectory = "/home/${user}";
     stateVersion = osVersion;
-  };
-
-  imports = localUtils.dirImports {
-    inherit lib;
-    dir = ./modules;
   };
 }

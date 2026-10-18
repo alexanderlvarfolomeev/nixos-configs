@@ -1,16 +1,4 @@
 {
-  dirImports = {
-    lib,
-    dir,
-  }:
-    lib.pipe dir [
-      builtins.readDir
-      builtins.attrNames
-      (builtins.filter (lib.strings.hasSuffix ".nix"))
-      (builtins.filter (name: name != "default.nix"))
-      (map (name: dir + ("/" + name)))
-    ];
-
   fromFileYAML = pkgs: file:
     builtins.fromJSON (
       # Create a temporary derivation to perform the conversion

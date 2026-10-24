@@ -7,16 +7,13 @@ Item {
   id: root
   required property var anchorWindow
 
-  PanelWindow {
+  PopupWindow {
     id: popupWindow
 
     readonly property bool expanded: pinned || islandHover.hovered || collapseTimer.running
     property bool pinned: false
 
-    screen: root.anchorWindow ? root.anchorWindow.screen : null
-    visible: root.anchorWindow != null
-    aboveWindows: true
-    exclusionMode: ExclusionMode.Ignore
+    visible: root.anchorWindow !== null
     color: "transparent"
     implicitWidth: expanded
       ? Config.dashboardSinglePartWidth * 3
@@ -25,12 +22,17 @@ Item {
       ? Config.dashboardHeight
       : Config.dashboardIslandHeight
 
-    anchors {
-      top: true
-    }
+    anchor {
+      window: root.anchorWindow
+      edges: Edges.Bottom
+      gravity: Edges.Bottom
 
-    margins {
-      top: Config.barHeight - Config.dashboardIslandOverlap
+      rect {
+        x: root.anchorWindow ? root.anchorWindow.width / 2 : 0
+        y: root.anchorWindow
+          ? root.anchorWindow.height - Config.dashboardIslandOverlap
+          : 0
+      }
     }
 
     Behavior on implicitWidth {

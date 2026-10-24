@@ -1,7 +1,7 @@
-{upkgs, ...}: {
-  home.packages = with upkgs; [
-    ladybird
-  ];
+{
+  # home.packages = with upkgs; [
+  #   ladybird
+  # ];
 
   programs.zen-browser = {
     enable = true;

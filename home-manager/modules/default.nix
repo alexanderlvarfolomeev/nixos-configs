@@ -1,0 +1,33 @@
+{
+  imports = [
+    ./audio-video.nix
+    ./bash.nix
+    ./browsers.nix
+    ./editors/common.nix
+    ./editors/kakoune.nix
+    ./editors/msedit.nix
+    ./editors/vscode.nix
+    ./editors/zed.nix
+    ./env.nix
+    ./extra-packages/pkgs.nix
+    ./file-managers/superfile.nix
+    ./file-managers/yazi.nix
+    ./git.nix
+    ./hypr/hypridle.nix
+    ./hypr/hyprland.nix
+    ./hypr/hyprlock.nix
+    ./nixvim
+    ./nwg-bar.nix
+    ./quickshell/quickshell.nix
+    ./rofi/rofi.nix
+    ./scripts.nix
+    ./stylix.nix
+    ./sw-engine/jetbrains.nix
+    ./temu/temu.nix
+    ./temu/tmux.nix
+    ./udiskie.nix
+    ./waybar/waybar.nix
+    ./wlogout/wlogout.nix
+    ./xdg.nix
+  ];
+}

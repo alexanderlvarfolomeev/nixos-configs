@@ -1,11 +1,9 @@
 {
-  osVersion,
-  user,
-  ...
-}: {
+  imports = [./modules];
+
   home = {
-    username = user;
-    homeDirectory = "/home/${user}";
-    stateVersion = osVersion;
+    username = "aorise";
+    homeDirectory = "/home/aorise";
+    stateVersion = "26.05";
   };
 }

@@ -1,19 +1,9 @@
-{
-  pkgs,
-  lib,
-  localUtils,
-  ...
-}: let
-  extraPackagesNameList = lib.pipe ./packages.yaml [
-    (localUtils.fromFileYAML pkgs)
-    builtins.attrValues
-    builtins.concatLists
-  ];
+{pkgs, ...}: let
+  packageGroups = import ./packages.nix {inherit pkgs;};
 in {
   programs.home-manager.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
-  home.packages =
-    localUtils.getPkgsByNames pkgs extraPackagesNameList;
+  home.packages = builtins.concatLists (builtins.attrValues packageGroups);
 }

@@ -1,0 +1,5 @@
+module qs.components
+IconButton 1.0 IconButton.qml
+IconLabel 1.0 IconLabel.qml
+SliderRow 1.0 SliderRow.qml
+ToggleTile 1.0 ToggleTile.qml

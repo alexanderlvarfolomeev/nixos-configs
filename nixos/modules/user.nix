@@ -1,17 +1,14 @@
 {
-  pkgs,
-  user,
-  ...
-}: {
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.${user} = {
-    isNormalUser = true;
-    description = user;
-    extraGroups = ["networkmanager" "wheel"];
-    packages = with pkgs; [];
+  flake.nixosModules.user = {username, ...}: {
+    # Define a user account. Don't forget to set a password with ‘passwd’.
+    users.users.${username} = {
+      isNormalUser = true;
+      description = username;
+      extraGroups = ["networkmanager" "wheel"];
+    };
+
+    nix.settings.trusted-users = ["root" username];
+
+    services.getty.autologinUser = username;
   };
-
-  nix.settings.trusted-users = ["root" user];
-
-  services.getty.autologinUser = user;
 }

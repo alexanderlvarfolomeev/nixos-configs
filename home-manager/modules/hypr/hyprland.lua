@@ -265,7 +265,7 @@ hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(terminal .. " -e " .. fileManager))
 hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("XDG_CURRENT_DESKTOP=GNOME Telegram --"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("firefox"))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("zen-twilight"))
 
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + C", hl.dsp.window.close())

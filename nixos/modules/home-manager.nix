@@ -1,4 +1,6 @@
-{homeManager, ...}: {
-  imports = [homeManager.nixosModules.default];
-  home-manager.backupFileExtension = "backup";
+{inputs, ...}: {
+  flake.nixosModules.home-manager = {
+    imports = [inputs.home-manager.nixosModules.default];
+    home-manager.backupFileExtension = "backup";
+  };
 }

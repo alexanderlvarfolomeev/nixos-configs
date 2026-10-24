@@ -1,5 +1,5 @@
 {inputs}: rec {
-  user = "aorise";
+  username = "aorise";
   system = "x86_64-linux";
   osVersion = "26.05";
 

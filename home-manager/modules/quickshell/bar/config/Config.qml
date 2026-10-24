@@ -87,10 +87,6 @@ Singleton {
 
     readonly property real dashboardHeight: 332
     readonly property real dashboardSinglePartWidth: 270
-    readonly property real dashboardIslandWidth: 210
-    readonly property real dashboardIslandHeight: 32
-    readonly property real dashboardIslandOverlap: 6
-    readonly property int dashboardAnimationDuration: 360
     readonly property real dashboardBorderRadius: 10
     readonly property real dashboardInnerContainerRatio: 0.95
     readonly property string dashboardBgColor: "#c0003b5b"

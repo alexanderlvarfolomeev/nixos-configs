@@ -7,231 +7,147 @@ Item {
   id: root
   required property var anchorWindow
 
-  PopupWindow {
-    id: popupWindow
+  Component {
+    id: popupComponent
 
-    readonly property bool expanded: pinned || islandHover.hovered || collapseTimer.running
-    property bool pinned: false
+    PopupWindow {
+      id: popupWindow
+      implicitHeight: Config.dashboardHeight
+      implicitWidth: Config.dashboardSinglePartWidth * 3
+      visible: true
+      color: "transparent"
 
-    visible: root.anchorWindow !== null
-    color: "transparent"
-    implicitWidth: expanded
-      ? Config.dashboardSinglePartWidth * 3
-      : Config.dashboardIslandWidth
-    implicitHeight: expanded
-      ? Config.dashboardHeight
-      : Config.dashboardIslandHeight
+      property bool isActive: false
 
-    anchor {
-      window: root.anchorWindow
-      edges: Edges.Bottom
-      gravity: Edges.Bottom
+      anchor {
+        window: anchorWindow
+        edges: Edges.Bottom
+        gravity: Edges.Bottom
 
-      rect {
-        x: root.anchorWindow ? root.anchorWindow.width / 2 : 0
-        y: root.anchorWindow
-          ? root.anchorWindow.height - Config.dashboardIslandOverlap
-          : 0
-      }
-    }
-
-    Behavior on implicitWidth {
-      NumberAnimation {
-        duration: Config.dashboardAnimationDuration
-        easing.type: Easing.OutCubic
-      }
-    }
-
-    Behavior on implicitHeight {
-      NumberAnimation {
-        duration: Config.dashboardAnimationDuration
-        easing.type: Easing.OutCubic
-      }
-    }
-
-    onExpandedChanged: {
-      ResourceSingleton.active = expanded
-
-      if (expanded) {
-        contentUnloadTimer.stop()
-      } else {
-        contentUnloadTimer.restart()
-      }
-    }
-
-    Rectangle {
-      id: island
-      anchors.fill: parent
-      clip: true
-      radius: popupWindow.expanded
-        ? Config.dashboardBorderRadius
-        : height / 2
-      border {
-        color: Config.dashboardBorderColor
-        width: Config.dashboardBorderWidth
-      }
-
-      gradient: Gradient {
-        GradientStop {
-          position: 0.0
-          color: Config.barColor
-        }
-        GradientStop {
-          position: popupWindow.expanded ? 0.18 : 0.55
-          color: Config.dashboardBgColor
-        }
-        GradientStop {
-          position: 1.0
-          color: popupWindow.expanded ? Config.dashboardBgColor : "#d0003b5b"
-        }
-      }
-
-      Behavior on radius {
-        NumberAnimation {
-          duration: Config.dashboardAnimationDuration
-          easing.type: Easing.OutCubic
-        }
-      }
-
-      HoverHandler {
-        id: islandHover
-
-        onHoveredChanged: {
-          if (hovered) {
-            collapseTimer.stop()
-          } else if (!popupWindow.pinned) {
-            collapseTimer.restart()
-          }
-        }
-      }
-
-      Loader {
-        id: dashboardContent
-        anchors {
-          fill: parent
-          margins: Config.dashboardBorderWidth
-        }
-        active: popupWindow.expanded || contentUnloadTimer.running
-        opacity: popupWindow.expanded ? 1 : 0
-        sourceComponent: dashboardComponent
-
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 180
-            easing.type: Easing.OutQuad
-          }
-        }
-      }
-
-      Row {
-        id: islandLabel
-        anchors.centerIn: parent
-        spacing: 9
-        opacity: popupWindow.expanded ? 0 : 1
-        visible: opacity > 0
-
-        Behavior on opacity {
-          NumberAnimation {
-            duration: 120
-            easing.type: Easing.OutQuad
-          }
-        }
-
-        Rectangle {
-          anchors.verticalCenter: parent.verticalCenter
-          width: 8
-          height: 8
-          radius: 4
-          color: Config.dashboardBorderColor
-
-          SequentialAnimation on opacity {
-            loops: Animation.Infinite
-            NumberAnimation {
-              from: 1
-              to: 0.5
-              duration: 1200
-              easing.type: Easing.InOutSine
-            }
-            NumberAnimation {
-              from: 0.5
-              to: 1
-              duration: 1200
-              easing.type: Easing.InOutSine
-            }
-          }
-        }
-
-        Text {
-          anchors.verticalCenter: parent.verticalCenter
-          text: "DASHBOARD"
-          color: "#e6e6fa"
-          font {
-            family: Config.fontFamily
-            pixelSize: 12
-            bold: true
-            letterSpacing: 1.4
-          }
-        }
-
-        Text {
-          anchors.verticalCenter: parent.verticalCenter
-          text: "⌄"
-          color: Config.dashboardBorderColor
-          font.pixelSize: 16
+        rect {
+          x: anchorWindow.width / 2
+          y: anchorWindow.height
         }
       }
 
       Rectangle {
-        anchors {
-          top: parent.top
-          left: parent.left
-          right: parent.right
-          leftMargin: Config.dashboardBorderRadius
-          rightMargin: Config.dashboardBorderRadius
+        id: popupRect
+        color: "transparent"
+
+        property var diffY: popupWindow.isActive ? 0 : -popupWindow.implicitHeight
+
+        Behavior on anchors.verticalCenterOffset {
+          NumberAnimation {
+            duration: 400
+            easing.type: Easing.OutCubic
+
+            onRunningChanged: {
+              if (!running) {
+                popupWindow.visible = popupWindow.isActive
+              } else {
+                popupWindow.visible = true
+              }
+            }
+          }
         }
-        height: 1
-        color: "#60ffffff"
-        opacity: popupWindow.expanded ? 0.45 : 0.7
+
+        anchors {
+          centerIn: parent
+          verticalCenterOffset: popupRect.diffY
+        }
+
+        implicitHeight: popupWindow.implicitHeight - Config.dashboardBorderWidth * 2
+        implicitWidth: popupWindow.implicitWidth - Config.dashboardBorderWidth * 2
+      
+        border {
+          color: Config.dashboardBorderColor
+          width: Config.dashboardBorderWidth
+        }
+
+        bottomLeftRadius: Config.dashboardBorderRadius
+        bottomRightRadius: Config.dashboardBorderRadius
+
+        Column {
+          id: dashColumn
+          anchors.fill: parent
+          spacing: 0
+
+          Rectangle {
+            id: tabRect
+
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: Config.barColor }
+                GradientStop { position: 0.2; color: Config.dashboardBgColor }
+                GradientStop { position: 1.0; color: Config.dashboardBgColor }
+            }
+
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: dashColumn.height
+            width: dashColumn.width
+
+            bottomRightRadius: Config.dashboardBorderRadius
+            bottomLeftRadius: Config.dashboardBorderRadius
+
+            Row {
+              spacing: 0
+              anchors.fill: parent
+
+              Resources {
+                implicitHeight: tabRect.height
+                implicitWidth: tabRect.width / 3
+                anchors.verticalCenter: parent.verticalCenter
+              }
+
+              User {
+                implicitHeight: tabRect.height
+                implicitWidth: tabRect.width / 3
+                anchors.verticalCenter: parent.verticalCenter
+              }
+
+              Player {
+                implicitHeight: tabRect.height
+                implicitWidth: tabRect.width / 3
+                anchors.verticalCenter: parent.verticalCenter
+              }
+            }
+          }
+        }
       }
     }
-
-    Timer {
-      id: collapseTimer
-      interval: 260
-      repeat: false
-    }
-
-    Timer {
-      id: contentUnloadTimer
-      interval: Config.dashboardAnimationDuration + 80
-      repeat: false
-    }
-
-    Component.onDestruction: ResourceSingleton.active = false
   }
 
-  Component {
-    id: dashboardComponent
+  Timer {
+    id: destroyTimer
+    interval: 30000
+    repeat: false
+    onTriggered: {
+      dashLoader.active = false
+    }
+  }
 
-    Row {
-      spacing: 0
+  Loader {
+    id: dashLoader
+    sourceComponent: popupComponent
+    active: false
 
-      Resources {
-        implicitHeight: parent.height
-        implicitWidth: parent.width / 3
-        anchors.verticalCenter: parent.verticalCenter
-      }
+    onLoaded: {
+      item.isActive = true
+      ResourceSingleton.active = true
+    }
 
-      User {
-        implicitHeight: parent.height
-        implicitWidth: parent.width / 3
-        anchors.verticalCenter: parent.verticalCenter
-      }
-
-      Player {
-        implicitHeight: parent.height
-        implicitWidth: parent.width / 3
-        anchors.verticalCenter: parent.verticalCenter
+    function toggle() {
+      destroyTimer.stop()
+      if (item != null) {
+        if (item.isActive) {
+          item.isActive = false
+          ResourceSingleton.active = false
+          destroyTimer.restart()
+        } else {
+          item.isActive = true
+          ResourceSingleton.active = true
+        }
+      } else {
+        dashLoader.active = true
       }
     }
   }
@@ -240,7 +156,7 @@ Item {
     target: "dashboard"
 
     function toggle() {
-      popupWindow.pinned = !popupWindow.pinned
+      dashLoader.toggle()
     }
   }
 }

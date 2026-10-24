@@ -1,10 +1,8 @@
 import Quickshell
-import Quickshell.Hyprland
-import Quickshell.Wayland
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Controls
-import qs.utils
+import qs.modules.hyprland
 
 Rectangle {
   id: root
@@ -34,7 +32,10 @@ Rectangle {
         bottom: parent.bottom
       }
 
-      model: Utils.AppSingleton.filteredTopLevels
+      model: ScriptModel {
+        values: AppSingleton.filteredTopLevels
+        objectProp: "key"
+      }
 
       Rectangle {
         id: wlrRepeaterDelegate

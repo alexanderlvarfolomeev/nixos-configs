@@ -9,7 +9,7 @@ import qs.utils
 Singleton {
   id: root
 
-  property bool active: true
+  property bool active: false
 
   property var disks: []
   readonly property real storageTotal: {
@@ -79,17 +79,25 @@ Singleton {
   }
 
   Timer {
-    id: timer
+    id: sampleTimer
     running: root.active
     interval: 5000
     repeat: true
     triggeredOnStart: true
 
     onTriggered: {
-      console.log("Reloaded!")
       meminfo.reload()
       stat.reload()
-      storage.running = true;
+    }
+  }
+
+  Timer {
+    running: root.active
+    interval: 60000
+    repeat: true
+    triggeredOnStart: true
+    onTriggered: {
+      if (!storage.running) storage.running = true;
     }
   }
 
@@ -112,8 +120,12 @@ Singleton {
     onLoaded: {
       const data = text();
       // kB
-      root.memoryFree = parseInt(data.match(/MemAvailable:\s*(\d+)/)[1], 10) || 1;
-      root.memoryTotal = parseInt(data.match(/MemTotal:\s*(\d+)/)[1], 10) || 0;
+      const availableMatch = data.match(/MemAvailable:\s*(\d+)/);
+      const totalMatch = data.match(/MemTotal:\s*(\d+)/);
+      if (!availableMatch || !totalMatch) return;
+
+      root.memoryFree = parseInt(availableMatch[1], 10) || 0;
+      root.memoryTotal = parseInt(totalMatch[1], 10) || 0;
     }
   }
 
@@ -129,9 +141,11 @@ Singleton {
         const total = stats.reduce((a, b) => a + b, 0);
         const idle = stats[3] + (stats[4] ?? 0);
 
-        const totalDiff = total - root.cpuTotal;
-        const idleDiff = idle - root.cpuIdle;
-        cpuPercentage = Utils.percentage(totalDiff - idleDiff, totalDiff);
+        if (root.cpuTotal > 0 && total >= root.cpuTotal && idle >= root.cpuIdle) {
+          const totalDiff = total - root.cpuTotal;
+          const idleDiff = idle - root.cpuIdle;
+          root.cpuPercentage = Utils.percentage(totalDiff - idleDiff, totalDiff);
+        }
 
         root.cpuTotal = total;
         root.cpuIdle = idle;
@@ -148,7 +162,15 @@ Singleton {
 
     stdout: StdioCollector {
       onStreamFinished: {
-        const data = JSON.parse(text);
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (error) {
+          console.warn("Failed to parse lsblk output:", error);
+          return;
+        }
+
+        if (!Array.isArray(data.blockdevices)) return;
         const diskList = [];
         const seenDevices = new Set();
 

@@ -2,46 +2,41 @@ pragma Singleton
 
 import Quickshell
 import Quickshell.Hyprland
-import Quickshell.Io
-import Quickshell.Services.Pipewire
 import QtQuick
 
 Singleton {
     id: root
 
     // TODO: map neovim window to "nvim"
-    property list<var> regexTitleToMap: [[/^Yazi/, "yazi"], [/^Brogue/, "brogue-ce"], [/^auto-cpufreq/, "auto-cpufreq-gtk"]]
-    property list<var> regexToIgnore: [/^Alacritty/, /^ueberzugpp/, /^org.pulseaudio.pavucontrol$/, /^com.gabm.satty/, /^foot/]
+    readonly property list<var> regexTitleToMap: [[/^Yazi/, "yazi"], [/^Brogue/, "brogue-ce"], [/^auto-cpufreq/, "auto-cpufreq-gtk"]]
+    readonly property list<var> regexToIgnore: [/^Alacritty/, /^ueberzugpp/, /^org.pulseaudio.pavucontrol$/, /^com.gabm.satty/, /^foot/]
+    property var iconCache: ({})
 
     property int alwaysVisibleWorkspaces: 5
-    property list<DesktopEntry> desktopEntries: DesktopEntries.applications.values
     property list<HyprlandWorkspace> occupiedWorkspaces: Hyprland.workspaces.values
     property list<HyprlandToplevel> topLevels: Hyprland.toplevels.values.filter(tl => tl.wayland != null && tl.workspace != null)
     property list<var> filteredTopLevels: filterApps(topLevels, regexTitleToMap, regexToIgnore)
 
-    property list<var> workspaceModels: createModel(occupiedWorkspaces, filteredTopLevels, desktopEntries, alwaysVisibleWorkspaces)
+    property list<var> workspaceModels: createModel(occupiedWorkspaces, filteredTopLevels, alwaysVisibleWorkspaces)
 
     function guessIcon(appName): string {
         if (!appName || appName.length == 0) {
             return "image-missing";
         }
 
-        let entry = DesktopEntries.byId(appName);
-        if (entry != null) {
-            return entry.icon;
-        }
-        entry = DesktopEntries.heuristicLookup(appName);
-        if (entry != null) {
-            console.log("Heuristic match: " + appName);
-            return entry.icon;
+        if (iconCache.hasOwnProperty(appName)) {
+            return iconCache[appName];
         }
 
-        console.log("No match: " + appName);
-        return "image-missing";
+        let entry = DesktopEntries.byId(appName);
+        if (entry == null) entry = DesktopEntries.heuristicLookup(appName);
+
+        const icon = entry?.icon || "image-missing";
+        iconCache[appName] = icon;
+        return icon;
     }
 
-    function createModel(ws, tls, des, avw) {
-        // console.log("Workspace model change triggered")
+    function createModel(ws, tls, avw) {
         let tpByW = new Map();
         tls.forEach(tl => {
             const wId = tl.workspace;
@@ -68,8 +63,6 @@ Singleton {
                     active: false,
                     special: false,
                     topLevels: [],
-                    // To allow switching workspace by clicking on it
-                    // Lua version
                     workspace: {
                         activate: () => Hyprland.dispatch(`hl.dsp.focus({ workspace = "${idx}" })`)
                     }
@@ -85,11 +78,12 @@ Singleton {
 
     function filterApp(topLevel: HyprlandToplevel, regexTitleToMap, regexToIgnore): var {
         let mappedAppId = null;
-        regexTitleToMap.forEach(p => {
+        for (const p of regexTitleToMap) {
             if (p[0].test(topLevel.title)) {
                 mappedAppId = p[1];
+                break;
             }
-        });
+        }
         if (!mappedAppId) {
             mappedAppId = topLevel.wayland.appId ?? null;
         }
@@ -97,6 +91,7 @@ Singleton {
             return null;
         } else {
             return {
+                key: topLevel.id,
                 id: mappedAppId,
                 title: topLevel.title,
                 workspace: topLevel.workspace.id

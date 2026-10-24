@@ -1,5 +1,3 @@
-import Quickshell
-import Quickshell.Io
 import QtQuick
 import qs.base
 import qs.config

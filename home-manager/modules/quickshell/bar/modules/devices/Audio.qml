@@ -1,9 +1,6 @@
 import Quickshell
 import Quickshell.Io
-import Quickshell.Services.Pipewire
-import Quickshell.Widgets
 import QtQuick
-import QtQuick.Layouts
 import qs.base
 import qs.config
 
@@ -35,6 +32,6 @@ MouseRec {
   Process {
     id: pavucontrol
     running: false
-    command: ["bash",  "/home/aorise/.local/scripts/toggle.sh", "pavucontrol"]
+    command: ["bash", Quickshell.env("HOME") + "/.local/scripts/toggle.sh", "pavucontrol"]
   }
 }

@@ -1,9 +1,7 @@
 import QtQuick
-import QtQuick.Controls
 import Quickshell
 import qs.base
 import qs.config
-import qs.utils
 
 Rectangle {
   id: root

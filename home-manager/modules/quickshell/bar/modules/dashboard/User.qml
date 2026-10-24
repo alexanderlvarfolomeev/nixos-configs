@@ -1,7 +1,4 @@
 import QtQuick
-import QtQuick.Controls
-import Quickshell
-import Quickshell.Io
 import qs.base
 import qs.config
 import qs.modules.common

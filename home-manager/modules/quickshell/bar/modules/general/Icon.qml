@@ -1,8 +1,6 @@
 import QtQuick
-import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
-import Quickshell.Widgets
 import qs.base
 import qs.config
 import qs.modules.common

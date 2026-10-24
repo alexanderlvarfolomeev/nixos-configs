@@ -12,10 +12,10 @@ function secondsToHumanReadable(totalSeconds) {
 }
 
 function percentage(current, total) {
-  if (total == 0) {
+  if (!Number.isFinite(current) || !Number.isFinite(total) || total <= 0) {
     return 0;
   }
-  return Math.round(Math.min((current / total) * 100, 100));
+  return Math.round(Math.max(0, Math.min((current / total) * 100, 100)));
 }
 
 function kbytesToHumanReadable(kibibytes) {
@@ -23,6 +23,10 @@ function kbytesToHumanReadable(kibibytes) {
 }
 
 function getBinValue(bins, ratio) {
-  let bin = Math.min(bins.length - 1, Math.floor(ratio * bins.length))
+  if (!bins || bins.length === 0) {
+    return ""
+  }
+  const normalizedRatio = Number.isFinite(ratio) ? Math.max(0, Math.min(ratio, 1)) : 0
+  let bin = Math.min(bins.length - 1, Math.floor(normalizedRatio * bins.length))
   return bins[bin]
-}  
+}

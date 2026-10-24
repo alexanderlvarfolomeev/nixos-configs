@@ -1,7 +1,7 @@
 import Quickshell
-import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import QtQuick
+import qs.modules.hyprland
 
 Rectangle {
   id: root
@@ -31,24 +31,17 @@ Rectangle {
         bottom: parent.bottom
       }
 
-      model: DesktopEntries.applications.values
+      model: ScriptModel {
+        values: AppSingleton.filteredTopLevels
+        objectProp: "key"
+      }
 
-      // IconImage {
-      //   required property var modelData
-
-      //   anchors.verticalCenter: parent.verticalCenter
-
-      //   implicitSize: 24
-
-      //   source: Quickshell.iconPath(modelData.icon)
-      // }
-
-      Text {
+      IconImage {
         required property var modelData
 
         anchors.verticalCenter: parent.verticalCenter
-
-        text: JSON.stringify(modelData.command)
+        implicitSize: 24
+        source: Quickshell.iconPath(AppSingleton.guessIcon(modelData.id))
       }
     }
   }

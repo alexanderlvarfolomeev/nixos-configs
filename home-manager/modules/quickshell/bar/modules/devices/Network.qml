@@ -1,6 +1,5 @@
 import Quickshell
 import Quickshell.Io
-import Quickshell.Widgets
 import QtQuick
 import qs.base
 import qs.config
@@ -37,6 +36,6 @@ MouseRec {
   Process {
     id: iwgtk
     running: false
-    command: ["bash",  "/home/aorise/.local/scripts/toggle.sh", "iwgtk"]
+    command: ["bash", Quickshell.env("HOME") + "/.local/scripts/toggle.sh", "iwgtk"]
   }
 }

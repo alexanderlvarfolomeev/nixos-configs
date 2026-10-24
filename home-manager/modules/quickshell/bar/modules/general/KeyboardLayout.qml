@@ -5,67 +5,63 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
 
-/**
- * Exposes the active Hyprland Xkb keyboard layout name and code for indicators.
- *
- * TODO: use events
- */
+/** Exposes the active Hyprland XKB keyboard layout name and code for indicators. */
 Singleton {
     id: root
-    // You can read these
     property list<string> layoutCodes: []
     property var cachedLayoutCodes: ({})
     property string currentLayoutName: ""
     property string currentLayoutCode: ""
-    // For the service
-    property var baseLayoutFilePath: "/etc/X11/layouts.lst"
     property bool needsLayoutRefresh: false
 
-    // Update the layout code according to the layout name (Hyprland gives the name not the code)
     onCurrentLayoutNameChanged: root.updateLayoutCode()
     function updateLayoutCode() {
-        if (cachedLayoutCodes.hasOwnProperty(currentLayoutName)) {
+        if (!currentLayoutName) {
+            root.currentLayoutCode = "";
+        } else if (cachedLayoutCodes.hasOwnProperty(currentLayoutName)) {
             root.currentLayoutCode = cachedLayoutCodes[currentLayoutName];
-        } else {
-            layoutFile.reload();
+        } else if (layoutCodes.length > 0) {
+            root.currentLayoutCode = layoutCodes[0];
         }
     }
 
-    FileView {
+    function loadLayoutMappings(data) {
+        const lines = data.split("\n");
+        const mappings = {};
+        let section = "";
+
+        for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed) continue;
+
+            if (trimmed.startsWith("!")) {
+                section = trimmed.substring(1).trim().split(/\s+/)[0];
+                continue;
+            }
+
+            if (section === "layout") {
+                const match = line.match(/^\s*(\S+)\s+(.+)$/);
+                if (match) mappings[match[2].trim()] = match[1];
+            } else if (section === "variant") {
+                const match = line.match(/^\s*(\S+)\s+(\S+):\s+(.+)$/);
+                if (match) mappings[match[3].trim()] = match[2];
+            }
+        }
+
+        root.cachedLayoutCodes = mappings;
+        root.updateLayoutCode();
+    }
+
+    Process {
         id: layoutFile
-        path: root.baseLayoutFilePath
+        command: ["bash", Quickshell.shellPath("scripts/xkb_layouts.sh")]
+        running: true
 
-        onLoaded: {
-            const lines = text().split("\n");
-            const targetDescription = root.currentLayoutName;
-            const foundLine = lines.find(line => {
-                // Skip comment lines and empty lines
-                if (!line.trim() || line.trim().startsWith('!'))
-                    return false;
-
-                // Match layout: (whitespace + ) key + whitespace + description
-                const matchLayout = line.match(/^\s*(\S+)\s+(.+)$/);
-                if (matchLayout && matchLayout[2] === targetDescription) {
-                    root.cachedLayoutCodes[matchLayout[2]] = matchLayout[1];
-                    root.currentLayoutCode = matchLayout[1];
-                    return true;
-                }
-
-                // Match variant: (whitespace + ) variant + whitespace + key + whitespace + description
-                const matchVariant = line.match(/^\s*(\S+)\s+(\S+)\s+(.+)$/);
-                if (matchVariant && matchVariant[3] === targetDescription) {
-                    const complexLayout = matchVariant[2] + matchVariant[1];
-                    root.cachedLayoutCodes[matchVariant[3]] = complexLayout;
-                    root.currentLayoutCode = complexLayout;
-                    return true;
-                }
-                
-                return false;
-            });
+        stdout: StdioCollector {
+            onStreamFinished: root.loadLayoutMappings(text)
         }
     }
 
-    // Find out available layouts and current active layout. Should only be necessary on init
     Process {
         id: fetchLayoutsProc
         running: true
@@ -74,33 +70,40 @@ Singleton {
         stdout: StdioCollector {
             id: devicesCollector
             onStreamFinished: {
-                const parsedOutput = JSON.parse(devicesCollector.text);
-                const hyprlandKeyboard = parsedOutput["keyboards"].find(kb => kb.main === true);
-                root.layoutCodes = hyprlandKeyboard["layout"].split(",");
-                root.currentLayoutName = hyprlandKeyboard["active_keymap"];
+                try {
+                    const parsedOutput = JSON.parse(devicesCollector.text);
+                    const keyboards = parsedOutput.keyboards ?? [];
+                    const hyprlandKeyboard = keyboards.find(kb => kb.main === true) ?? keyboards[0];
+                    if (!hyprlandKeyboard) return;
+
+                    root.layoutCodes = (hyprlandKeyboard.layout ?? "").split(",").filter(Boolean);
+                    root.currentLayoutName = hyprlandKeyboard.active_keymap ?? "";
+                } catch (error) {
+                    console.warn("Failed to parse Hyprland keyboard data:", error);
+                }
+            }
+        }
+
+        onExited: {
+            if (root.needsLayoutRefresh) {
+                root.needsLayoutRefresh = false;
+                fetchLayoutsProc.running = true;
             }
         }
     }
 
-    // Update the layout name when it changes
     Connections {
         target: Hyprland
         function onRawEvent(event) {
             if (event.name === "activelayout") {
-                if (root.needsLayoutRefresh) {
-                    root.needsLayoutRefresh = false;
-                    fetchLayoutsProc.running = true;
-                }
-
-                // If there's only one layout, the updated layout is always the same
-                if (root.layoutCodes.length <= 1) return;
-
-                // Update when layout might have changed
                 const dataString = event.data;
                 root.currentLayoutName = dataString.substring(dataString.indexOf(",") + 1);
             } else if (event.name == "configreloaded") {
-                // // Mark layout code list to be updated when config is reloaded
-                root.needsLayoutRefresh = true;
+                if (fetchLayoutsProc.running) {
+                    root.needsLayoutRefresh = true;
+                } else {
+                    fetchLayoutsProc.running = true;
+                }
             }
         }
     }

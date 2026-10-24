@@ -22,6 +22,11 @@
 
     nixvim.url = "github:nix-community/nixvim/nixos-26.05";
 
+    quickshell-overview = {
+      url = "github:Shanu-Kumawat/quickshell-overview/74918ba66e0714017a6a5bfb9bf2affa66dabbc1";
+      flake = false;
+    };
+
     # not in nixpkgs
     fastpotify = {
       url = "github:crmne/fastpotify/refs/tags/v0.6.0";

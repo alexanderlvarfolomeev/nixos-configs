@@ -2,7 +2,6 @@ pragma Singleton
 
 import Quickshell
 import Quickshell.Io
-import Quickshell.Networking
 import QtQuick
 import qs.utils
 
@@ -13,64 +12,86 @@ Singleton {
   property string ethernetEmoji: ""
   property string disconnectedEmoji: " "
   property var wifiEmoji: ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
-  property string wlanId: "wlan0"
+  // Leave empty to discover the first wireless interface from sysfs.
+  property string wlanId: ""
 
   property string state: "disconnected"
   property var network: null
   property var rssi: null
-  property var ip4Adress: null
+  property var ip4Address: null
+
+  function resetState() {
+    state = "disconnected"
+    network = null
+    rssi = null
+    ip4Address = null
+  }
 
   Process {
-    id: dateProc
-    command: ["bash", "/home/aorise/nix/home-manager/modules/quickshell/bar/scripts/iwd_station_status.sh", wlanId]
+    id: stationProc
+    command: [Quickshell.shellPath("scripts/iwd_station_status.sh"), wlanId]
     running: true
+
+    onExited: (exitCode, exitStatus) => {
+      if (exitCode !== 0) {
+        root.resetState()
+      }
+    }
 
     stdout: StdioCollector {
       onStreamFinished: {
-        // console.log(this.text)
-        let lines = this.text.split(/\n/)
-        if (lines.length < 5 || !lines[0].includes("Station: " + wlanId)) {
-            state = "disconnected"
-            network = null
-            rssi = null
-            ip4Adress = null
+        const lines = this.text.split(/\n/)
+        const stationLine = lines.find(line => line.includes("Station:"))
+        const header = lines.find(line => line.includes("Property") && line.includes("Value"))
+
+        if (!stationLine || !header) {
+          root.resetState()
+          return
         }
-        // console.log(lines)
-        let header = lines[2]
-        let propertyOffset = header.indexOf("Property")
-        let valueOffset = header.indexOf("Value")
+
+        const propertyOffset = header.indexOf("Property")
+        const valueOffset = header.indexOf("Value")
         if (propertyOffset == -1 || valueOffset == -1 || propertyOffset >= valueOffset) {
-            console.log("Malformed header line for station status: '" + header + "'")
-            return
+          root.resetState()
+          return
         }
-        // console.log(propertyOffset + " " + valueOffset)
-                    
-        let properties = new Map();
-        lines.slice(5).filter(l => l.length > 0).forEach(l => {
-          let property = l.substring(propertyOffset, valueOffset).trim()
-          let propertyValue = l.substring(valueOffset).trim()
-          properties.set(property, propertyValue) 
+
+        const properties = new Map()
+        lines.filter(line => line.length >= valueOffset).forEach(line => {
+          const property = line.substring(propertyOffset, valueOffset).trim()
+          const propertyValue = line.substring(valueOffset).trim()
+          if (property && property !== "Property") {
+            properties.set(property, propertyValue)
+          }
         })
-        state = properties.get("State")
-        network = properties.get("Connected network") ?? null
-        rssi = parseInt(properties.get("RSSI").split(/\s+/)[0]) ?? null
-        ip4Adress = properties.get("IPv4 address") ?? null
+
+        const parsedRssi = Number.parseInt((properties.get("RSSI") ?? "").split(/\s+/)[0], 10)
+        root.state = properties.get("State") ?? "disconnected"
+        root.network = properties.get("Connected network") ?? null
+        root.rssi = Number.isFinite(parsedRssi) ? parsedRssi : null
+        root.ip4Address = properties.get("IPv4 address") ?? null
       }
     }
   }
 
   Timer {
-    interval: 5000
+    interval: 10000
     running: true
     repeat: true
-    onTriggered: dateProc.running = true
+    onTriggered: {
+      if (!stationProc.running) {
+        stationProc.running = true
+      }
+    }
   }
 
   function rssiLevel(dbm): real {
+    if (!Number.isFinite(dbm)) {
+      return 0
+    }
     let hardwareOptimum = -45
     let hardwareMin = -90.0
-    let strength = 1.0 - Math.min(1.0, Math.abs(dbm - hardwareOptimum) / (hardwareOptimum - hardwareMin))
-    return strength
+    return Math.max(0, 1.0 - Math.min(1.0, Math.abs(dbm - hardwareOptimum) / (hardwareOptimum - hardwareMin)))
   }
 
   function networkStateText(state, network, rssi): string {

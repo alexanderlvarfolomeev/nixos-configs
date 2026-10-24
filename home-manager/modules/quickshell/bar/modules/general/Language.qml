@@ -1,12 +1,14 @@
-import Quickshell
-import Quickshell.Io
 import QtQuick
-import QtQuick.Layouts
 import qs.base
 import qs.config
 
 Rectangle {
     id: root
+
+    readonly property string layoutCode: KeyboardLayout.currentLayoutCode.toUpperCase()
+    readonly property string layoutLabel: /^[A-Z]{2}$/.test(layoutCode)
+        ? String.fromCodePoint(...layoutCode.split('').map(c => 127397 + c.charCodeAt()))
+        : layoutCode
     anchors {
         top: parent.top
         bottom: parent.bottom
@@ -19,7 +21,7 @@ Rectangle {
     StyledText {
         id: powerIcon
         anchors.centerIn: parent
-        text: String.fromCodePoint(...KeyboardLayout.currentLayoutCode.toUpperCase().split('').map(c => 127397 + c.charCodeAt()))
+        text: root.layoutLabel
         font.pixelSize: Config.languageFontSize
     }
 }

@@ -1,6 +1,4 @@
 import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
 import Quickshell
 
 PopupWindow {
@@ -61,7 +59,7 @@ PopupWindow {
     tooltipTimer.stop()
 
     if (root.visible && target !== root.targetItem) {
-      // hide
+      root.hide()
     }
 
     root.text = text

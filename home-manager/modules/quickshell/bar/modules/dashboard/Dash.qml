@@ -1,9 +1,6 @@
 import QtQuick
-import QtQuick.Window
-import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
-import qs.base as Base
 import qs.config
 
 Item {
@@ -135,6 +132,7 @@ Item {
 
     onLoaded: {
       item.isActive = true
+      ResourceSingleton.active = true
     }
 
     function toggle() {
@@ -150,7 +148,6 @@ Item {
         }
       } else {
         dashLoader.active = true
-        ResourceSingleton.active = true // todo: make it dependency
       }
     }
   }

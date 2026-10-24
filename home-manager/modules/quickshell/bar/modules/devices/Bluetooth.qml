@@ -1,9 +1,6 @@
 import Quickshell
-import Quickshell.Io
 import Quickshell.Bluetooth as BT
-import Quickshell.Widgets
 import QtQuick
-import QtQuick.Layouts
 import qs.base
 import qs.config
 
@@ -30,10 +27,7 @@ MouseRec {
       case BT.BluetoothAdapterState.Enabling: return "\udb80\udcb1"; // 󰂱
       case BT.BluetoothAdapterState.Disabling: return "\udb80\udcb1"; // 󰂱
       case BT.BluetoothAdapterState.Blocked: return "\uf293"; // 
-      default: {
-        console.log(state);
-        return "?";
-      }
+      default: return "?";
     }
   }
 

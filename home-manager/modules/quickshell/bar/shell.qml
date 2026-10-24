@@ -1,114 +1,94 @@
 //@ pragma UseQApplication
 //@ pragma Env QS_NO_RELOAD_POPUP=1
-// TODO: try to parametrize
 //@ pragma IconTheme default
 //@ pragma Env QT_QUICK_WHEEL_DECELERATION=1000
 
-// import "modules"
-// import "modules/bar"
-// import Quickshell
-
 import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
 import Quickshell
-import Quickshell.Hyprland
 import qs.config
 import qs.modules.dashboard as Dashboard
 import qs.modules.devices as Devices
 import qs.modules.general as General
 import qs.modules.hyprland as Workspaces
 
-// ShellRoot is the top-level container Quickshell expects
 ShellRoot {
     id: root
 
-    PanelWindow {
-        id: panel
-        visible: true
-        color: Config.barColor
+    Variants {
+        id: panels
+        model: Quickshell.screens
 
-        implicitHeight: Config.barHeight
+        PanelWindow {
+            id: panel
+            required property var modelData
 
-        anchors {
-            top: true
-            left: true
-            right: true
-        }
+            screen: modelData
+            visible: true
+            color: Config.barColor
 
-        exclusiveZone: height
+            implicitHeight: Config.barHeight
 
-        // // Background of the bar
-        // Rectangle {
-        //     anchors.fill: parent
-        //     color: "#20242b"
-        //     opacity: 0.15
-        // }
-
-        // Panel contents
-        Rectangle {
-            id: content
-            anchors.fill: parent
-            color: "transparent"
-
-            Row {
-                id: leftBlocks
-                spacing: 20
-                anchors {
-                    left: content.left
-                    top: content.top
-                    bottom: content.bottom
-                    leftMargin: 8.0
-                }
-                // Layout.alignment: Qt.AlignLeft
-                
-
-                General.Icon{}
-
-                General.Time {}
+            anchors {
+                top: true
+                left: true
+                right: true
             }
 
-            Row {
-                id: centerBlocks
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    top: parent.top
-                    bottom: parent.bottom
+            exclusiveZone: height
+
+            Rectangle {
+                id: content
+                anchors.fill: parent
+                color: "transparent"
+
+                Row {
+                    id: leftBlocks
+                    spacing: 20
+                    anchors {
+                        left: content.left
+                        top: content.top
+                        bottom: content.bottom
+                        leftMargin: 8.0
+                    }
+
+                    General.Icon {}
+
+                    General.Time {}
                 }
 
-                Workspaces.Workspaces {}
-            }
+                Row {
+                    id: centerBlocks
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        top: parent.top
+                        bottom: parent.bottom
+                    }
+                    visible: leftBlocks.x + leftBlocks.width + 20 <= x
+                        && x + width + 20 <= rightBlocks.x
 
-            Row {
-                id: rightBlocks
-                spacing: 8
-                anchors {
-                    right: content.right
-                    top: content.top
-                    bottom: content.bottom
+                    Workspaces.Workspaces {}
                 }
-                // Layout.alignment: Qt.AlignRight
 
-                Devices.DeviceRow {}
+                Row {
+                    id: rightBlocks
+                    spacing: 8
+                    anchors {
+                        right: content.right
+                        top: content.top
+                        bottom: content.bottom
+                    }
 
-                // Rectangle {
-                //     anchors {
-                //         top: rightBlocks.top
-                //         bottom: rightBlocks.bottom
-                //     }
-                //     implicitWidth: 4
-                //     color: "red"
-                //     // Layout.fillHeight: true
-                // }
+                    Devices.DeviceRow {}
 
-                General.Language {}
-        
-                General.Power {}
+                    General.Language {}
+
+                    General.Power {}
+                }
             }
         }
     }
 
     Dashboard.Dash {
-        anchorWindow: panel
+        anchorWindow: panels.instances.length > 0 ? panels.instances[0] : null
     }
 }

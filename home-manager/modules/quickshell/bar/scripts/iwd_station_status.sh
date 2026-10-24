@@ -1,6 +1,20 @@
-wlan=$1
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+wlan="${1:-}"
+
 if [[ -z "$wlan" ]]; then
-  echo "NO WLAN"
-  exit 1
+  for wireless_path in /sys/class/net/*/wireless; do
+    [[ -d "$wireless_path" ]] || continue
+    wlan="$(basename "$(dirname "$wireless_path")")"
+    break
+  done
 fi
-iwctl station $wlan show | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]//g"
+
+if [[ -z "$wlan" ]]; then
+  exit 2
+fi
+
+LC_ALL=C iwctl station "$wlan" show \
+  | sed -E $'s/\033\\[[0-9;]*[[:alpha:]]//g'

@@ -13,7 +13,7 @@ import qs.views
 ShellRoot {
     id: root
 
-    SystemState { id: systemModel }
+    property var systemState: SystemState { id: systemModel }
 
     Variants {
         id: islandInstances
@@ -25,17 +25,13 @@ ShellRoot {
 
             property string page: "control"
             property bool pinned: false
-            property bool autoCollapse: true
-            property real panelOpacity: 0.94
+            property bool autoCollapse: General.islandAutoCollapse
+            property real panelOpacity: General.islandOpacity
             property real cornerRadius: Theme.cornerRadius
             readonly property int compactPreviewWidth: Theme.compactWidth
             readonly property bool expanded: pinned || islandHover.hovered || collapseTimer.running
-            readonly property int expandedWidth: page === "settings"
-                ? Theme.settingsWidth
-                : (page === "launcher" ? Theme.launcherWidth : Theme.controlWidth)
-            readonly property int expandedHeight: page === "settings"
-                ? Theme.settingsHeight
-                : (page === "launcher" ? Theme.launcherHeight : Theme.controlHeight)
+            readonly property int expandedWidth: page === "launcher" ? Theme.launcherWidth : Theme.controlWidth
+            readonly property int expandedHeight: page === "launcher" ? Theme.launcherHeight : Theme.controlHeight
 
             function openPage(nextPage) {
                 page = nextPage;
@@ -52,7 +48,7 @@ ShellRoot {
             screen: modelData
             visible: true
             aboveWindows: true
-            focusable: expanded && (page === "launcher" || page === "settings")
+            focusable: expanded && (page === "launcher")
             exclusionMode: ExclusionMode.Ignore
             color: "transparent"
             implicitWidth: expanded ? expandedWidth : Theme.compactWidth
@@ -86,27 +82,13 @@ ShellRoot {
                     Theme.background.b,
                     islandWindow.panelOpacity
                 )
-                border.color: islandWindow.expanded ? Theme.borderStrong : Theme.border
+                border.color: "blue" // islandWindow.expanded ? Theme.borderStrong : Theme.border
                 border.width: 1
 
                 Behavior on radius {
                     NumberAnimation {
                         duration: Theme.animationDuration
-                        easing.type: Easing.OutCubic
                     }
-                }
-
-                Rectangle {
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                        right: parent.right
-                        leftMargin: parent.radius
-                        rightMargin: parent.radius
-                    }
-                    height: 1
-                    color: "#55ffffff"
-                    opacity: islandWindow.expanded ? 0.5 : 0.7
                 }
 
                 HoverHandler {
@@ -135,6 +117,7 @@ ShellRoot {
                         spacing: 9
 
                         Row {
+                            id: workspacesRow
                             anchors.verticalCenter: parent.verticalCenter
                             spacing: 3
                             Repeater {
@@ -188,6 +171,7 @@ ShellRoot {
                                     ? Theme.warning
                                     : Theme.textMuted
                             }
+
                             Text {
                                 anchors.verticalCenter: parent.verticalCenter
                                 visible: systemModel.batteryPercent > 0
@@ -204,9 +188,7 @@ ShellRoot {
                 Loader {
                     anchors.fill: parent
                     active: islandWindow.expanded || contentUnload.running
-                    sourceComponent: islandWindow.page === "settings"
-                        ? settingsPage
-                        : (islandWindow.page === "launcher" ? launcherPage : controlPage)
+                    sourceComponent: islandWindow.page === "launcher" ? launcherPage : controlPage
                     opacity: islandWindow.expanded ? 1 : 0
 
                     Behavior on opacity {
@@ -236,7 +218,7 @@ ShellRoot {
             Component {
                 id: controlPage
                 ControlCenter {
-                    systemModel: systemModel
+                    systemModel: root.systemState
                     controller: islandWindow
                 }
             }
@@ -244,11 +226,6 @@ ShellRoot {
             Component {
                 id: launcherPage
                 Launcher { controller: islandWindow }
-            }
-
-            Component {
-                id: settingsPage
-                Settings { controller: islandWindow }
             }
         }
     }
@@ -266,10 +243,6 @@ ShellRoot {
 
         function launcher() {
             for (const instance of islandInstances.instances) instance.openPage("launcher");
-        }
-
-        function settings() {
-            for (const instance of islandInstances.instances) instance.openPage("settings");
         }
 
         function close() {

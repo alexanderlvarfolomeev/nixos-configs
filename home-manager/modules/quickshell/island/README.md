@@ -24,9 +24,3 @@ qs ipc -p ~/nix/home-manager/modules/quickshell/island call island close
 
 The compact pill expands on hover. Clicking the pill pins it; leaving an
 unpinned surface collapses it after a short grace period.
-
-## Preview
-
-| Control center | Launcher | Settings |
-| --- | --- | --- |
-| ![Control center](preview/control-center.svg) | ![Launcher](preview/launcher.svg) | ![Settings](preview/settings.svg) |

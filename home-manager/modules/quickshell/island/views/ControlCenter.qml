@@ -52,13 +52,6 @@ Item {
                     buttonSize: 30
                     onClicked: Quickshell.execDetached(["loginctl", "lock-session"])
                 }
-
-                IconButton {
-                    icon: "dark_mode"
-                    buttonSize: 30
-                    checked: root.systemModel.doNotDisturb
-                    onClicked: root.systemModel.toggleDoNotDisturb()
-                }
             }
         }
 
@@ -220,10 +213,6 @@ Item {
                 IconButton {
                     icon: "search"
                     onClicked: root.controller.openPage("launcher")
-                }
-                IconButton {
-                    icon: "settings"
-                    onClicked: root.controller.openPage("settings")
                 }
             }
         }

@@ -20,6 +20,11 @@ ShellRoot {
     FloatingWindow {
         implicitWidth: 1000
         implicitHeight: 650
+        IslandComponents.GlassSurface {
+            anchors.fill: parent
+            radius: 24
+            z: -1
+        }
         Item {
             width: parent.width
             height: 40

@@ -10,3 +10,4 @@ StatusSummary 1.0 StatusSummary.qml
 ApplicationIcon 1.0 ApplicationIcon.qml
 PageFrame 1.0 PageFrame.qml
 MetricCard 1.0 MetricCard.qml
+GlassSurface 1.0 GlassSurface.qml

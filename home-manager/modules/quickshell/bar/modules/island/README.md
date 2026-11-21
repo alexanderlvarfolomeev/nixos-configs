@@ -31,6 +31,20 @@ controls, and player selection. Resources restores CPU, memory, and root-filesys
 usage; its sampler and storage query exist only while the page is loaded.
 System restores the user/session, OS, kernel, hostname, and uptime information.
 
+## Glass surface
+
+The island uses a translucent blue tint (28% collapsed, 56% expanded) with native
+gradient highlights and a glossy double rim. Tune these opacities in
+`config/General.qml`; text and workspace tiles keep their own opacity and palette.
+
+Background blur follows the animated rounded surface through Quickshell's
+`BackgroundEffect` region. Hyprland also has a scoped `qsbar-island-glass` layer
+rule in `hyprland.lua`, matching the `qsbar-island` namespace. Its alpha cutoff
+leaves the fixed backing window transparent outside the island. Load the updated
+Hyprland config to enable that rule. Actual blur requires a supporting compositor;
+the tint and highlights still render without it. There is no screen-capture loop
+or shader compilation dependency.
+
 ## Adding a page
 
 Add the view under `views/` and export it in that directory's `qmldir`. In

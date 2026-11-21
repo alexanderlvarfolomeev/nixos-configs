@@ -434,6 +434,16 @@ hl.window_rule({
 -- })
 
 -- Layer rules also return a handle.
+-- Blur only painted island pixels; its fixed transparent backing window must
+-- remain clear outside the animated rounded surface.
+hl.layer_rule({
+	name = "qsbar-island-glass",
+	match = { namespace = "^qsbar-island$" },
+	blur = true,
+	ignore_alpha = 0.01,
+	xray = false,
+})
+
 -- local overlayLayerRule = hl.layer_rule({
 --     name  = "no-anim-overlay",
 --     match = { namespace = "^my-overlay$" },

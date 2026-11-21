@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import Quickshell.Wayland
 import qs.modules.island.components
 import qs.modules.island.config
 import qs.modules.island.services
@@ -39,6 +40,7 @@ Scope {
             exclusionMode: ExclusionMode.Ignore
             color: "transparent"
             surfaceFormat.opaque: false
+            WlrLayershell.namespace: "qsbar-island"
 
             // Keep the Wayland backing buffer stable. Resizing a layer-shell
             // window is asynchronous, which can expose a stale/unpainted strip
@@ -53,10 +55,15 @@ Scope {
                 radius: islandSurface.radius
             }
 
+            BackgroundEffect.blurRegion: Region {
+                item: islandSurface
+                radius: islandSurface.radius
+            }
+
             anchors.top: true
             margins.top: root.topMargin
 
-            Rectangle {
+            GlassSurface {
                 id: islandSurface
                 anchors {
                     top: parent.top
@@ -66,14 +73,11 @@ Scope {
                 height: state.expanded ? state.currentPage.height : Theme.compactHeight
                 clip: true
                 radius: state.expanded ? Theme.cornerRadius : height / 2
-                color: Qt.rgba(
-                    Theme.background.r,
-                    Theme.background.g,
-                    Theme.background.b,
-                    General.islandOpacity
-                )
-                border.color: state.expanded ? Theme.borderStrong : Theme.border
-                border.width: 1
+                tintOpacity: state.expanded ? General.expandedIslandOpacity : General.islandOpacity
+
+                Behavior on tintOpacity {
+                    NumberAnimation { duration: Theme.animationDuration }
+                }
 
                 Behavior on width {
                     NumberAnimation {

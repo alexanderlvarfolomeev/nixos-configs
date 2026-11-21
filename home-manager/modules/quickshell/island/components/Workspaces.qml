@@ -1,8 +1,7 @@
 import QtQuick
-import Quickshell
 import Quickshell.Hyprland
-import Quickshell.Widgets
 import qs.config
+import qs.services
 
 Row {
     id: root
@@ -23,14 +22,7 @@ Row {
                 exists: workspace !== undefined,
                 active: workspace?.focused ?? false,
                 special: id < 0,
-                apps: windows.filter(window => window.workspace?.id === id && window.wayland != null)
-                    .map(window => {
-                        let appId = window.wayland.appId;
-                        if (/^Yazi/.test(window.title)) appId = "yazi";
-                        else if (/^Brogue/.test(window.title)) appId = "brogue-ce";
-                        else if (/^auto-cpufreq/.test(window.title)) appId = "auto-cpufreq-gtk";
-                        return appId;
-                    }).filter(appId => appId && !/^(Alacritty|ueberzugpp|org\.pulseaudio\.pavucontrol$|com\.gabm\.satty|foot)/.test(appId))
+                apps: windows.filter(window => window.workspace?.id === id)
             };
         });
     }
@@ -77,14 +69,9 @@ Row {
 
                         Repeater {
                             model: tile.modelData.apps
-                            IconImage {
-                                required property string modelData
-                                implicitSize: 20
-                                source: {
-                                    const entry = DesktopEntries.byId(modelData)
-                                        ?? DesktopEntries.heuristicLookup(modelData);
-                                    return Quickshell.iconPath(entry?.icon || "application-x-executable");
-                                }
+                            ApplicationIcon {
+                                required property var modelData
+                                source: DesktopIcons.sourceFor(modelData)
                             }
                         }
                     }

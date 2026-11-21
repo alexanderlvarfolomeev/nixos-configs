@@ -1,4 +1,6 @@
 module qs.modules.island.views
 ControlCenter 1.0 ControlCenter.qml
 Launcher 1.0 Launcher.qml
-Settings 1.0 Settings.qml
+Media 1.0 Media.qml
+Resources 1.0 Resources.qml
+SystemInfo 1.0 SystemInfo.qml

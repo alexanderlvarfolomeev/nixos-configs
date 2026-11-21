@@ -6,57 +6,18 @@ import Quickshell
 import qs.modules.island.components
 import qs.modules.island.config
 
-Item {
+PageFrame {
     id: root
 
     required property var systemModel
-    required property var controller
+    title: "Control Center"
+    subtitle: systemModel.dateLabel
 
     Column {
         anchors {
             fill: parent
-            margins: 14
         }
         spacing: 8
-
-        Item {
-            width: parent.width
-            height: 32
-
-            Column {
-                anchors {
-                    left: parent.left
-                    verticalCenter: parent.verticalCenter
-                }
-                spacing: -1
-
-                Base.TextShadow {
-                    text: "Control Center"
-                    color: Theme.text
-                    font { family: Theme.fontFamily; pixelSize: 16; weight: Font.DemiBold }
-                }
-
-                Base.TextShadow {
-                    text: root.systemModel.dateLabel
-                    color: Theme.textMuted
-                    font { family: Theme.fontFamily; pixelSize: 9 }
-                }
-            }
-
-            Row {
-                anchors {
-                    right: parent.right
-                    verticalCenter: parent.verticalCenter
-                }
-                spacing: 7
-
-                IconButton {
-                    icon: "lock"
-                    buttonSize: 30
-                    onClicked: Quickshell.execDetached(["loginctl", "lock-session"])
-                }
-            }
-        }
 
         Grid {
             width: parent.width
@@ -199,25 +160,5 @@ Item {
             TapHandler { onTapped: Quickshell.execDetached(["swaync-client", "-t"]) }
         }
 
-        Item {
-            width: parent.width
-            height: 32
-
-            Row {
-                anchors.centerIn: parent
-                spacing: 8
-
-                Repeater {
-                    model: root.controller.pages
-                    IconButton {
-                        required property var modelData
-                        icon: modelData.icon
-                        tooltip: modelData.title
-                        checked: root.controller.pageId === modelData.key
-                        onClicked: root.controller.openPage(modelData.key)
-                    }
-                }
-            }
-        }
     }
 }

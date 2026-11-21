@@ -34,12 +34,15 @@ Row {
         Rectangle {
             id: tile
             required property var modelData
+            objectName: "workspace-" + modelData.id
             width: workspaceRow.width + 20
             height: root.height
             radius: 12
-            color: modelData.active ? Theme.workspaceActive
-                : pointer.hovered ? Theme.workspaceHover
+            color: pointer.hovered ? Theme.workspaceHover
+                : modelData.active ? Theme.workspaceActive
                 : modelData.exists ? Theme.accentSoft : "transparent"
+            border.width: 1
+            border.color: pointer.hovered ? Theme.accent : "transparent"
 
             Row {
                 id: workspaceRow

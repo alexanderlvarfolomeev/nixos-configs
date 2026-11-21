@@ -16,6 +16,7 @@ ShellRoot {
     }
     property int clicks: 0
     property int holds: 0
+    Component { id: resourceFixture; ResourceMonitor {} }
     FloatingWindow {
         implicitWidth: 1000
         implicitHeight: 650
@@ -70,6 +71,24 @@ ShellRoot {
             try {
                 root.check(page.status === Loader.Ready && compact.status === Loader.Ready, "page/compact load");
                 if (root.step === 0) {
+                    root.check(!root.registry.find("settings"), "settings removed");
+                    root.check(!root.controller.expanded, "starts collapsed");
+                    root.controller.selectPage("control");
+                    root.check(!root.controller.expanded, "page selection cannot expand");
+                    root.controller.openPage("control");
+                    root.check(root.controller.expanded, "IPC command opens");
+                    root.controller.closeIsland();
+                    root.check(!root.controller.expanded, "close collapses");
+
+                    const monitor = resourceFixture.createObject(root);
+                    monitor.previousTotal = 0;
+                    monitor.previousIdle = 0;
+                    monitor.updateCpu("cpu 10 0 10 80 0 0 0 0 0 0");
+                    monitor.updateCpu("cpu 30 0 30 140 0 0 0 0 2000 2000");
+                    root.check(Math.abs(monitor.cpuUsage - 0.4) < 0.001, "CPU excludes double-counted guest time");
+                    monitor.updateMemory("MemTotal: 100 kB\nMemAvailable: 40 kB");
+                    root.check(monitor.memoryUsed === 60, "memory uses available, not just free");
+                    monitor.destroy();
                     root.check(devices.children[1].enabled, "disabled Bluetooth remains clickable");
                     root.check(devices.width > 100, "device status layout has width");
                     button.clicked({wasHeld: false});

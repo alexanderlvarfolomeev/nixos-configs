@@ -65,12 +65,12 @@ Scope {
                 width: state.expanded ? state.currentPage.width : islandWindow.collapsedWidth
                 height: state.expanded ? state.currentPage.height : Theme.compactHeight
                 clip: true
-                radius: state.expanded ? state.cornerRadius : height / 2
+                radius: state.expanded ? Theme.cornerRadius : height / 2
                 color: Qt.rgba(
                     Theme.background.r,
                     Theme.background.g,
                     Theme.background.b,
-                    state.panelOpacity
+                    General.islandOpacity
                 )
                 border.color: state.expanded ? Theme.borderStrong : Theme.border
                 border.width: 1
@@ -94,12 +94,6 @@ Scope {
                         duration: Theme.animationDuration
                     }
                 }
-
-                // HoverHandler {
-                //     id: islandHover
-
-                //     onHoveredChanged: state.hovered = hovered
-                // }
 
                 CollapsedIsland {
                     id: compactContent
@@ -157,10 +151,6 @@ Scope {
 
         function open(page: string) {
             for (const instance of islandInstances.instances) instance.controller.openPage(page);
-        }
-
-        function settings() {
-            for (const instance of islandInstances.instances) instance.controller.openPage("settings");
         }
 
         function close() {

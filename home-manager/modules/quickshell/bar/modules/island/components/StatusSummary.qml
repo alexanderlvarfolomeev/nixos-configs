@@ -5,7 +5,6 @@ import qs.modules.island.config
 Item {
     id: root
     required property var systemModel
-    signal togglePinned()
     implicitWidth: Theme.compactWidth
     implicitHeight: Theme.compactHeight
 
@@ -80,5 +79,4 @@ Item {
         }
     }
 
-    TapHandler { onTapped: root.togglePinned() }
 }

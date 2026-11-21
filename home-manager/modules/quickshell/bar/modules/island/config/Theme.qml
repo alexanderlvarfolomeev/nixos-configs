@@ -18,7 +18,7 @@ Singleton {
     readonly property color accentSoft: "#2800b4d8"
     readonly property color activeText: Config.activeTextColor
     readonly property color workspaceActive: Config.bluetoothBgColor
-    readonly property color workspaceHover: Config.panelColor
+    readonly property color workspaceHover: Qt.lighter(Config.bluetoothBgColor, 1.2)
     readonly property color workspaceAppsActive: "#90ffffff"
     readonly property color workspaceApps: "#50ffffff"
     readonly property color success: "#ff82d8a6"
@@ -34,8 +34,6 @@ Singleton {
     readonly property int controlHeight: 408
     readonly property int launcherWidth: 390
     readonly property int launcherHeight: 326
-    readonly property int settingsWidth: 650
-    readonly property int settingsHeight: 492
     readonly property int animationDuration: 260
     readonly property int cornerRadius: 24
 }

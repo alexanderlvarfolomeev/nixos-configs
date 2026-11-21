@@ -19,9 +19,15 @@ QtObject {
         { key: "launcher", title: "Launcher", icon: "search",
             width: Theme.launcherWidth, height: Theme.launcherHeight,
             keyboardFocus: true, view: launcherView, compactView: statusSummary },
-        { key: "settings", title: "Settings", icon: "settings",
-            width: Theme.settingsWidth, height: Theme.settingsHeight,
-            keyboardFocus: true, view: settingsView, compactView: statusSummary }
+        { key: "media", title: "Media", icon: "music_note",
+            width: 430, height: 450,
+            keyboardFocus: false, view: mediaView, compactView: statusSummary },
+        { key: "resources", title: "Resources", icon: "monitoring",
+            width: 430, height: 400,
+            keyboardFocus: false, view: resourcesView, compactView: workspaceSummary },
+        { key: "system", title: "System", icon: "person",
+            width: 430, height: 430,
+            keyboardFocus: false, view: systemView, compactView: statusSummary }
     ]
     readonly property int maximumWidth: Math.max(...entries.map(page => page.width))
     readonly property int maximumHeight: Math.max(...entries.map(page => page.height))
@@ -36,14 +42,13 @@ QtObject {
     property Component launcherView: Component {
         Launcher { controller: root.controller }
     }
-    property Component settingsView: Component {
-        Settings { controller: root.controller }
-    }
+    property Component mediaView: Component { Media { controller: root.controller } }
+    property Component resourcesView: Component { Resources { controller: root.controller } }
+    property Component systemView: Component { SystemInfo { controller: root.controller } }
     property Component workspaceSummary: Component { WorkspaceSummary {} }
     property Component statusSummary: Component {
         StatusSummary {
             systemModel: root.systemModel
-            onTogglePinned: root.controller.toggle()
         }
     }
 }

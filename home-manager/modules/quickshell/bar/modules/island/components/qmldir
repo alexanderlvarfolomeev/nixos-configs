@@ -8,3 +8,5 @@ CollapsedIsland 1.0 CollapsedIsland.qml
 WorkspaceSummary 1.0 WorkspaceSummary.qml
 StatusSummary 1.0 StatusSummary.qml
 ApplicationIcon 1.0 ApplicationIcon.qml
+PageFrame 1.0 PageFrame.qml
+MetricCard 1.0 MetricCard.qml

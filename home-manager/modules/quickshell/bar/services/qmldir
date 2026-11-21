@@ -8,3 +8,6 @@ singleton Network 1.0 Network.qml
 singleton Clock 1.0 Clock.qml
 singleton KeyboardLayout 1.0 KeyboardLayout.qml
 singleton OsInfo 1.0 OsInfo.qml
+singleton Media 1.0 Media.qml
+ResourceMonitor 1.0 ResourceMonitor.qml
+SystemInfo 1.0 SystemInfo.qml

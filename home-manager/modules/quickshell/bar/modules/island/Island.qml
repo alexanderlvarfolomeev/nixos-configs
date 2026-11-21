@@ -1,16 +1,14 @@
-//@ pragma UseQApplication
-//@ pragma Env QS_NO_RELOAD_POPUP=1
-//@ pragma IconTheme default
-
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import qs.components
-import qs.config
-import qs.services
+import qs.modules.island.components
+import qs.modules.island.config
+import qs.modules.island.services
 
-ShellRoot {
+Scope {
     id: root
+    required property int barHeight
+    readonly property int topMargin: Math.max(0, (barHeight - Theme.compactHeight) / 2)
 
     property var systemState: SystemState { id: systemModel }
 
@@ -57,7 +55,7 @@ ShellRoot {
             }
 
             anchors.top: true
-            margins.top: 3
+            margins.top: root.topMargin
 
             Rectangle {
                 id: islandSurface
@@ -168,6 +166,14 @@ ShellRoot {
 
         function close() {
             for (const instance of islandInstances.instances) instance.controller.closeIsland();
+        }
+    }
+
+    // Preserve qsbar's existing Super+D binding and dashboard IPC clients.
+    IpcHandler {
+        target: "dashboard"
+        function toggle() {
+            for (const instance of islandInstances.instances) instance.controller.toggle();
         }
     }
 

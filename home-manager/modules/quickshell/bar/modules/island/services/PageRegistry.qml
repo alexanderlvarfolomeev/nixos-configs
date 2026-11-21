@@ -1,9 +1,9 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import qs.components
-import qs.config
-import qs.views
+import qs.modules.island.components
+import qs.modules.island.config
+import qs.modules.island.views
 
 QtObject {
     id: root

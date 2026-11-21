@@ -1,25 +1,21 @@
-# Repo-local Quickshell island
+# Qsbar island
 
-This shell is independent from `bar/` and is intentionally not autostarted. Run
-it directly from the checkout for immediate QML reloads:
-
-```sh
-qs --path ~/nix/home-manager/modules/quickshell/island
-```
-
-The existing bar remains at:
+The island is part of qsbar and starts with it. Run the bar directly from the
+checkout for immediate QML reloads:
 
 ```sh
 qs --path ~/nix/home-manager/modules/quickshell/bar
 ```
 
+The existing `dashboard toggle` IPC target (Super+D) also toggles the island.
+
 IPC entry points (replace the path if the checkout lives elsewhere):
 
 ```sh
-qs ipc -p ~/nix/home-manager/modules/quickshell/island call island toggle
-qs ipc -p ~/nix/home-manager/modules/quickshell/island call island launcher
-qs ipc -p ~/nix/home-manager/modules/quickshell/island call island settings
-qs ipc -p ~/nix/home-manager/modules/quickshell/island call island close
+qs ipc -p ~/nix/home-manager/modules/quickshell/bar call island toggle
+qs ipc -p ~/nix/home-manager/modules/quickshell/bar call island launcher
+qs ipc -p ~/nix/home-manager/modules/quickshell/bar call island settings
+qs ipc -p ~/nix/home-manager/modules/quickshell/bar call island close
 ```
 
 The compact pill expands after a short hover delay; leaving an unpinned surface
@@ -38,7 +34,7 @@ The shell derives its loaders, focus policy, and backing size from that entry.
 Control Center navigation also uses the registry. Open any registered page with:
 
 ```sh
-qs ipc -p ~/nix/home-manager/modules/quickshell/island call island open launcher
+qs ipc -p ~/nix/home-manager/modules/quickshell/bar call island open launcher
 ```
 
 `IslandController.qml` owns navigation, pinning, and hover timers. Views receive

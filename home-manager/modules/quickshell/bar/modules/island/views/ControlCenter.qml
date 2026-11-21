@@ -2,8 +2,8 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
-import qs.components
-import qs.config
+import qs.modules.island.components
+import qs.modules.island.config
 
 Item {
     id: root

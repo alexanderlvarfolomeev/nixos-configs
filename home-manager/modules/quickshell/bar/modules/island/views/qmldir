@@ -1,4 +1,4 @@
-module qs.views
+module qs.modules.island.views
 ControlCenter 1.0 ControlCenter.qml
 Launcher 1.0 Launcher.qml
 Settings 1.0 Settings.qml

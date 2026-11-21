@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell.Hyprland
-import qs.config
-import qs.services
+import qs.modules.island.config
+import qs.modules.island.services
 
 Row {
     id: root

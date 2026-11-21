@@ -6,10 +6,9 @@
 import QtQuick
 import Quickshell
 import qs.config
-import qs.modules.dashboard as Dashboard
+import qs.modules.island as Island
 import qs.modules.devices as Devices
 import qs.modules.general as General
-import qs.modules.hyprland as Workspaces
 
 ShellRoot {
     id: root
@@ -57,19 +56,6 @@ ShellRoot {
                 }
 
                 Row {
-                    id: centerBlocks
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                        top: parent.top
-                        bottom: parent.bottom
-                    }
-                    visible: leftBlocks.x + leftBlocks.width + 20 <= x
-                        && x + width + 20 <= rightBlocks.x
-
-                    Workspaces.Workspaces {}
-                }
-
-                Row {
                     id: rightBlocks
                     spacing: 8
                     anchors {
@@ -88,7 +74,7 @@ ShellRoot {
         }
     }
 
-    Dashboard.Dash {
-        anchorWindow: panels.instances.length > 0 ? panels.instances[0] : null
+    Island.Island {
+        barHeight: Config.barHeight
     }
 }

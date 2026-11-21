@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import qs.config
+import qs.modules.island.config
 
 Rectangle {
     id: root

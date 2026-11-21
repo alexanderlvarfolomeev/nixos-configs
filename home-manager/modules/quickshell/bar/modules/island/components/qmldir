@@ -1,4 +1,4 @@
-module qs.components
+module qs.modules.island.components
 IconButton 1.0 IconButton.qml
 IconLabel 1.0 IconLabel.qml
 SliderRow 1.0 SliderRow.qml

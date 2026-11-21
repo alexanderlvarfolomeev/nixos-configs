@@ -1,5 +1,5 @@
 import QtQuick
-import qs.config
+import qs.modules.island.config
 
 Item {
     implicitWidth: workspaceStrip.implicitWidth + 24

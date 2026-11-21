@@ -34,7 +34,6 @@ ShellRoot {
                 case 2:
                     if (!Qt.colorEqual(root.tile.color, Theme.workspaceHover) || Qt.colorEqual(root.tile.color, root.idle))
                         throw new Error("empty workspace hover color");
-                    if (!Qt.colorEqual(root.tile.border.color, Theme.accent)) throw new Error("hover outline");
                     events.mouseMove(strip, strip.width + 20, 70);
                     break;
                 case 3:

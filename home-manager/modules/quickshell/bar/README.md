@@ -40,7 +40,7 @@ helper-command messages are expected; real device interaction and Wayland
 placement still require a desktop session.
 
 The optional pointer check (requires QtTest) sends real Qt mouse-move events to
-an empty workspace tile and verifies its hover color and outline:
+an empty workspace tile and verifies its hover color and restoration on exit:
 
 ```sh
 QT_QPA_PLATFORM=offscreen qs --path ~/nix/home-manager/modules/quickshell/bar/workspace-hover-smoke.qml

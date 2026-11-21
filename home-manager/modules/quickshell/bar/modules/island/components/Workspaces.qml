@@ -38,11 +38,9 @@ Row {
             width: workspaceRow.width + 20
             height: root.height
             radius: 12
-            color: pointer.hovered ? Theme.workspaceHover
-                : modelData.active ? Theme.workspaceActive
+            color: modelData.active ? Theme.workspaceActive
+                : pointer.hovered ? Theme.workspaceHover
                 : modelData.exists ? Theme.accentSoft : "transparent"
-            border.width: 1
-            border.color: pointer.hovered ? Theme.accent : "transparent"
 
             Row {
                 id: workspaceRow

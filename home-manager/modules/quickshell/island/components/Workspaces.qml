@@ -55,7 +55,7 @@ Row {
                 anchors.centerIn: parent
                 spacing: 10
 
-                Text {
+                StyledText {
                     anchors.verticalCenter: parent.verticalCenter
                     text: tile.modelData.special ? "S" : tile.modelData.id
                     color: tile.modelData.active ? Theme.activeText : Theme.accent

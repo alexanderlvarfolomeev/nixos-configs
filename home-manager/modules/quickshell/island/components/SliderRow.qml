@@ -26,7 +26,7 @@ Item {
         color: Theme.textMuted
     }
 
-    Text {
+    StyledText {
         id: title
         anchors {
             left: glyph.right

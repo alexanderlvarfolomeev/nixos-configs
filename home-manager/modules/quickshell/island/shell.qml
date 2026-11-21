@@ -8,7 +8,6 @@ import Quickshell.Io
 import qs.components
 import qs.config
 import qs.services
-import qs.views
 
 ShellRoot {
     id: root
@@ -23,36 +22,23 @@ ShellRoot {
             id: islandWindow
             required property var modelData
 
-            property string page: "control"
-            property bool pinned: false
-            property bool autoCollapse: General.islandAutoCollapse
-            property real panelOpacity: General.islandOpacity
-            property real cornerRadius: Theme.cornerRadius
-            readonly property int compactPreviewWidth: Theme.compactWidth
-            property bool hoverExpanded: false
-            readonly property bool expanded: pinned || hoverExpanded || collapseTimer.running
-            readonly property int expandedWidth: page === "launcher" ? Theme.launcherWidth : Theme.controlWidth
-            readonly property int expandedHeight: page === "launcher" ? Theme.launcherHeight : Theme.controlHeight
+            property var controller: IslandController {
+                id: state
+                registry: pageRegistry
+            }
+            property var registry: PageRegistry {
+                id: pageRegistry
+                systemModel: root.systemState
+                controller: state
+            }
             readonly property int collapsedWidth: Math.min(compactContent.implicitWidth, screen.width - 24)
-            readonly property int backingWidth: Math.max(collapsedWidth, Theme.controlWidth, Theme.launcherWidth)
-            readonly property int backingHeight: Math.max(Theme.compactHeight, Theme.controlHeight, Theme.launcherHeight)
-
-            function openPage(nextPage) {
-                page = nextPage;
-                pinned = true;
-                collapseTimer.stop();
-            }
-
-            function closeIsland() {
-                pinned = false;
-                page = "control";
-                collapseTimer.stop();
-            }
+            readonly property int backingWidth: Math.max(collapsedWidth, pageRegistry.maximumWidth)
+            readonly property int backingHeight: Math.max(Theme.compactHeight, pageRegistry.maximumHeight)
 
             screen: modelData
             visible: true
             aboveWindows: true
-            focusable: expanded && (page === "launcher")
+            focusable: state.expanded && state.currentPage.keyboardFocus
             exclusionMode: ExclusionMode.Ignore
             color: "transparent"
             surfaceFormat.opaque: false
@@ -79,17 +65,17 @@ ShellRoot {
                     top: parent.top
                     horizontalCenter: parent.horizontalCenter
                 }
-                width: islandWindow.expanded ? islandWindow.expandedWidth : islandWindow.collapsedWidth
-                height: islandWindow.expanded ? islandWindow.expandedHeight : Theme.compactHeight
+                width: state.expanded ? state.currentPage.width : islandWindow.collapsedWidth
+                height: state.expanded ? state.currentPage.height : Theme.compactHeight
                 clip: true
-                radius: islandWindow.expanded ? islandWindow.cornerRadius : height / 2
+                radius: state.expanded ? state.cornerRadius : height / 2
                 color: Qt.rgba(
                     Theme.background.r,
                     Theme.background.g,
                     Theme.background.b,
-                    islandWindow.panelOpacity
+                    state.panelOpacity
                 )
-                border.color: islandWindow.expanded ? Theme.borderStrong : Theme.border
+                border.color: state.expanded ? Theme.borderStrong : Theme.border
                 border.width: 1
 
                 Behavior on width {
@@ -115,38 +101,21 @@ ShellRoot {
                 HoverHandler {
                     id: islandHover
 
-                    onHoveredChanged: {
-                        if (hovered) {
-                            collapseTimer.stop();
-                            hoverExpandTimer.restart();
-                        } else if (!islandWindow.pinned) {
-                            hoverExpandTimer.stop();
-                            if (islandWindow.hoverExpanded) {
-                                if (islandWindow.autoCollapse) collapseTimer.restart();
-                                else islandWindow.pinned = true;
-                            }
-                            islandWindow.hoverExpanded = false;
-                        } else {
-                            hoverExpandTimer.stop();
-                            islandWindow.hoverExpanded = false;
-                        }
-                    }
+                    onHoveredChanged: state.hovered = hovered
                 }
 
                 CollapsedIsland {
                     id: compactContent
                     anchors.fill: parent
-                    systemModel: root.systemState
-                    page: islandWindow.page
-                    expanded: islandWindow.expanded
-                    onTogglePinned: islandWindow.pinned = !islandWindow.pinned
+                    sourceComponent: state.currentPage.compactView
+                    expanded: state.expanded
                 }
                 Loader {
                     anchors.fill: parent
-                    enabled: islandWindow.expanded
-                    active: islandWindow.expanded || contentUnload.running
-                    sourceComponent: islandWindow.page === "launcher" ? launcherPage : controlPage
-                    opacity: islandWindow.expanded ? 1 : 0
+                    enabled: state.expanded
+                    active: state.expanded || contentUnload.running
+                    sourceComponent: state.currentPage.view
+                    opacity: state.expanded ? 1 : 0
 
                     Behavior on opacity {
                         NumberAnimation { duration: 170; easing.type: Easing.OutQuad }
@@ -154,42 +123,22 @@ ShellRoot {
                 }
             }
 
-            // Give workspace tiles time to receive a click before expansion.
-            Timer {
-                id: hoverExpandTimer
-                interval: 450
-                onTriggered: islandWindow.hoverExpanded = islandHover.hovered
-            }
-
-            Timer {
-                id: collapseTimer
-                interval: 320
-                repeat: false
-                onTriggered: islandWindow.page = "control"
-            }
-
             Timer {
                 id: contentUnload
                 interval: Theme.animationDuration + 100
                 repeat: false
+                onTriggered: state.pageId = pageRegistry.defaultPage
             }
 
-            onExpandedChanged: {
-                if (expanded) contentUnload.stop();
-                else contentUnload.restart();
-            }
-
-            Component {
-                id: controlPage
-                ControlCenter {
-                    systemModel: root.systemState
-                    controller: islandWindow
+            Connections {
+                target: state
+                function onExpandedChanged() {
+                    if (state.expanded) {
+                        contentUnload.stop();
+                        root.systemState.refreshControls();
+                    }
+                    else contentUnload.restart();
                 }
-            }
-
-            Component {
-                id: launcherPage
-                Launcher { controller: islandWindow }
             }
         }
     }
@@ -198,19 +147,27 @@ ShellRoot {
         target: "island"
 
         function toggle() {
-            for (const instance of islandInstances.instances) instance.pinned = !instance.pinned;
+            for (const instance of islandInstances.instances) instance.controller.toggle();
         }
 
         function controlCenter() {
-            for (const instance of islandInstances.instances) instance.openPage("control");
+            for (const instance of islandInstances.instances) instance.controller.openPage("control");
         }
 
         function launcher() {
-            for (const instance of islandInstances.instances) instance.openPage("launcher");
+            for (const instance of islandInstances.instances) instance.controller.openPage("launcher");
+        }
+
+        function open(page: string) {
+            for (const instance of islandInstances.instances) instance.controller.openPage(page);
+        }
+
+        function settings() {
+            for (const instance of islandInstances.instances) instance.controller.openPage("settings");
         }
 
         function close() {
-            for (const instance of islandInstances.instances) instance.closeIsland();
+            for (const instance of islandInstances.instances) instance.controller.closeIsland();
         }
     }
 

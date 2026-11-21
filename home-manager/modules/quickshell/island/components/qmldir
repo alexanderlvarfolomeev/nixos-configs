@@ -5,3 +5,6 @@ SliderRow 1.0 SliderRow.qml
 ToggleTile 1.0 ToggleTile.qml
 Workspaces 1.0 Workspaces.qml
 CollapsedIsland 1.0 CollapsedIsland.qml
+StyledText 1.0 StyledText.qml
+WorkspaceSummary 1.0 WorkspaceSummary.qml
+StatusSummary 1.0 StatusSummary.qml

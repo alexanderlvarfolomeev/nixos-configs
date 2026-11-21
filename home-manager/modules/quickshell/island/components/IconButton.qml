@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls
 import qs.config
 
 Rectangle {
@@ -25,6 +26,10 @@ Rectangle {
         iconSize: Math.round(root.buttonSize * 0.56)
         color: root.checked ? Theme.activeText : Theme.text
     }
+
+    ToolTip.visible: pointer.hovered && tooltip.length > 0
+    ToolTip.text: tooltip
+    ToolTip.delay: 600
 
     HoverHandler { id: pointer }
     TapHandler { onTapped: root.clicked() }

@@ -1,7 +1,7 @@
 import QtQuick
 import qs.config
 
-Text {
+StyledText {
     property int iconSize: 20
 
     color: Theme.text

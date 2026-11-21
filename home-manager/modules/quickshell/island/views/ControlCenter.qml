@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import Quickshell
 import qs.components
@@ -27,13 +29,13 @@ Item {
                 }
                 spacing: -1
 
-                Text {
+                StyledText {
                     text: "Control Center"
                     color: Theme.text
                     font { family: Theme.fontFamily; pixelSize: 16; weight: Font.DemiBold }
                 }
 
-                Text {
+                StyledText {
                     text: root.systemModel.dateLabel
                     color: Theme.textMuted
                     font { family: Theme.fontFamily; pixelSize: 9 }
@@ -69,7 +71,6 @@ Item {
                 icon: "wifi"
                 title: "Wi-Fi"
                 subtitle: "Open networks"
-                active: true
                 onClicked: root.systemModel.openNetwork()
             }
 
@@ -174,12 +175,12 @@ Item {
                     width: parent.width - 84
                     spacing: 1
 
-                    Text {
+                    StyledText {
                         text: "Notifications"
                         color: Theme.text
                         font { family: Theme.fontFamily; pixelSize: 12; weight: Font.DemiBold }
                     }
-                    Text {
+                    StyledText {
                         text: root.systemModel.doNotDisturb ? "Do not disturb is enabled" : "Open notification center"
                         color: Theme.textMuted
                         font { family: Theme.fontFamily; pixelSize: 9 }
@@ -205,14 +206,15 @@ Item {
                 anchors.centerIn: parent
                 spacing: 8
 
-                IconButton {
-                    icon: "tune"
-                    checked: true
-                    onClicked: root.controller.openPage("control")
-                }
-                IconButton {
-                    icon: "search"
-                    onClicked: root.controller.openPage("launcher")
+                Repeater {
+                    model: root.controller.pages
+                    IconButton {
+                        required property var modelData
+                        icon: modelData.icon
+                        tooltip: modelData.title
+                        checked: root.controller.pageId === modelData.key
+                        onClicked: root.controller.openPage(modelData.key)
+                    }
                 }
             }
         }

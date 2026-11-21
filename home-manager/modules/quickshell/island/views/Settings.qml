@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import qs.components
 import qs.config
@@ -6,19 +8,8 @@ Item {
     id: root
 
     required property var controller
-    property string selectedSection: "Control Center"
-    readonly property var sections: [
-        { icon: "view_day", name: "Bar & Island" },
-        { icon: "music_note", name: "Media" },
-        { icon: "schedule", name: "Clock & Date" },
-        { icon: "palette", name: "Appearance" },
-        { icon: "animation", name: "Motion" },
-        { icon: "search", name: "Launcher" },
-        { icon: "notifications", name: "Notifications" },
-        { icon: "tune", name: "Control Center" },
-        { icon: "lock", name: "Lock Screen" },
-        { icon: "memory", name: "System" }
-    ]
+    readonly property string selectedSection: "Appearance"
+    readonly property var sections: [{ icon: "palette", name: "Appearance" }]
 
     Row {
         anchors.fill: parent
@@ -35,7 +26,7 @@ Item {
                 }
                 spacing: 5
 
-                Text {
+                StyledText {
                     width: parent.width
                     height: 32
                     text: "Island settings"
@@ -54,9 +45,7 @@ Item {
                         width: parent.width
                         height: 36
                         radius: 11
-                        color: root.selectedSection === modelData.name
-                            ? Theme.accentSoft
-                            : (navPointer.hovered ? Theme.raisedHover : "transparent")
+                        color: Theme.accentSoft
 
                         Row {
                             anchors {
@@ -71,21 +60,19 @@ Item {
                                 width: 21
                                 text: navItem.modelData.icon
                                 iconSize: 17
-                                color: root.selectedSection === navItem.modelData.name ? Theme.accent : Theme.textMuted
+                                color: Theme.accent
                             }
 
-                            Text {
+                            StyledText {
                                 anchors.verticalCenter: parent.verticalCenter
                                 width: parent.width - 31
                                 text: navItem.modelData.name
-                                color: root.selectedSection === navItem.modelData.name ? Theme.text : Theme.textMuted
+                                color: Theme.text
                                 elide: Text.ElideRight
                                 font { family: Theme.fontFamily; pixelSize: 11; weight: Font.Medium }
                             }
                         }
 
-                        HoverHandler { id: navPointer }
-                        TapHandler { onTapped: root.selectedSection = navItem.modelData.name }
                     }
                 }
             }
@@ -106,7 +93,7 @@ Item {
                     width: parent.width
                     height: 34
 
-                    Text {
+                    StyledText {
                         anchors.verticalCenter: parent.verticalCenter
                         text: root.selectedSection
                         color: Theme.text
@@ -144,7 +131,7 @@ Item {
                             spacing: 8
 
                             Rectangle { width: 5; height: 5; radius: 3; color: Theme.accent }
-                            Text {
+                            StyledText {
                                 text: "12:48"
                                 color: Theme.text
                                 font { family: Theme.monoFamily; pixelSize: 10; weight: Font.DemiBold }
@@ -154,13 +141,13 @@ Item {
                         }
                     }
 
-                    Text {
+                    StyledText {
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             bottom: parent.bottom
                             bottomMargin: 9
                         }
-                        text: "Live island preview"
+                        text: "Island preview"
                         color: Theme.textMuted
                         font { family: Theme.fontFamily; pixelSize: 9 }
                     }
@@ -181,8 +168,8 @@ Item {
                         }
                         spacing: 6
 
-                        Text {
-                            text: root.selectedSection === "Control Center" ? "Control Center surface" : "Island surface"
+                        StyledText {
+                            text: "Island surface"
                             color: Theme.text
                             font { family: Theme.fontFamily; pixelSize: 12; weight: Font.DemiBold }
                         }
@@ -211,7 +198,7 @@ Item {
                             width: parent.width
                             height: 38
 
-                            Text {
+                            StyledText {
                                 anchors {
                                     left: parent.left
                                     verticalCenter: parent.verticalCenter
@@ -253,7 +240,7 @@ Item {
                         IconLabel {
                             anchors.verticalCenter: parent.verticalCenter
                             width: 30
-                            text: root.selectedSection === "Control Center" ? "tune" : "construction"
+                            text: "palette"
                             iconSize: 25
                             color: Theme.accent
                         }
@@ -263,19 +250,15 @@ Item {
                             width: parent.width - 42
                             spacing: 2
 
-                            Text {
-                                text: root.selectedSection === "Control Center"
-                                    ? "Hover-first control center"
-                                    : root.selectedSection + " module"
+                            StyledText {
+                                text: "Session appearance"
                                 color: Theme.text
                                 font { family: Theme.fontFamily; pixelSize: 12; weight: Font.DemiBold }
                             }
-                            Text {
+                            StyledText {
                                 width: parent.width
                                 wrapMode: Text.WordWrap
-                                text: root.selectedSection === "Control Center"
-                                    ? "Native audio, Bluetooth, battery and media services stay idle until needed."
-                                    : "The module boundary is ready for this page without coupling it to qsbar."
+                                text: "Changes apply immediately to this island for the current session."
                                 color: Theme.textMuted
                                 font { family: Theme.fontFamily; pixelSize: 9 }
                             }

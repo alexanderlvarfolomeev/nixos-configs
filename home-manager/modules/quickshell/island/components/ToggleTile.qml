@@ -45,7 +45,7 @@ Rectangle {
             width: parent.width - 44
             spacing: 1
 
-            Text {
+            StyledText {
                 width: parent.width
                 text: root.title
                 color: Theme.text
@@ -53,7 +53,7 @@ Rectangle {
                 font { family: Theme.fontFamily; pixelSize: 13; weight: Font.DemiBold }
             }
 
-            Text {
+            StyledText {
                 width: parent.width
                 text: root.subtitle
                 color: root.active ? Theme.text : Theme.textMuted

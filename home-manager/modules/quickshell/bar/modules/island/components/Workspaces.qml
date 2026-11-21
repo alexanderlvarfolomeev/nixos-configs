@@ -28,8 +28,6 @@ Row {
         });
     }
 
-    Rectangle { width: 5; height: root.height; color: Theme.workspaceActive }
-
     Repeater {
         model: root.workspaceModels
 
@@ -38,7 +36,7 @@ Row {
             required property var modelData
             width: workspaceRow.width + 20
             height: root.height
-            radius: 5
+            radius: 12
             color: modelData.active ? Theme.workspaceActive
                 : pointer.hovered ? Theme.workspaceHover
                 : modelData.exists ? Theme.accentSoft : "transparent"
@@ -59,8 +57,8 @@ Row {
                     anchors.verticalCenter: parent.verticalCenter
                     visible: tile.modelData.apps.length > 0
                     width: appsRow.width + 16
-                    height: 30
-                    radius: 10
+                    height: root.height - 2 * 2
+                    radius: 12
                     color: tile.modelData.active ? Theme.workspaceAppsActive : Theme.workspaceApps
 
                     Row {
@@ -89,6 +87,4 @@ Row {
             }
         }
     }
-
-    Rectangle { width: 5; height: root.height; color: Theme.workspaceActive }
 }

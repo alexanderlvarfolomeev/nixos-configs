@@ -95,11 +95,11 @@ Scope {
                     }
                 }
 
-                HoverHandler {
-                    id: islandHover
+                // HoverHandler {
+                //     id: islandHover
 
-                    onHoveredChanged: state.hovered = hovered
-                }
+                //     onHoveredChanged: state.hovered = hovered
+                // }
 
                 CollapsedIsland {
                     id: compactContent

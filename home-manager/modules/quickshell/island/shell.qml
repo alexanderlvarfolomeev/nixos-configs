@@ -32,6 +32,8 @@ ShellRoot {
             readonly property bool expanded: pinned || islandHover.hovered || collapseTimer.running
             readonly property int expandedWidth: page === "launcher" ? Theme.launcherWidth : Theme.controlWidth
             readonly property int expandedHeight: page === "launcher" ? Theme.launcherHeight : Theme.controlHeight
+            readonly property int backingWidth: Math.max(Theme.compactWidth, Theme.controlWidth, Theme.launcherWidth)
+            readonly property int backingHeight: Math.max(Theme.compactHeight, Theme.controlHeight, Theme.launcherHeight)
 
             function openPage(nextPage) {
                 page = nextPage;
@@ -51,29 +53,32 @@ ShellRoot {
             focusable: expanded && (page === "launcher")
             exclusionMode: ExclusionMode.Ignore
             color: "transparent"
-            implicitWidth: expanded ? expandedWidth : Theme.compactWidth
-            implicitHeight: expanded ? expandedHeight : Theme.compactHeight
+            surfaceFormat.opaque: false
+
+            // Keep the Wayland backing buffer stable. Resizing a layer-shell
+            // window is asynchronous, which can expose a stale/unpainted strip
+            // between the requested and compositor-confirmed dimensions.
+            implicitWidth: backingWidth
+            implicitHeight: backingHeight
+
+            // Only the visible island accepts input; the rest of the fixed,
+            // transparent backing window remains click-through.
+            mask: Region {
+                item: islandSurface
+                radius: islandSurface.radius
+            }
 
             anchors.top: true
             margins.top: 3
 
-            Behavior on implicitWidth {
-                NumberAnimation {
-                    duration: Theme.animationDuration
-                    easing.type: Easing.OutCubic
-                }
-            }
-
-            Behavior on implicitHeight {
-                NumberAnimation {
-                    duration: Theme.animationDuration
-                    easing.type: Easing.OutCubic
-                }
-            }
-
             Rectangle {
                 id: islandSurface
-                anchors.fill: parent
+                anchors {
+                    top: parent.top
+                    horizontalCenter: parent.horizontalCenter
+                }
+                width: islandWindow.expanded ? islandWindow.expandedWidth : Theme.compactWidth
+                height: islandWindow.expanded ? islandWindow.expandedHeight : Theme.compactHeight
                 clip: true
                 radius: islandWindow.expanded ? islandWindow.cornerRadius : height / 2
                 color: Qt.rgba(
@@ -82,8 +87,22 @@ ShellRoot {
                     Theme.background.b,
                     islandWindow.panelOpacity
                 )
-                border.color: "blue" // islandWindow.expanded ? Theme.borderStrong : Theme.border
+                border.color: islandWindow.expanded ? Theme.borderStrong : Theme.border
                 border.width: 1
+
+                Behavior on width {
+                    NumberAnimation {
+                        duration: Theme.animationDuration
+                        easing.type: Easing.OutCubic
+                    }
+                }
+
+                Behavior on height {
+                    NumberAnimation {
+                        duration: Theme.animationDuration
+                        easing.type: Easing.OutCubic
+                    }
+                }
 
                 Behavior on radius {
                     NumberAnimation {

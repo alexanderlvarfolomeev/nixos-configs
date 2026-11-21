@@ -23,7 +23,7 @@ Rectangle {
         anchors.centerIn: parent
         text: root.icon
         iconSize: Math.round(root.buttonSize * 0.56)
-        color: root.checked ? "#ff0b1020" : Theme.text
+        color: root.checked ? Theme.activeText : Theme.text
     }
 
     HoverHandler { id: pointer }

@@ -29,10 +29,12 @@ ShellRoot {
             property real panelOpacity: General.islandOpacity
             property real cornerRadius: Theme.cornerRadius
             readonly property int compactPreviewWidth: Theme.compactWidth
-            readonly property bool expanded: pinned || islandHover.hovered || collapseTimer.running
+            property bool hoverExpanded: false
+            readonly property bool expanded: pinned || hoverExpanded || collapseTimer.running
             readonly property int expandedWidth: page === "launcher" ? Theme.launcherWidth : Theme.controlWidth
             readonly property int expandedHeight: page === "launcher" ? Theme.launcherHeight : Theme.controlHeight
-            readonly property int backingWidth: Math.max(Theme.compactWidth, Theme.controlWidth, Theme.launcherWidth)
+            readonly property int collapsedWidth: Math.min(compactContent.implicitWidth, screen.width - 24)
+            readonly property int backingWidth: Math.max(collapsedWidth, Theme.controlWidth, Theme.launcherWidth)
             readonly property int backingHeight: Math.max(Theme.compactHeight, Theme.controlHeight, Theme.launcherHeight)
 
             function openPage(nextPage) {
@@ -77,7 +79,7 @@ ShellRoot {
                     top: parent.top
                     horizontalCenter: parent.horizontalCenter
                 }
-                width: islandWindow.expanded ? islandWindow.expandedWidth : Theme.compactWidth
+                width: islandWindow.expanded ? islandWindow.expandedWidth : islandWindow.collapsedWidth
                 height: islandWindow.expanded ? islandWindow.expandedHeight : Theme.compactHeight
                 clip: true
                 radius: islandWindow.expanded ? islandWindow.cornerRadius : height / 2
@@ -116,96 +118,32 @@ ShellRoot {
                     onHoveredChanged: {
                         if (hovered) {
                             collapseTimer.stop();
+                            hoverExpandTimer.restart();
                         } else if (!islandWindow.pinned) {
-                            if (islandWindow.autoCollapse) collapseTimer.restart();
-                            else islandWindow.pinned = true;
+                            hoverExpandTimer.stop();
+                            if (islandWindow.hoverExpanded) {
+                                if (islandWindow.autoCollapse) collapseTimer.restart();
+                                else islandWindow.pinned = true;
+                            }
+                            islandWindow.hoverExpanded = false;
+                        } else {
+                            hoverExpandTimer.stop();
+                            islandWindow.hoverExpanded = false;
                         }
                     }
                 }
 
-                Item {
+                CollapsedIsland {
                     id: compactContent
                     anchors.fill: parent
-                    visible: opacity > 0
-                    opacity: islandWindow.expanded ? 0 : 1
-
-                    Behavior on opacity { NumberAnimation { duration: 110 } }
-
-                    Row {
-                        anchors.centerIn: parent
-                        spacing: 9
-
-                        Row {
-                            id: workspacesRow
-                            anchors.verticalCenter: parent.verticalCenter
-                            spacing: 3
-                            Repeater {
-                                model: 3
-                                Rectangle {
-                                    width: index === 0 ? 6 : 4
-                                    height: width
-                                    radius: width / 2
-                                    color: index === 0 ? Theme.accent : Theme.textMuted
-                                    opacity: 1 - index * 0.22
-                                }
-                            }
-                        }
-
-                        Text {
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: systemModel.clock
-                            color: Theme.text
-                            font { family: Theme.monoFamily; pixelSize: 11; weight: Font.DemiBold }
-                        }
-
-                        Rectangle {
-                            anchors.verticalCenter: parent.verticalCenter
-                            width: 1
-                            height: 14
-                            color: Theme.borderStrong
-                        }
-
-                        Text {
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: systemModel.keyboardLayout
-                            color: Theme.textMuted
-                            font { family: Theme.monoFamily; pixelSize: 10; weight: Font.DemiBold }
-                        }
-
-                        IconLabel {
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: "wifi"
-                            iconSize: 15
-                            color: Theme.textMuted
-                        }
-
-                        Row {
-                            anchors.verticalCenter: parent.verticalCenter
-                            spacing: 1
-
-                            IconLabel {
-                                text: systemModel.batteryIcon
-                                iconSize: 16
-                                color: systemModel.batteryPercent > 0 && systemModel.batteryPercent < 20
-                                    ? Theme.warning
-                                    : Theme.textMuted
-                            }
-
-                            Text {
-                                anchors.verticalCenter: parent.verticalCenter
-                                visible: systemModel.batteryPercent > 0
-                                text: systemModel.batteryPercent + "%"
-                                color: Theme.textMuted
-                                font { family: Theme.monoFamily; pixelSize: 9 }
-                            }
-                        }
-                    }
-
-                    TapHandler { onTapped: islandWindow.pinned = !islandWindow.pinned }
+                    systemModel: root.systemState
+                    page: islandWindow.page
+                    expanded: islandWindow.expanded
+                    onTogglePinned: islandWindow.pinned = !islandWindow.pinned
                 }
-
                 Loader {
                     anchors.fill: parent
+                    enabled: islandWindow.expanded
                     active: islandWindow.expanded || contentUnload.running
                     sourceComponent: islandWindow.page === "launcher" ? launcherPage : controlPage
                     opacity: islandWindow.expanded ? 1 : 0
@@ -214,6 +152,13 @@ ShellRoot {
                         NumberAnimation { duration: 170; easing.type: Easing.OutQuad }
                     }
                 }
+            }
+
+            // Give workspace tiles time to receive a click before expansion.
+            Timer {
+                id: hoverExpandTimer
+                interval: 450
+                onTriggered: islandWindow.hoverExpanded = islandHover.hovered
             }
 
             Timer {

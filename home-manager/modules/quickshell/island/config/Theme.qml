@@ -4,20 +4,26 @@ import QtQuick
 import Quickshell
 
 Singleton {
-    readonly property color background: "#ee090b10"
-    readonly property color raised: "#ff151820"
-    readonly property color raisedHover: "#ff1d222c"
-    readonly property color surface: "#ff11141a"
-    readonly property color border: "#28ffffff"
-    readonly property color borderStrong: "#45ffffff"
-    readonly property color text: "#fff5f6fa"
-    readonly property color textMuted: "#ff979ca8"
-    readonly property color accent: "#ff88a9ff"
-    readonly property color accentSoft: "#284f74d8"
+    // Match qsbar's dashboard, workspace and device colors.
+    readonly property color background: "#c0003b5b"
+    readonly property color raised: "#00449a"
+    readonly property color raisedHover: "#0071c5"
+    readonly property color surface: "#20242b"
+    readonly property color border: "#8000b4d8"
+    readonly property color borderStrong: "#00b4d8"
+    readonly property color text: "#e6e6fa"
+    readonly property color textMuted: "#69b1e2"
+    readonly property color accent: "#00b4d8"
+    readonly property color accentSoft: "#2800b4d8"
+    readonly property color activeText: "#241b20"
+    readonly property color workspaceActive: "#0071c5"
+    readonly property color workspaceHover: "#c0003b5b"
+    readonly property color workspaceAppsActive: "#90ffffff"
+    readonly property color workspaceApps: "#50ffffff"
     readonly property color success: "#ff82d8a6"
     readonly property color warning: "#fff3c978"
 
-    readonly property string fontFamily: "Noto Sans"
+    readonly property string fontFamily: "JetBrainsMono Nerd Font Propo"
     readonly property string monoFamily: "JetBrainsMono Nerd Font Propo"
     readonly property string iconFamily: "Material Symbols Rounded"
 

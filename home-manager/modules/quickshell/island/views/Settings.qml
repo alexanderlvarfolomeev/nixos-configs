@@ -26,7 +26,7 @@ Item {
         Rectangle {
             width: 190
             height: parent.height
-            color: "#b50b0d12"
+            color: Theme.surface
 
             Column {
                 anchors {
@@ -136,7 +136,7 @@ Item {
                         width: root.controller.compactPreviewWidth
                         height: 30
                         radius: 15
-                        color: "#ff07090d"
+                        color: Theme.background
                         border.color: Theme.borderStrong
 
                         Row {

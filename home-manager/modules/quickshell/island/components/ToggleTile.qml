@@ -36,7 +36,7 @@ Rectangle {
                 anchors.centerIn: parent
                 text: root.icon
                 iconSize: 19
-                color: root.active ? "#ff0b1020" : Theme.text
+                color: root.active ? Theme.activeText : Theme.text
             }
         }
 
@@ -56,7 +56,7 @@ Rectangle {
             Text {
                 width: parent.width
                 text: root.subtitle
-                color: root.active ? "#ffc5d5ff" : Theme.textMuted
+                color: root.active ? Theme.text : Theme.textMuted
                 elide: Text.ElideRight
                 font { family: Theme.fontFamily; pixelSize: 10 }
             }

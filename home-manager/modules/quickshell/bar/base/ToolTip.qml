@@ -1,113 +1,54 @@
 import QtQuick
-import Quickshell
+import QtQuick.Controls
+import qs.config
 
-PopupWindow {
-  id: root
+Popup {
+    id: root
+    property string text: ""
+    property Item targetItem: null
+    property int delay: 600
 
-  property var text: ""
-  property var targetItem: null
-  property int anchorX: 0
-  property int anchorY: 0
-  property int delay: 600
-  
-  visible: false
-  color: "transparent"
+    parent: targetItem
+    x: parent ? (parent.width - width) / 2 : 0
+    y: parent ? parent.height + 5 : 0
+    padding: 15
+    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
-  anchor.item: targetItem
-  anchor.rect.x: anchorX
-  anchor.rect.y: anchorY
-
-  Rectangle {
-    id: tooltipRec
-
-    anchors {
-        top: parent.top
-        bottom: parent.bottom
+    background: Rectangle {
+        color: "#d7241b20"
+        radius: 5
     }
 
-    width: tooltipText.width + 15 * 2
-    implicitHeight: tooltipText.font.pixelSize + 15 * 2
-    color: "#d7241b20"
-    radius: 5 
-
-    Text {
-      id: tooltipText
-
-      anchors.centerIn: parent
-
-      font.pixelSize: 20
-      font.bold: true
-      font.family: "JetBrains Mono NF"
-
-      color: "#00b4d8"
-      text: root.text
-    }
-  }
-
-  Timer {
-    id: tooltipTimer
-    interval: root.delay
-    repeat: false
-    onTriggered: root.show()
-  }
-
-  function prepareToShow(target, text) {
-    if (!target || !text) {
-      return
+    contentItem: TextShadow {
+        text: root.text
+        color: Config.networkTextColor
+        font.family: Config.fontFamily
+        font.pixelSize: Config.fontSize
+        font.bold: true
     }
 
-    tooltipTimer.stop()
-
-    if (root.visible && target !== root.targetItem) {
-      root.hide()
+    Timer {
+        id: showDelay
+        interval: root.delay
+        onTriggered: {
+            if (root.targetItem && root.text) root.open();
+        }
     }
 
-    root.text = text
-    root.targetItem = target
-
-    tooltipTimer.start()
-  }
-
-  function show() {
-    if (!targetItem) {
-      return
+    function prepareToShow(target, label) {
+        hide();
+        if (!target || !label) return;
+        targetItem = target;
+        text = label;
+        showDelay.start();
     }
 
-    const tipWidth = tooltipRec.width
-    const tipHeight = tooltipRec.implicitHeight
-    root.implicitWidth = tipWidth
-    root.implicitHeight = tipHeight
-
-    root.anchorX = (targetItem.width - tipWidth) / 2
-    root.anchorY = targetItem.height + 5
-
-    root.visible = true
-  }
-
-  function hide() {
-    tooltipTimer.stop()
-    root.visible = false
-    root.text = ""
-  }
-
-  function refreshText(text) {
-    if (!visible || !targetItem) {
-      return
+    function hide() {
+        showDelay.stop();
+        close();
     }
 
-    root.text = text
-
-    const tipWidth = tooltipRec.width
-    const tipHeight = tooltipRec.implicitHeight
-    root.implicitWidth = tipWidth
-    root.implicitHeight = tipHeight
-
-    root.anchorX = (targetItem.width - tipWidth) / 2
-
-    Qt.callLater(() => {
-      if (root.anchor && root.visible) {
-        root.anchor.updateAnchor()
-      }
-    })
-  }
+    function refreshText(label) {
+        text = label;
+    }
 }

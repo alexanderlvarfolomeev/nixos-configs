@@ -3,30 +3,23 @@ import QtQuick
 Rectangle {
   id: root
 
-  // Behavior on color {
-  //   ColorAnimation {
-  //     duration: 100 // Animation time in milliseconds
-  //   }
-  // }
+  signal clicked(var mouse)
+  signal pressAndHold(var mouse)
+  signal entered()
+  signal exited()
 
   MouseArea {
     id: mouse
     anchors.fill: parent
     hoverEnabled: true
 
-    onClicked: mouse => root.onClicked(mouse)
-    onPressAndHold: mouse => root.onPressAndHold(mouse)
-    onEntered: () => root.onEntered()
-    onExited: () => root.onExited()
+    onClicked: mouse => root.clicked(mouse)
+    onPressAndHold: mouse => root.pressAndHold(mouse)
+    onEntered: root.entered()
+    onExited: root.exited()
   }
-
-  // HoverHandler
 
   property bool extraHoveredCondition: true
   readonly property bool hovered: extraHoveredCondition && mouse.containsMouse
 
-  property var onClicked: (mouse) => {}
-  property var onPressAndHold: mouse => onClicked(mouse)
-  property var onEntered: () => {}
-  property var onExited: () => {}
 }

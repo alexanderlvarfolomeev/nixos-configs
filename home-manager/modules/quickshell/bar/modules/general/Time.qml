@@ -1,6 +1,7 @@
 import QtQuick
 import qs.base
 import qs.config
+import qs.services
 
 Rectangle {
     id: root
@@ -23,10 +24,10 @@ Rectangle {
         gradient: Config.timeBgGradient
     }
 
-    ShadowedStyledText {
+    StyledText {
         id: timeText
         anchors.centerIn: parent
-        text: TimeTimer.time
+        text: Clock.time
         font.pixelSize: Config.timeFontSize
         color: Config.timeTextColor
     }

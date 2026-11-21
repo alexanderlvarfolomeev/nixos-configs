@@ -1,9 +1,10 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import qs.base as Base
 import QtQuick.Controls
 import Quickshell
-import Quickshell.Widgets
+import qs.services
 import qs.modules.island.components
 import qs.modules.island.config
 
@@ -88,7 +89,7 @@ Item {
             }
         }
 
-        StyledText {
+        Base.TextShadow {
             width: parent.width
             text: search.text.length > 0 ? "Results" : "Applications"
             color: Theme.textMuted
@@ -127,12 +128,12 @@ Item {
                         radius: 9
                         color: "#16ffffff"
 
-                        IconImage {
+                        ApplicationIcon {
                             anchors {
                                 fill: parent
                                 margins: 5
                             }
-                            source: Quickshell.iconPath(appDelegate.modelData.icon || "application-x-executable")
+                            source: DesktopIcons.iconSource(appDelegate.modelData.icon)
                         }
                     }
 
@@ -141,7 +142,7 @@ Item {
                         width: parent.width - 78
                         spacing: -1
 
-                        StyledText {
+                        Base.TextShadow {
                             width: parent.width
                             text: appDelegate.modelData.name
                             color: Theme.text
@@ -149,7 +150,7 @@ Item {
                             font { family: Theme.fontFamily; pixelSize: 12; weight: Font.DemiBold }
                         }
 
-                        StyledText {
+                        Base.TextShadow {
                             width: parent.width
                             text: appDelegate.modelData.genericName || appDelegate.modelData.comment
                             color: Theme.textMuted
@@ -170,7 +171,7 @@ Item {
                 HoverHandler { id: appPointer }
                 TapHandler { onTapped: root.launch(appDelegate.modelData) }
             }
-            StyledText {
+            Base.TextShadow {
                 anchors.centerIn: parent
                 width: parent.width
                 visible: root.matches.length === 0

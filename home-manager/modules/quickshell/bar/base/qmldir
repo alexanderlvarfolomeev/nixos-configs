@@ -1,0 +1,6 @@
+module qs.base
+MouseRec 1.0 MouseRec.qml
+StatusButton 1.0 StatusButton.qml
+StyledText 1.0 StyledText.qml
+TextShadow 1.0 TextShadow.qml
+ToolTip 1.0 ToolTip.qml

@@ -1,6 +1,7 @@
 import QtQuick
 import qs.base
 import qs.config
+import qs.services
 
 Rectangle {
     id: root

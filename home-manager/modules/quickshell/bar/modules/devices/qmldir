@@ -1,0 +1,6 @@
+module qs.modules.devices
+Audio 1.0 Audio.qml
+Battery 1.0 Battery.qml
+Bluetooth 1.0 Bluetooth.qml
+DeviceRow 1.0 DeviceRow.qml
+Network 1.0 Network.qml

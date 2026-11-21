@@ -1,4 +1,4 @@
-import Quickshell.Io
+import Quickshell
 import QtQuick
 import qs.base as Base
 import qs.config
@@ -10,8 +10,6 @@ Base.MouseRec {
         bottom: parent.bottom
     }
     width: 66
-    // Layout.preferredWidth: 66
-    // Layout.fillHeight: true
     topLeftRadius: 5
     bottomLeftRadius: 20
     gradient: Gradient {
@@ -31,12 +29,7 @@ Base.MouseRec {
     }
 
     onClicked: function() {
-        wlogout.startDetached()
+        Quickshell.execDetached(["wlogout", "-b", "2"])
     }
 
-    Process {
-        id: wlogout
-        running: false
-        command: [ "wlogout", "-b", "2"]
-    }
 }

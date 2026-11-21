@@ -16,7 +16,7 @@ Singleton {
     property string onColor: Config.audioTextColor
     property string placeholderColor: "transparent"
 
-    property PwNode sink: Pipewire.defaultAudioSink
+    readonly property PwNode sink: Pipewire.defaultAudioSink
 
     function sinkStateColor(audio: PwNodeAudio): string {
         if (!audio) {
@@ -41,6 +41,6 @@ Singleton {
     }
 
     PwObjectTracker {
-        objects: [ sink ]
+        objects: root.sink ? [root.sink] : []
     }
 }

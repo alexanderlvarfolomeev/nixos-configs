@@ -1,7 +1,8 @@
 import QtQuick
+import qs.base as Base
 import Quickshell.Hyprland
 import qs.modules.island.config
-import qs.modules.island.services
+import qs.services
 
 Row {
     id: root
@@ -47,7 +48,7 @@ Row {
                 anchors.centerIn: parent
                 spacing: 10
 
-                StyledText {
+                Base.TextShadow {
                     anchors.verticalCenter: parent.verticalCenter
                     text: tile.modelData.special ? "S" : tile.modelData.id
                     color: tile.modelData.active ? Theme.activeText : Theme.accent

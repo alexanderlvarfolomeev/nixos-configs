@@ -1,0 +1,10 @@
+module qs.services
+singleton SystemState 1.0 SystemState.qml
+singleton DesktopIcons 1.0 DesktopIcons.qml
+singleton Actions 1.0 Actions.qml
+singleton Audio 1.0 Audio.qml
+singleton Battery 1.0 Battery.qml
+singleton Network 1.0 Network.qml
+singleton Clock 1.0 Clock.qml
+singleton KeyboardLayout 1.0 KeyboardLayout.qml
+singleton OsInfo 1.0 OsInfo.qml

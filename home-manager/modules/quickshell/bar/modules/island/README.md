@@ -38,6 +38,7 @@ qs ipc -p ~/nix/home-manager/modules/quickshell/bar call island open launcher
 ```
 
 `IslandController.qml` owns navigation, pinning, and hover timers. Views receive
-it explicitly rather than accessing the window or its ids. `SystemState.qml`
-owns shared device state and commands. Appearance changes apply for the current
-session; Settings exposes only the controls currently implemented.
+it explicitly rather than accessing the window or its ids. The bar's shared
+`services/SystemState.qml` supplies device state and commands, and `base/` supplies
+text shadows. Appearance changes apply for the current session; Settings exposes
+only the controls currently implemented.

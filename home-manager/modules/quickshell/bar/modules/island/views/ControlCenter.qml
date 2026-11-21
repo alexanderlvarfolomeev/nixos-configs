@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import qs.base as Base
 import Quickshell
 import qs.modules.island.components
 import qs.modules.island.config
@@ -29,13 +30,13 @@ Item {
                 }
                 spacing: -1
 
-                StyledText {
+                Base.TextShadow {
                     text: "Control Center"
                     color: Theme.text
                     font { family: Theme.fontFamily; pixelSize: 16; weight: Font.DemiBold }
                 }
 
-                StyledText {
+                Base.TextShadow {
                     text: root.systemModel.dateLabel
                     color: Theme.textMuted
                     font { family: Theme.fontFamily; pixelSize: 9 }
@@ -175,12 +176,12 @@ Item {
                     width: parent.width - 84
                     spacing: 1
 
-                    StyledText {
+                    Base.TextShadow {
                         text: "Notifications"
                         color: Theme.text
                         font { family: Theme.fontFamily; pixelSize: 12; weight: Font.DemiBold }
                     }
-                    StyledText {
+                    Base.TextShadow {
                         text: root.systemModel.doNotDisturb ? "Do not disturb is enabled" : "Open notification center"
                         color: Theme.textMuted
                         font { family: Theme.fontFamily; pixelSize: 9 }

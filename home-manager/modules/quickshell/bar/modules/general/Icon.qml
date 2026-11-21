@@ -1,9 +1,8 @@
 import QtQuick
 import Quickshell
-import Quickshell.Io
 import qs.base
 import qs.config
-import qs.modules.common
+import qs.services
 
 MouseRec {
     id: root
@@ -12,12 +11,12 @@ MouseRec {
     color: "transparent"
 
     onClicked: function() {
-        rofi.startDetached()
+        Quickshell.execDetached(["rofi", "-show", "drun"])
     }
     Image {
         id: icon
         anchors.verticalCenter: parent.verticalCenter
-        source: Quickshell.iconPath(SystemSingleton.osLogo)
+        source: Quickshell.iconPath(OsInfo.osLogo)
         width: parent.width
         height: parent.height
         fillMode: Image.PreserveAspectFit
@@ -29,9 +28,4 @@ MouseRec {
         color: root.hovered ? Config.hoveredTransparency : "transparent"
     }
 
-    Process {
-        id: rofi
-        running: false
-        command: [ "rofi", "-show", "drun"]
-    }
 }

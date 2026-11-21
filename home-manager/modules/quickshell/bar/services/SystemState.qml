@@ -1,19 +1,19 @@
+pragma Singleton
+
 import QtQuick
 import Quickshell
 import Quickshell.Bluetooth as BT
-import Quickshell.Hyprland
 import Quickshell.Io
-import Quickshell.Services.Pipewire
 import Quickshell.Services.UPower
 
-QtObject {
+Singleton {
     id: root
 
-    readonly property date now: clockSource.date
-    readonly property string clock: Qt.formatTime(now, "HH:mm")
+    readonly property date now: Clock.date
+    readonly property string clock: Clock.time
     readonly property string dateLabel: Qt.formatDate(now, "ddd, d MMM")
 
-    readonly property var sink: Pipewire.defaultAudioSink
+    readonly property var sink: Audio.sink
     readonly property real volume: sink?.audio?.volume ?? 0
     readonly property bool muted: sink?.audio?.muted ?? false
 
@@ -37,8 +37,7 @@ QtObject {
     property var savedAnimationValue: null
     property var queriedAnimationValue: null
     property bool requestedGameMode: false
-    property string keyboardLayout: "--"
-    property bool keyboardRefreshPending: false
+    readonly property string keyboardLayout: KeyboardLayout.currentLayoutCode.toUpperCase() || "--"
 
     function setVolume(nextVolume) {
         if (!sink?.audio) return;
@@ -92,33 +91,6 @@ QtObject {
         if (!dndQuery.running) dndQuery.running = true;
     }
 
-    function updateKeyboardLayout(layoutName) {
-        const name = (layoutName ?? "").trim().toLowerCase();
-        if (name.includes("russian") || name === "ru") {
-            keyboardLayout = "RU";
-        } else if (name.includes("english") || name === "us" || name === "en") {
-            keyboardLayout = "EN";
-        } else if (name.length > 0) {
-            keyboardLayout = name.substring(0, 2).toUpperCase();
-        }
-    }
-
-    function refreshKeyboard() {
-        if (keyboardQuery.running) {
-            keyboardRefreshPending = true;
-        } else {
-            keyboardQuery.running = true;
-        }
-    }
-
-    property SystemClock clockSource: SystemClock {
-        precision: SystemClock.Minutes
-    }
-
-    property PwObjectTracker pipewireTracker: PwObjectTracker {
-        objects: root.sink ? [root.sink] : []
-    }
-
     // Coalesce slider events and serialize writes so old values cannot finish last.
     property Timer brightnessThrottle: Timer {
         interval: 80
@@ -144,31 +116,6 @@ QtObject {
                 const match = text.match(/(\d+)%/);
                 if (match && !root.brightnessWritePending && !root.brightnessWrite.running)
                     root.brightness = Number(match[1]) / 100;
-            }
-        }
-    }
-
-    property Process keyboardQuery: Process {
-        command: ["hyprctl", "-j", "devices"]
-        running: true
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                try {
-                    const devices = JSON.parse(text);
-                    const keyboards = devices.keyboards ?? [];
-                    const keyboard = keyboards.find(item => item.main === true) ?? keyboards[0];
-                    if (keyboard) root.updateKeyboardLayout(keyboard.active_keymap);
-                } catch (error) {
-                    console.warn("Island: unable to read keyboard layout:", error);
-                }
-            }
-        }
-
-        onExited: {
-            if (root.keyboardRefreshPending) {
-                root.keyboardRefreshPending = false;
-                running = true;
             }
         }
     }
@@ -208,16 +155,4 @@ QtObject {
         }
     }
 
-    property Connections hyprlandEvents: Connections {
-        target: Hyprland
-
-        function onRawEvent(event) {
-            if (event.name === "activelayout") {
-                const separator = event.data.indexOf(",");
-                root.updateKeyboardLayout(separator >= 0 ? event.data.substring(separator + 1) : event.data);
-            } else if (event.name === "configreloaded") {
-                root.refreshKeyboard();
-            }
-        }
-    }
 }

@@ -29,7 +29,7 @@ Singleton {
 
   Process {
     id: stationProc
-    command: [Quickshell.shellPath("scripts/iwd_station_status.sh"), wlanId]
+    command: ["bash", Quickshell.shellPath("scripts/iwd_station_status.sh"), root.wlanId]
     running: true
 
     onExited: (exitCode, exitStatus) => {

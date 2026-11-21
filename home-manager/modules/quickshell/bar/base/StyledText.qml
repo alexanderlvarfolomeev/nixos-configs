@@ -1,7 +1,7 @@
 import QtQuick
 import qs.config
 
-Text {
+TextShadow {
   id: root
 
   font.bold: true

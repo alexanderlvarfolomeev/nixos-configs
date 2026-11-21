@@ -4,13 +4,12 @@ import Quickshell.Io
 import qs.modules.island.components
 import qs.modules.island.config
 import qs.modules.island.services
+import qs.services
 
 Scope {
     id: root
     required property int barHeight
     readonly property int topMargin: Math.max(0, (barHeight - Theme.compactHeight) / 2)
-
-    property var systemState: SystemState { id: systemModel }
 
     Variants {
         id: islandInstances
@@ -26,7 +25,7 @@ Scope {
             }
             property var registry: PageRegistry {
                 id: pageRegistry
-                systemModel: root.systemState
+                systemModel: SystemState
                 controller: state
             }
             readonly property int collapsedWidth: Math.min(compactContent.implicitWidth, screen.width - 24)
@@ -133,7 +132,7 @@ Scope {
                 function onExpandedChanged() {
                     if (state.expanded) {
                         contentUnload.stop();
-                        root.systemState.refreshControls();
+                        SystemState.refreshControls();
                     }
                     else contentUnload.restart();
                 }

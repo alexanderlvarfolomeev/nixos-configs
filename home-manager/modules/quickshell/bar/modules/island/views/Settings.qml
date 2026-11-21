@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import qs.base as Base
 import qs.modules.island.components
 import qs.modules.island.config
 
@@ -26,7 +27,7 @@ Item {
                 }
                 spacing: 5
 
-                StyledText {
+                Base.TextShadow {
                     width: parent.width
                     height: 32
                     text: "Island settings"
@@ -63,7 +64,7 @@ Item {
                                 color: Theme.accent
                             }
 
-                            StyledText {
+                            Base.TextShadow {
                                 anchors.verticalCenter: parent.verticalCenter
                                 width: parent.width - 31
                                 text: navItem.modelData.name
@@ -93,7 +94,7 @@ Item {
                     width: parent.width
                     height: 34
 
-                    StyledText {
+                    Base.TextShadow {
                         anchors.verticalCenter: parent.verticalCenter
                         text: root.selectedSection
                         color: Theme.text
@@ -131,7 +132,7 @@ Item {
                             spacing: 8
 
                             Rectangle { width: 5; height: 5; radius: 3; color: Theme.accent }
-                            StyledText {
+                            Base.TextShadow {
                                 text: "12:48"
                                 color: Theme.text
                                 font { family: Theme.monoFamily; pixelSize: 10; weight: Font.DemiBold }
@@ -141,7 +142,7 @@ Item {
                         }
                     }
 
-                    StyledText {
+                    Base.TextShadow {
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             bottom: parent.bottom
@@ -168,7 +169,7 @@ Item {
                         }
                         spacing: 6
 
-                        StyledText {
+                        Base.TextShadow {
                             text: "Island surface"
                             color: Theme.text
                             font { family: Theme.fontFamily; pixelSize: 12; weight: Font.DemiBold }
@@ -198,7 +199,7 @@ Item {
                             width: parent.width
                             height: 38
 
-                            StyledText {
+                            Base.TextShadow {
                                 anchors {
                                     left: parent.left
                                     verticalCenter: parent.verticalCenter
@@ -250,12 +251,12 @@ Item {
                             width: parent.width - 42
                             spacing: 2
 
-                            StyledText {
+                            Base.TextShadow {
                                 text: "Session appearance"
                                 color: Theme.text
                                 font { family: Theme.fontFamily; pixelSize: 12; weight: Font.DemiBold }
                             }
-                            StyledText {
+                            Base.TextShadow {
                                 width: parent.width
                                 wrapMode: Text.WordWrap
                                 text: "Changes apply immediately to this island for the current session."

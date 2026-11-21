@@ -1,0 +1,5 @@
+module qs.modules.general
+Icon 1.0 Icon.qml
+Language 1.0 Language.qml
+Power 1.0 Power.qml
+Time 1.0 Time.qml

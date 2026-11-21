@@ -1,4 +1,5 @@
 import QtQuick
+import qs.base as Base
 import qs.modules.island.config
 
 Rectangle {
@@ -45,7 +46,7 @@ Rectangle {
             width: parent.width - 44
             spacing: 1
 
-            StyledText {
+            Base.TextShadow {
                 width: parent.width
                 text: root.title
                 color: Theme.text
@@ -53,7 +54,7 @@ Rectangle {
                 font { family: Theme.fontFamily; pixelSize: 13; weight: Font.DemiBold }
             }
 
-            StyledText {
+            Base.TextShadow {
                 width: parent.width
                 text: root.subtitle
                 color: root.active ? Theme.text : Theme.textMuted

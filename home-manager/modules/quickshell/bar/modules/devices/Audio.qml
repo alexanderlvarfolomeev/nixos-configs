@@ -1,37 +1,10 @@
-import Quickshell
-import Quickshell.Io
-import QtQuick
 import qs.base
 import qs.config
+import qs.services as Services
 
-MouseRec {
-  id: root
-
-  anchors {
-      top: parent.top
-      bottom: parent.bottom
-      topMargin: 2.0
-      bottomMargin: 2.0
-  }
-  width: audioText.width + 10 * 2
-  color: root.hovered ? Qt.darker(Config.audioBgColor, 1.1) : Config.audioBgColor
-
-  StyledText {
-    id: audioText
-
-    anchors.centerIn: parent
-
-    color: AudioSingleton.sinkStateColor(AudioSingleton.sink?.audio)
-    text: AudioSingleton.sinkStateText(AudioSingleton.sink?.audio)
-  }
-
-  onClicked: function() {
-    pavucontrol.startDetached()
-  }
-
-  Process {
-    id: pavucontrol
-    running: false
-    command: ["bash", Quickshell.env("HOME") + "/.local/scripts/toggle.sh", "pavucontrol"]
-  }
+StatusButton {
+    background: Config.audioBgColor
+    textColor: Services.Audio.sinkStateColor(Services.Audio.sink?.audio)
+    text: Services.Audio.sinkStateText(Services.Audio.sink?.audio)
+    onClicked: Services.Actions.toggleApplication("pavucontrol")
 }

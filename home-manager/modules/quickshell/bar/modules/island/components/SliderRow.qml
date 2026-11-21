@@ -1,4 +1,5 @@
 import QtQuick
+import qs.base as Base
 import QtQuick.Controls
 import qs.modules.island.config
 
@@ -26,7 +27,7 @@ Item {
         color: Theme.textMuted
     }
 
-    StyledText {
+    Base.TextShadow {
         id: title
         anchors {
             left: glyph.right

@@ -1,4 +1,5 @@
 import QtQuick
+import qs.base as Base
 import qs.modules.island.config
 
 Item {
@@ -29,7 +30,7 @@ Item {
             }
         }
 
-        StyledText {
+        Base.TextShadow {
             anchors.verticalCenter: parent.verticalCenter
             text: root.systemModel.clock
             color: Theme.text
@@ -43,7 +44,7 @@ Item {
             color: Theme.borderStrong
         }
 
-        StyledText {
+        Base.TextShadow {
             anchors.verticalCenter: parent.verticalCenter
             text: root.systemModel.keyboardLayout
             color: Theme.textMuted
@@ -69,7 +70,7 @@ Item {
                     : Theme.textMuted
             }
 
-            StyledText {
+            Base.TextShadow {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: root.systemModel.batteryPercent > 0
                 text: root.systemModel.batteryPercent + "%"

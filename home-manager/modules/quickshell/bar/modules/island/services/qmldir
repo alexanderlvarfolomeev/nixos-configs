@@ -1,5 +1,3 @@
 module qs.modules.island.services
-SystemState 1.0 SystemState.qml
 PageRegistry 1.0 PageRegistry.qml
 IslandController 1.0 IslandController.qml
-singleton DesktopIcons 1.0 DesktopIcons.qml

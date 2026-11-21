@@ -44,6 +44,7 @@ Item {
             Repeater {
                 model: 3
                 Rectangle {
+                    required property int index
                     width: index === 0 ? 6 : 4
                     height: width
                     radius: width / 2

@@ -7,7 +7,7 @@ import qs.config
 Row {
     id: root
     spacing: 3
-    implicitHeight: 32
+    height: 32
 
     // Keep five numbered slots, plus any other existing/special workspaces.
     readonly property var workspaceModels: {
